@@ -1,0 +1,59 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:13-alpine
+    container_name: myapp_db
+    environment:
+      POSTGRES_USER: user        # Matches backend/app/database.py
+      POSTGRES_PASSWORD: password  # Matches backend/app/database.py
+      POSTGRES_DB: appdb         # Matches backend/app/database.py
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - "5432:5432" # Optional: Expose to host for direct DB access
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U user -d appdb"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: myapp_backend
+    ports:
+      - "8000:8000"
+    environment:
+      DATABASE_URL: "postgresql://user:password@db:5432/appdb"
+      # PORT: 8000 # Already set in Dockerfile, but can be overridden here if needed
+    depends_on:
+      db:
+        condition: service_healthy # Wait for db to be healthy
+    volumes:
+      # For development, you might mount the code volume:
+      # - ./backend:/app 
+      # But for production-like build, code is copied in Dockerfile
+      - /app/__pycache__ # Example of a volume to persist pycache if needed, or ignore it
+    # command: uvicorn app.main:app --host 0.0.0.0 --port 8000 # CMD is in Dockerfile
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: myapp_frontend
+    ports:
+      - "3000:3000"
+    environment:
+      # This URL is used by the browser to call the backend.
+      # Since backend's port 8000 is mapped to host's port 8000,
+      # localhost:8000 from the browser will correctly reach the backend.
+      NEXT_PUBLIC_API_URL: "http://localhost:8000"
+      # PORT: 3000 # Already set in Dockerfile, but can be overridden here if needed
+    depends_on:
+      - backend # Ensures backend is started, though not strictly a build dependency for client-side calls
+    # command: npm run start # CMD is in Dockerfile
+
+volumes:
+  pgdata: # Defines the named volume for PostgreSQL data persistence
