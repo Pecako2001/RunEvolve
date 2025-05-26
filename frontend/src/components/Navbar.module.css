@@ -1,0 +1,195 @@
+/* Navbar styles moved from globals.css */
+
+.navbar__container {
+  background: var(--navbar-bg);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  width: var(--navbar-full-width);
+  box-shadow: var(--navbar-shadow);
+  transition: width 0.2s cubic-bezier(.4,2,.6,1), box-shadow 0.2s;
+  border-right: 1.5px solid var(--navbar-border);
+  z-index: 10;
+}
+
+.navbar__container[data-sidebar-state="mini"] {
+  width: var(--navbar-mini-width);
+  min-width: var(--navbar-mini-width);
+}
+
+.navbar__container[data-sidebar-state="hidden"] {
+  width: 0;
+  min-width: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+.navbar__header {
+  padding: 1.2rem 1.5rem 1.1rem 1.5rem;
+  border-bottom: 1.5px solid var(--navbar-border);
+  display: flex;
+  align-items: center;
+  gap: 0.75em;
+  color: var(--navbar-link);
+  min-height: 60px;
+  background: rgba(36, 37, 38, 0.85);
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
+
+.navbar__header img {
+  border-radius: 12px;
+  box-shadow: 0 2px 8px 0 rgba(94, 234, 212, 0.10);
+  background: #fff;
+}
+
+.navbar__header .mantine-Text-root {
+  font-family: 'Montserrat', 'Open Sans', Arial, sans-serif;
+  letter-spacing: 0.04em;
+  font-weight: 800;
+  font-size: 1.25rem;
+  color: var(--navbar-accent);
+  text-shadow: 0 2px 8px rgba(94, 234, 212, 0.10);
+  margin-left: 0.5em;
+}
+
+.navbar__linksWrapper {
+  flex: 1;
+  overflow-y: auto;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+.navbar__linksInner {
+  padding: 0.5rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.navbar__linksInner[data-sidebar-state="mini"] {
+  padding: 0;
+  gap: 0.1rem;
+}
+
+.navbar__sectionTitle {
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  padding: 12px 24px 6px 24px;
+  color: var(--navbar-section);
+  opacity: 0.8;
+  transition: opacity 0.2s;
+}
+
+.navbar__link {
+  display: flex;
+  align-items: center;
+  padding: 11px 24px;
+  margin: 2px 0;
+  border-radius: 10px;
+  gap: 1em;
+  color: var(--navbar-link);
+  text-decoration: none;
+  font-size: 1.06rem;
+  font-weight: 600;
+  transition: background 0.18s, color 0.18s, box-shadow 0.18s;
+  cursor: pointer;
+  position: relative;
+  outline: none;
+  border: none;
+  background: none;
+}
+
+.navbar__link:hover,
+.navbar__link:focus-visible {
+  background: linear-gradient(90deg, var(--navbar-accent-dark) 0%, var(--navbar-accent) 100%);
+  color: var(--navbar-link-hover);
+  box-shadow: 0 2px 12px 0 rgba(94, 234, 212, 0.13);
+}
+
+.navbar__link[data-active] {
+  background: var(--navbar-link-active-bg);
+  color: var(--navbar-link-active);
+  box-shadow: 0 2px 12px 0 rgba(94, 234, 212, 0.18);
+}
+
+.navbar__link[data-active]::before {
+  content: '';
+  position: absolute;
+  left: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 6px;
+  height: 32px;
+  border-radius: 6px;
+  background: linear-gradient(180deg, #2dd4bf 0%, #5eead4 100%);
+  opacity: 0.9;
+  z-index: 1;
+}
+
+.navbar__icon {
+  width: 22px;
+  height: 22px;
+  color: inherit;
+  margin-right: 10px;
+  transition: color 0.18s, filter 0.18s;
+  filter: drop-shadow(0 2px 8px rgba(94, 234, 212, 0.10));
+}
+
+.navbar__link[data-active] .navbar__icon {
+  color: var(--navbar-link-active);
+  filter: none;
+}
+
+.navbar__container[data-sidebar-state="mini"] .navbar__link span,
+.navbar__container[data-sidebar-state="mini"] .navbar__sectionTitle {
+  display: none;
+}
+.navbar__container[data-sidebar-state="mini"] .navbar__icon {
+  margin-right: 0;
+}
+
+.navbar__infoSection {
+  border-top: 1.5px solid var(--navbar-border);
+  padding: 18px 24px;
+  color: var(--navbar-footer-text);
+  min-height: 56px;
+  background: var(--navbar-footer-bg);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+  font-size: 0.97rem;
+  opacity: 0.93;
+}
+
+.navbar__infoText {
+  color: var(--navbar-footer-text);
+  font-size: 0.97rem;
+  opacity: 0.85;
+}
+
+.navbar__infoLink {
+  color: var(--navbar-accent);
+  font-weight: 700;
+  text-decoration: underline;
+  font-size: 1.01rem;
+  transition: color 0.18s;
+}
+.navbar__infoLink:hover {
+  color: var(--navbar-accent-dark);
+}
+
+@media (max-width: 900px) {
+  .navbar__container {
+    width: 100vw;
+    min-width: 0;
+    border-radius: 0 0 18px 18px;
+  }
+  .navbar__header, .navbar__infoSection, .navbar__link, .navbar__sectionTitle {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+}

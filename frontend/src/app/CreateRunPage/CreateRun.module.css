@@ -1,21 +1,66 @@
-.pageContainer {
+.createRunPage__pageContainer {
     padding: var(--mantine-spacing-lg);
     display: flex;
     flex-direction: column;
     gap: var(--mantine-spacing-xl);
 }
 
-.previewCard {
-    /* Base styles are good from Mantine Card */
+.createRunPage__mainTitle {
+    margin-bottom: var(--mantine-spacing-xl);
+    margin-top: var(--mantine-spacing-md);
+    /* font-size and weight are handled by Title order prop */
+}
+
+.createRunPage__subTitle {
+    margin-bottom: var(--mantine-spacing-md);
+    /* Specific instance also has margin-top, will add a modifier or separate class if needed,
+       for now, this covers the most common use of mb="md" for subtitles.
+       The second subtitle "Create New Run" also has mt="xl".
+       Let's make a modifier for that.
+    */
+}
+
+.createRunPage__subTitle_marginTopXl {
+    margin-bottom: var(--mantine-spacing-md);
+    margin-top: var(--mantine-spacing-xl);
+}
+
+
+.createRunPage__previewCard {
+    border: 1px solid var(--mantine-color-default-border); /* withBorder */
+    box-shadow: var(--mantine-shadow-sm);                 /* shadow="sm" */
+    padding: var(--mantine-spacing-lg);                  /* padding="lg" */
+    margin-bottom: var(--mantine-spacing-xl);            /* mb="xl" */
+    border-radius: var(--mantine-radius-md);             /* radius="md" */
     transition: box-shadow 0.2s ease-in-out, transform 0.2s ease-in-out;
 }
 
-.previewCard:hover {
+.createRunPage__previewCard:hover {
     box-shadow: var(--mantine-shadow-lg);
     transform: translateY(-2px);
 }
 
-.formSection {
-    /* Add any specific styling if needed, e.g., max-width or alignment */
-    max-width: 600px; /* Example: constrain width of the form card */
+.createRunPage__formSection {
+    max-width: 600px;
+}
+
+.createRunPage__loaderGroup {
+    display: flex; /* Group is flex by default */
+    justify-content: center;
+    margin-bottom: var(--mantine-spacing-lg);
+    align-items: center; /* Default for Group */
+}
+
+.createRunPage__errorAlert {
+    margin-bottom: var(--mantine-spacing-lg);
+}
+
+.createRunPage__infoText {
+    margin-bottom: var(--mantine-spacing-lg);
+}
+
+.createRunPage__snapshotText {
+    font-size: var(--mantine-font-size-sm);
+    /* color: var(--mantine-color-dimmed); This was removed in previous steps. */
+    /* margin-top: var(--mantine-spacing-xs); This was removed in previous steps. */
 }
