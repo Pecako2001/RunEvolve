@@ -32,3 +32,10 @@ def create_run_from_previous(db: Session, last_run: models.Run) -> models.Run:
         copied_from=last_run.id
     )
     return create_run(db=db, run=run_data)
+
+def get_runs(db: Session, skip: int = 0, limit: int = 100) -> list[models.Run]:
+    """
+    Retrieves a list of Run records from the database with pagination.
+    Orders by created_at descending.
+    """
+    return db.query(models.Run).order_by(desc(models.Run.created_at)).offset(skip).limit(limit).all()

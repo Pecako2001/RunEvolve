@@ -1,9 +1,16 @@
+import os
+from dotenv import load_dotenv
 from fastapi import FastAPI, Depends, HTTPException
 from sqlalchemy.orm import Session
 from fastapi.middleware.cors import CORSMiddleware
+from typing import List, Dict, Any
+from datetime import datetime
 
 from . import crud, models, schemas
 from .database import engine, get_db
+
+# Load environment variables from .env file
+load_dotenv()
 
 # Create database tables
 # This should ideally be handled by Alembic in a production application
@@ -47,3 +54,55 @@ def get_latest_run(db: Session = Depends(get_db)):
     if last_run is None:
         raise HTTPException(status_code=404, detail="No previous runs found.")
     return last_run
+
+@app.get("/runs", response_model=List[schemas.RunResponse])
+def read_runs(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+    """
+    Retrieve all runs with pagination.
+    """
+    runs = crud.get_runs(db, skip=skip, limit=limit)
+    return runs
+
+@app.get("/runs/stats", response_model=schemas.StatsResponse)
+def get_run_stats(db: Session = Depends(get_db)):
+    """
+    Retrieves statistics about runs, grouped by week, month, and year.
+    """
+    runs = crud.get_runs(db=db)
+    stats = {"weekly": {}, "monthly": {}, "yearly": {}}
+
+    for run in runs:
+        # Weekly stats
+        year_week = f"{run.created_at.isocalendar().year}-W{run.created_at.isocalendar().week:02d}"
+        if year_week not in stats["weekly"]:
+            stats["weekly"][year_week] = {"count": 0, "total_distance": 0.0}
+        stats["weekly"][year_week]["count"] += 1
+        stats["weekly"][year_week]["total_distance"] += run.distance if run.distance else 0.0
+
+        # Monthly stats
+        year_month = f"{run.created_at.year}-{run.created_at.month:02d}"
+        if year_month not in stats["monthly"]:
+            stats["monthly"][year_month] = {"count": 0, "total_distance": 0.0}
+        stats["monthly"][year_month]["count"] += 1
+        stats["monthly"][year_month]["total_distance"] += run.distance if run.distance else 0.0
+
+        # Yearly stats
+        year = str(run.created_at.year)
+        if year not in stats["yearly"]:
+            stats["yearly"][year] = {"count": 0, "total_distance": 0.0}
+        stats["yearly"][year]["count"] += 1
+        stats["yearly"][year]["total_distance"] += run.distance if run.distance else 0.0
+    
+    return stats
+
+@app.get("/strava/auth")
+async def strava_auth_placeholder():
+    return {"message": "Strava auth placeholder"}
+
+@app.post("/strava/webhook")
+async def strava_webhook_placeholder():
+    return {"message": "Strava webhook placeholder"}
+
+@app.get("/strava/fetch")
+async def strava_fetch_placeholder():
+    return {"message": "Strava fetch placeholder"}
