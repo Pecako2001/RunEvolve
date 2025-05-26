@@ -16,7 +16,7 @@ import {
   RingProgress,
   Center,
 } from '@mantine/core';
-import { IconAlertCircle, IconRun, IconChartBar, IconCalendarStats, IconClockHour4, IconHeartRate, IconGauge } from '@tabler/icons-react';
+import { IconAlertCircle, IconRun, IconChartBar, IconCalendarStats, IconClockHour4, IconHeartbeat, IconGauge } from '@tabler/icons-react';
 
 // Define interfaces for the data structures
 interface Run {
