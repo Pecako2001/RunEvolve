@@ -13,6 +13,7 @@ import {
   Group,
 } from '@mantine/core';
 import { IconAlertCircle, IconRun, IconChartBar, IconCalendarStats, IconClockHour4, IconHeartbeat, IconGauge } from '@tabler/icons-react';
+import globalStyles from '../styles/global.module.css';
 
 // Define interfaces for the data structures
 interface Run {
@@ -145,7 +146,7 @@ export default function Home() {
       <Stack className="content-stack">
         <Title order={2} className="page-title">Run Overview</Title>
         
-        <Card className="card-base">
+        <Card className={`card-base ${globalStyles.cardHover}`}>
           <Group className="card-header">
             <Text className="text-large">Current Run</Text>
             {loadingLastRun && <Loader size="sm" />}
@@ -178,7 +179,7 @@ export default function Home() {
           )}
         </Card>
         
-        <Paper className="card-base">
+        <Paper className={`card-base ${globalStyles.cardHover}`}>
           <Text className="text-dimmed">Statistics</Text>
           {loadingStats && <Loader size="sm" />}
           {errorStats && (
@@ -188,19 +189,20 @@ export default function Home() {
           )}
           {!loadingStats && !errorStats && stats && (
             <SimpleGrid cols={2} spacing="lg">
-              <Paper className="card-base">
+              {/* Applying cardHover to inner Paper elements as well for consistency */}
+              <Paper className={`card-base ${globalStyles.cardHover}`}>
                 <Text size="xl" fw={700}>{weeklyStats.total_distance.toFixed(2)} km</Text>
                 <Text className="text-dimmed">This Week</Text>
               </Paper>
-              <Paper className="card-base">
+              <Paper className={`card-base ${globalStyles.cardHover}`}>
                 <Text size="xl" fw={700}>{weeklyStats.count}</Text>
                 <Text className="text-dimmed">Runs This Week</Text>
               </Paper>
-              <Paper className="card-base">
+              <Paper className={`card-base ${globalStyles.cardHover}`}>
                 <Text size="xl" fw={700}>{totalRuns}</Text>
                 <Text className="text-dimmed">Total Runs (All Time)</Text>
               </Paper>
-              <Paper className="card-base">
+              <Paper className={`card-base ${globalStyles.cardHover}`}>
                 <Text size="xl" fw={700}>{totalDistanceAllTime.toFixed(2)} km</Text>
                 <Text className="text-dimmed">Total Distance (All Time)</Text>
               </Paper>

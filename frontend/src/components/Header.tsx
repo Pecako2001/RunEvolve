@@ -4,26 +4,15 @@ import { Group, Title, Burger, Box, ActionIcon } from '@mantine/core';
 import { IconMenu2, IconX } from '@tabler/icons-react';
 import { IconMoon } from '@tabler/icons-react';
 import { IconSun } from '@tabler/icons-react';
-import { useState, useEffect } from "react";
 
 interface AppHeaderProps {
   navbarOpened: boolean;
   toggleNavbar: () => void;
+  currentTheme: 'theme-dark' | 'theme-light';
+  onToggleTheme: () => void;
 }
 
-
-export function AppHeader({ navbarOpened, toggleNavbar }: AppHeaderProps) {
-  
-  const [theme, setTheme] = useState<'theme-dark' | 'theme-light'>(() => {
-    if (typeof window !== 'undefined') {
-      return document.body.classList.contains('theme-light') ? 'theme-light' : 'theme-dark';
-    }
-    return 'theme-dark';
-  });
-
-  const toggleTheme = () => {
-    setTheme((prev) => (prev === 'theme-dark' ? 'theme-light' : 'theme-dark'));
-  };
+export function AppHeader({ navbarOpened, toggleNavbar, currentTheme, onToggleTheme }: AppHeaderProps) {
   return (
     <Box className="header__group">
       <Group>
@@ -31,12 +20,12 @@ export function AppHeader({ navbarOpened, toggleNavbar }: AppHeaderProps) {
       </Group>
           <Group gap={0}>
             <ActionIcon
-              onClick={toggleTheme}
+              onClick={onToggleTheme}
               variant="subtle"
               size="lg"
               aria-label="Toggle color scheme"
             >
-              {theme === 'theme-dark' ? <IconSun size={20} /> : <IconMoon size={20} />}
+              {currentTheme === 'theme-dark' ? <IconSun size={20} /> : <IconMoon size={20} />}
             </ActionIcon>
             {toggleNavbar && (
               <ActionIcon

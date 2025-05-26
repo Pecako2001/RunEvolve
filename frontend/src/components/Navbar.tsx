@@ -59,21 +59,6 @@ export function AppNavbar({
 }: Props) {
   const [active, setActive] = useState("Home");
   const isMobile = useMediaQuery("(max-width: 768px)");
-  const [theme, setTheme] = useState<'theme-dark' | 'theme-light'>(() => {
-    if (typeof window !== 'undefined') {
-      return document.body.classList.contains('theme-light') ? 'theme-light' : 'theme-dark';
-    }
-    return 'theme-dark';
-  });
-
-  useEffect(() => {
-    document.body.classList.remove('theme-dark', 'theme-light');
-    document.body.classList.add(theme);
-  }, [theme]);
-
-  const toggleTheme = () => {
-    setTheme((prev) => (prev === 'theme-dark' ? 'theme-light' : 'theme-dark'));
-  };
 
   useEffect(() => {
     if (isMobile && onClose && mobileOpened === true) onClose();

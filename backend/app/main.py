@@ -8,6 +8,8 @@ from datetime import datetime
 
 from . import crud, models, schemas
 from .database import engine, get_db
+from .services.ai_model import predict_run_type # Import the prediction function
+from .models import RunStatus # Import RunStatus for setting planned runs
 
 # Load environment variables from .env file
 load_dotenv()
@@ -63,12 +65,72 @@ def read_runs(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     runs = crud.get_runs(db, skip=skip, limit=limit)
     return runs
 
+@app.get("/runs/planned", response_model=List[schemas.RunResponse])
+def read_planned_runs(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+    """
+    Retrieve all planned runs with pagination.
+    """
+    runs = crud.get_planned_runs(db, skip=skip, limit=limit)
+    return runs
+
+@app.post("/runs/predict", response_model=schemas.RunPredictionResponse)
+def predict_and_plan_run(
+    prediction_request: schemas.RunPredictionRequest, 
+    db: Session = Depends(get_db)
+):
+    # 1. Prepare features for the prediction model
+    features_for_prediction = {
+        "distance": prediction_request.distance,
+        "time": prediction_request.time,
+        "average_speed": prediction_request.average_speed,
+        "name": prediction_request.name
+    }
+    # Remove None values as predict_run_type's heuristic might not handle them well if not all are present
+    # and the model itself expects numerical inputs (or scaled Nones if handled that way).
+    # The current ai_model.py heuristic `assign_run_type_label` uses .get(key, 0) or 0, so Nones become 0.
+    # The ML model part expects numerical values.
+    # For simplicity, we'll pass them as-is and let predict_run_type handle it.
+    # If any required field for the model (distance, time, average_speed) is None, prediction might be less accurate or fall back to heuristic.
+
+    # 2. Get prediction from the AI model
+    predicted_type = predict_run_type(run_features=features_for_prediction)
+
+    # 3. Create a new "planned" run
+    planned_run_data = schemas.RunCreate(
+        name=prediction_request.name or f"{predicted_type} (AI Suggested)",
+        distance=prediction_request.distance,
+        time=prediction_request.time,
+        average_speed=prediction_request.average_speed,
+        status=RunStatus.PLANNED, # Set status to PLANNED
+        settings_snapshot={
+            "user_inputs": prediction_request.model_dump(),
+            "predicted_run_type": predicted_type,
+            "ai_model_version": "0.1.0" 
+        }
+    )
+    
+    db_planned_run = crud.create_run(db=db, run=planned_run_data)
+
+    # 4. Return the created planned run along with the prediction type
+    # Convert db_planned_run (models.Run) to schemas.Run, then add predicted_type for RunPredictionResponse
+    
+    # Use model_validate to convert SQLAlchemy model to Pydantic model
+    run_response_part = schemas.Run.model_validate(db_planned_run)
+    
+    # Construct the final response
+    final_response = schemas.RunPredictionResponse(
+        **run_response_part.model_dump(), # Spread fields from Run
+        predicted_run_type=predicted_type
+    )
+    
+    return final_response
+
 @app.get("/runs/stats", response_model=schemas.StatsResponse)
 def get_run_stats(db: Session = Depends(get_db)):
     """
-    Retrieves statistics about runs, grouped by week, month, and year.
+    Retrieves statistics about completed runs, grouped by week, month, and year.
     """
-    runs = crud.get_runs(db=db)
+    runs = crud.get_completed_runs(db=db) # Use get_completed_runs
     stats = {"weekly": {}, "monthly": {}, "yearly": {}}
 
     for run in runs:
