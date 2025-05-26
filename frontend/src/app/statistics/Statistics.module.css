@@ -1,0 +1,108 @@
+/* Container for the entire page */
+.statisticsPage__container {
+  padding: var(--mantine-spacing-md);
+}
+
+/* Stack used for the loading state */
+.statisticsPage__loadingStack {
+  height: 80vh; /* from style={{ height: '80vh' }} */
+  align-items: center;
+  justify-content: center;
+  display: flex; /* Stack is flex based */
+  flex-direction: column; /* Default for Stack */
+}
+
+/* Main title of the page */
+.statisticsPage__mainTitle {
+  margin-bottom: var(--mantine-spacing-xl); /* from mb="xl" or mb="lg" */
+}
+
+/* Stack for the main content area (charts and table) */
+.statisticsPage__contentStack {
+  gap: var(--mantine-spacing-xl); /* from gap="xl", was lg before, xl is used in main stack */
+}
+
+/* Paper component styling for charts */
+.statisticsPage__chartPaper {
+  padding: var(--mantine-spacing-md); /* from p="md" */
+  box-shadow: var(--mantine-shadow-md); /* from shadow="md" */
+  border-radius: var(--mantine-radius-md); /* from radius="md" */
+  border: 1px solid var(--mantine-color-default-border); /* from withBorder */
+}
+
+/* Paper component styling for the table */
+.statisticsPage__tablePaper {
+  padding: var(--mantine-spacing-md); /* from p="md" */
+  box-shadow: var(--mantine-shadow-md); /* from shadow="md" */
+  border-radius: var(--mantine-radius-md); /* from radius="md" */
+  border: 1px solid var(--mantine-color-default-border); /* from withBorder */
+  overflow-x: auto; /* To handle min-width on table */
+}
+
+/* Title within Paper components */
+.statisticsPage__paperTitle {
+  margin-bottom: var(--mantine-spacing-md); /* from mb="md" */
+  /* order={4} handles font size/weight */
+}
+
+/* Group holding charts */
+.statisticsPage__chartGroup {
+  min-height: 300px; /* from style={{ height: 300 }} - Mantine Group is flex */
+  width: 100%; 
+  display: flex;
+  justify-content: center; 
+  align-items: center;
+}
+
+/* Text for "Not enough data" message */
+.statisticsPage__noDataText {
+  text-align: center; 
+  color: var(--mantine-color-dimmed); 
+  margin-top: var(--mantine-spacing-md); /* from mt="md" (was lg before) */
+  height: 300px; /* from style */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+/* Table styling */
+.statisticsPage__runsTable {
+  min-width: 600px; /* from miw={600} */
+}
+
+.statisticsPage__runsTable th {
+  padding: var(--mantine-spacing-xs) var(--mantine-spacing-sm);
+}
+
+.statisticsPage__runsTable td {
+  padding: var(--mantine-spacing-xs) var(--mantine-spacing-sm);
+  border-bottom: 1px solid var(--mantine-color-gray-2);
+}
+
+.statisticsPage__runsTable_striped tbody tr:nth-of-type(odd) {
+  background-color: var(--mantine-color-gray-0);
+}
+
+.statisticsPage__runsTable_highlightOnHover tbody tr:hover {
+  background-color: var(--mantine-color-gray-1);
+}
+
+.statisticsPage__runsTable_withTableBorder {
+  border: 1px solid var(--mantine-color-gray-3);
+}
+
+.statisticsPage__runsTable_withTableBorder th,
+.statisticsPage__runsTable_withTableBorder td {
+  border-top: 1px solid var(--mantine-color-gray-3);
+}
+
+.statisticsPage__runsTable_withColumnBorders th,
+.statisticsPage__runsTable_withColumnBorders td {
+  border-left: 1px solid var(--mantine-color-gray-3);
+}
+
+.statisticsPage__runsTable_withColumnBorders th:first-child,
+.statisticsPage__runsTable_withColumnBorders td:first-child {
+  border-left: 0;
+}

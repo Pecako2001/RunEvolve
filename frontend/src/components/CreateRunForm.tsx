@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { Card, TextInput, Button, Notification, Stack, Text } from '@mantine/core';
 import axios from 'axios';
+import styles from './CreateRunForm.module.css';
 
 interface RunResponse {
   id: number;
@@ -54,7 +55,7 @@ export default function CreateRunForm() {
   };
 
   return (
-    <Card withBorder shadow="sm" padding="lg" radius="md">
+    <Card className={styles.createRunForm__card}>
       <Stack>
         <TextInput
           label="Run Name (Optional)"
@@ -63,7 +64,7 @@ export default function CreateRunForm() {
           onChange={(event) => setRunName(event.currentTarget.value)}
           disabled={isLoading}
         />
-        <Text size="xs" c="dimmed">
+        <Text className={styles.createRunForm__noteText}>
           Note: The run name is currently for local reference and not sent to the backend with this action.
           The new run will inherit its name from the previous run.
         </Text>
@@ -81,8 +82,7 @@ export default function CreateRunForm() {
         <Button
           onClick={handleSubmit}
           loading={isLoading}
-          fullWidth
-          mt="md"
+          className={styles.createRunForm__submitButton}
         >
           Create Run From Last
         </Button>

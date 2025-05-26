@@ -1,0 +1,86 @@
+/* frontend/src/app/profile/Profile.module.css */
+.profilePage__container {
+  padding: var(--mantine-spacing-md);
+}
+
+.profilePage__title {
+  margin-bottom: var(--mantine-spacing-xl);
+  text-align: center; /* Center align the main title */
+}
+
+/* General class for Paper components used as sections */
+.profilePage__sectionPaper {
+  padding: var(--mantine-spacing-lg);
+  margin-bottom: var(--mantine-spacing-xl);
+  border: 1px solid var(--mantine-color-default-border); /* Use default border for consistency */
+  box-shadow: var(--mantine-shadow-sm);
+  border-radius: var(--mantine-radius-md);
+}
+
+.profilePage__sectionHeader {
+  font-size: var(--mantine-font-size-xl);
+  font-weight: 600;
+  margin-bottom: var(--mantine-spacing-lg);
+}
+
+/* User Information Section */
+.profilePage__userInfo {
+  display: flex;
+  align-items: center;
+  gap: var(--mantine-spacing-lg); /* Increased gap for better visual separation */
+  margin-bottom: var(--mantine-spacing-md); /* Add some margin below user info before next element if any in same paper */
+}
+
+.profilePage__userName {
+    font-size: var(--mantine-font-size-xl);
+    font-weight: bold;
+}
+
+.profilePage__joinDate {
+    font-size: var(--mantine-font-size-sm);
+    color: var(--mantine-color-dimmed);
+}
+
+
+/* Strava Integration Section */
+.profilePage__stravaSection {
+  /* Uses profilePage__sectionPaper for common styles */
+}
+
+.profilePage__stravaStatusGroup {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* To space out title and badge/button */
+    gap: var(--mantine-spacing-md);
+}
+
+
+/* Run Summaries & Personal Bests Sections */
+.profilePage__summaryCard { /* For individual stat cards in SimpleGrid */
+  text-align: center;
+  padding: var(--mantine-spacing-sm);
+  /* border: 1px solid var(--mantine-color-gray-2); */ /* Optional: if cards need individual borders */
+  /* border-radius: var(--mantine-radius-sm); */
+}
+
+.profilePage__summaryValue {
+  font-size: var(--mantine-font-size-xl); /* Made slightly larger for emphasis */
+  font-weight: bold;
+  color: var(--runevolve-brand-primary-color); /* Using global variable */
+}
+
+.profilePage__summaryLabel {
+  font-size: var(--mantine-font-size-sm);
+  color: var(--mantine-color-dimmed);
+  margin-top: var(--mantine-spacing-xs);
+}
+
+.profilePage__pbItem {
+  font-size: var(--mantine-font-size-md);
+  padding: var(--mantine-spacing-xs) 0; /* Add some padding for list items */
+}
+
+.profilePage__pbLabel {
+    font-weight: 600;
+    color: var(--mantine-color-dark-2); /* Slightly more emphasis for PB labels */
+}

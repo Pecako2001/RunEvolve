@@ -14,6 +14,7 @@ import {
   Group,
   ScrollArea,
 } from '@mantine/core';
+import styles from './Statistics.module.css'; // Import CSS module
 import {
   ResponsiveContainer,
   LineChart,
@@ -127,9 +128,9 @@ export default function StatisticsPage() {
 
   if (loading) {
     return (
-      <Container fluid p="md">
-        <Stack align="center" justify="center" style={{ height: '80vh' }}>
-          <Loader size="xl" />
+      <Container fluid className={styles.statisticsPage__container}>
+        <Stack className={styles.statisticsPage__loadingStack}>
+          <Loader size="xl" /> {/* Mantine Loader size prop is fine */}
           <Text>Loading statistics...</Text>
         </Stack>
       </Container>
@@ -138,7 +139,7 @@ export default function StatisticsPage() {
 
   if (error) {
     return (
-      <Container fluid p="md">
+      <Container fluid className={styles.statisticsPage__container}>
         <Alert title="Error Fetching Run Data" color="red" icon={<IconAlertCircle />}>
           {error}
         </Alert>
@@ -148,8 +149,8 @@ export default function StatisticsPage() {
   
   if (runs.length === 0 && !loading && !error) { // Added !error condition here
     return (
-      <Container fluid p="md">
-        <Title order={2} mb="lg">Run Statistics</Title>
+      <Container fluid className={styles.statisticsPage__container}>
+        <Title order={2} className={styles.statisticsPage__mainTitle}>Run Statistics</Title>
         <Text>No run data available to display statistics. Try creating some runs first!</Text>
       </Container>
     );
@@ -167,16 +168,16 @@ export default function StatisticsPage() {
   ));
 
   return (
-    <Container fluid p="md">
-      <Stack gap="xl">
-        <Title order={2} mb="lg">Run Statistics</Title>
+    <Container fluid className={styles.statisticsPage__container}>
+      <Stack className={styles.statisticsPage__contentStack}>
+        <Title order={2} className={styles.statisticsPage__mainTitle}>Run Statistics</Title>
 
         <Grid>
           <Grid.Col span={{ base: 12, md: 6 }}>
-            <Paper shadow="md" p="md" radius="md" withBorder>
-              <Title order={4} mb="md">Average Speed per Month</Title>
+            <Paper className={styles.statisticsPage__chartPaper}>
+              <Title order={4} className={styles.statisticsPage__paperTitle}>Average Speed per Month</Title>
               {monthlyAvgSpeedData.length > 0 ? (
-                <Group justify="center" style={{ height: 300 }}>
+                <Group className={styles.statisticsPage__chartGroup}>
                   <ResponsiveContainer width="100%" height="100%">
                     <LineChart data={monthlyAvgSpeedData}>
                       <CartesianGrid strokeDasharray="3 3" />
@@ -195,10 +196,10 @@ export default function StatisticsPage() {
           </Grid.Col>
 
           <Grid.Col span={{ base: 12, md: 6 }}>
-            <Paper shadow="md" p="md" radius="md" withBorder>
-              <Title order={4} mb="md">Total Distance per Year</Title>
+            <Paper className={styles.statisticsPage__chartPaper}>
+              <Title order={4} className={styles.statisticsPage__paperTitle}>Total Distance per Year</Title>
               {yearlyDistanceData.length > 0 ? (
-               <Group justify="center" style={{ height: 300 }}>
+               <Group className={styles.statisticsPage__chartGroup}>
                 <ResponsiveContainer width="100%" height="100%">
                   <BarChart data={yearlyDistanceData}>
                     <CartesianGrid strokeDasharray="3 3" />
@@ -211,7 +212,7 @@ export default function StatisticsPage() {
                 </ResponsiveContainer>
               </Group>
               ) : (
-                <Text ta="center" c="dimmed" mt="md" style={{ height: 300, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <Text className={styles.statisticsPage__noDataText}>
                   Not enough data for yearly total distance chart.
                 </Text>
               )}
@@ -219,10 +220,13 @@ export default function StatisticsPage() {
           </Grid.Col>
         </Grid>
         
-        <Paper shadow="md" p="md" radius="md" withBorder>
-          <Title order={4} mb="md">All Runs</Title>
+        <Paper className={styles.statisticsPage__tablePaper}>
+          <Title order={4} className={styles.statisticsPage__paperTitle}>All Runs</Title>
           <ScrollArea>
-            <Table striped highlightOnHover withTableBorder withColumnBorders miw={600}>
+            <Table 
+              className={`${styles.statisticsPage__runsTable} ${styles.statisticsPage__runsTable_striped} ${styles.statisticsPage__runsTable_highlightOnHover} ${styles.statisticsPage__runsTable_withTableBorder} ${styles.statisticsPage__runsTable_withColumnBorders}`}
+              miw={600}
+            >
               <Table.Thead>
                 <Table.Tr>
                   <Table.Th>Name</Table.Th>

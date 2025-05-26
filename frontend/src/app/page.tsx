@@ -17,6 +17,7 @@ import {
   Center,
 } from '@mantine/core';
 import { IconAlertCircle, IconRun, IconChartBar, IconCalendarStats, IconClockHour4, IconHeartbeat, IconGauge } from '@tabler/icons-react';
+import styles from './Home.module.css';
 
 // Define interfaces for the data structures
 interface Run {
@@ -146,14 +147,14 @@ export default function Home() {
   // For now, we'll display average speed from the last run if available.
 
   return (
-    <Container fluid p="md">
-      <Stack gap="lg">
-        <Title order={2} mb="lg">Dashboard</Title>
+    <Container fluid className={styles.home__container}>
+      <Stack className={styles.home__mainStack}>
+        <Title order={2} className={styles.home__pageTitle}>Dashboard</Title>
 
         <Grid>
           <Grid.Col span={{ base: 12, md: 6 }}>
-            <Card shadow="sm" padding="lg" radius="md" withBorder>
-              <Group justify="space-between" mb="xs">
+            <Card className={styles.home__infoCard}>
+              <Group className={styles.home__cardHeaderGroup}>
                 <Title order={3}>Last Run</Title>
                 {loadingLastRun && <Loader size="sm" />}
               </Group>
@@ -164,8 +165,8 @@ export default function Home() {
               )}
               {!loadingLastRun && !errorLastRun && lastRun && (
                 <Stack>
-                  <Text size="lg" fw={700}>{lastRun.name || 'Unnamed Run'}</Text>
-                  <Text c="dimmed">Date: {new Date(lastRun.created_at).toLocaleDateString()}</Text>
+                  <Text className={styles.home__runNameText}>{lastRun.name || 'Unnamed Run'}</Text>
+                  <Text className={styles.home__dimmedText}>Date: {new Date(lastRun.created_at).toLocaleDateString()}</Text>
                   <Group>
                     <IconRun size={20} /> <Text>Distance: {lastRun.distance?.toFixed(2) || 'N/A'} km</Text>
                   </Group>
@@ -181,14 +182,14 @@ export default function Home() {
                 </Stack>
               )}
               {!loadingLastRun && !errorLastRun && !lastRun && (
-                <Text mt="md" ta="center" c="dimmed">No runs recorded yet. Go for your first run!</Text>
+                <Text className={styles.home__emptyStateText}>No runs recorded yet. Go for your first run!</Text>
               )}
             </Card>
           </Grid.Col>
 
           <Grid.Col span={{ base: 12, md: 6 }}>
-            <Card shadow="sm" padding="lg" radius="md" withBorder>
-              <Group justify="space-between" mb="xs">
+            <Card className={styles.home__infoCard}>
+              <Group className={styles.home__cardHeaderGroup}>
                 <Title order={3}>Activity Summary</Title>
                  {loadingStats && <Loader size="sm" />}
               </Group>
@@ -199,26 +200,26 @@ export default function Home() {
               )}
               {!loadingStats && !errorStats && stats && (
                 <SimpleGrid cols={2} spacing="lg">
-                  <Paper p="md" shadow="xs" withBorder>
+                  <Paper className={styles.home__statPaper}>
                     <Text size="xl" fw={700}>{weeklyStats.total_distance.toFixed(2)} km</Text>
-                    <Text c="dimmed">This Week</Text>
+                    <Text className={styles.home__dimmedText}>This Week</Text>
                   </Paper>
-                  <Paper p="md" shadow="xs" withBorder>
+                  <Paper className={styles.home__statPaper}>
                     <Text size="xl" fw={700}>{weeklyStats.count}</Text>
-                    <Text c="dimmed">Runs This Week</Text>
+                    <Text className={styles.home__dimmedText}>Runs This Week</Text>
                   </Paper>
-                  <Paper p="md" shadow="xs" withBorder>
+                  <Paper className={styles.home__statPaper}>
                     <Text size="xl" fw={700}>{totalRuns}</Text>
-                    <Text c="dimmed">Total Runs (All Time)</Text>
+                    <Text className={styles.home__dimmedText}>Total Runs (All Time)</Text>
                   </Paper>
-                   <Paper p="md" shadow="xs" withBorder>
+                   <Paper className={styles.home__statPaper}>
                     <Text size="xl" fw={700}>{totalDistanceAllTime.toFixed(2)} km</Text>
-                    <Text c="dimmed">Total Distance (All Time)</Text>
+                    <Text className={styles.home__dimmedText}>Total Distance (All Time)</Text>
                   </Paper>
                 </SimpleGrid>
               )}
               {!loadingStats && !errorStats && !stats && (
-                 <Text mt="md" ta="center" c="dimmed">No statistics available yet.</Text>
+                 <Text className={styles.home__emptyStateText}>No statistics available yet.</Text>
               )}
             </Card>
           </Grid.Col>
@@ -226,7 +227,7 @@ export default function Home() {
         
         {/* Placeholder for future charts or more detailed stats */}
         {/* 
-        <Card shadow="sm" padding="lg" radius="md" withBorder>
+        <Card className={styles.home__infoCard}>
           <Title order={4}>Weekly Progress (Example)</Title>
           <Center>
             <RingProgress

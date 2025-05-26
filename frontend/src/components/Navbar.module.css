@@ -1,0 +1,31 @@
+/* Styles for the main navigation links wrapper */
+.navbar__linksWrapper {
+  flex-grow: 1; /* Allow this section to grow */
+  /* overflow-y: auto; /* Add if links can exceed available space */
+}
+
+/* New overall container for the navbar content */
+.navbar__container {
+  display: flex;
+  flex-direction: column;
+  height: 100%; /* Ensure navbar takes full height */
+}
+
+/* New section for app information */
+.navbar__infoSection {
+  padding-top: var(--mantine-spacing-md);
+  margin-top: var(--mantine-spacing-md);
+  border-top: 1px solid var(--mantine-color-gray-3); /* Or use Mantine's Divider component */
+}
+
+/* Styling for text within the info section */
+.navbar__infoText {
+  font-size: var(--mantine-font-size-xs);
+  color: var(--mantine-color-dimmed);
+}
+
+/* Styling for the link within the info section */
+.navbar__infoLink {
+  font-size: var(--mantine-font-size-xs);
+  /* Anchor color is typically handled by Mantine theme, or override here if needed */
+}

@@ -1,6 +1,7 @@
 'use client';
 
 import { Group, Title, Burger } from '@mantine/core';
+import styles from './Header.module.css';
 
 interface AppHeaderProps {
   navbarOpened: boolean;

@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { Container, Title, Text, Loader, Alert, Card, Stack, Group } from '@mantine/core';
 import axios from 'axios';
 import CreateRunForm from '@/components/CreateRunForm'; // Assuming alias @ is setup for src
-import classes from './CreateRun.module.css'; // Import CSS module
+import styles from './CreateRun.module.css'; // Import CSS module
 
 // 1. Define Run Interface
 interface Run {
@@ -47,39 +47,39 @@ export default function CreateRunPage() {
   }, []);
 
   return (
-    <Container className={classes.pageContainer}>
-      <Title order={1} mb="xl" mt="md">
+    <Container className={styles.createRunPage__pageContainer}>
+      <Title order={1} className={styles.createRunPage__mainTitle}>
         Create New Run
       </Title>
 
       {/* 4. Display Last Run Data (Preview) */}
-      <Title order={2} size="h3" mb="md">Preview Previous Run</Title>
+      <Title order={2} size="h3" className={styles.createRunPage__subTitle}>Preview Previous Run</Title>
       {isLoadingLastRun && (
-        <Group justify="center" mb="lg">
+        <Group className={styles.createRunPage__loaderGroup}>
           <Loader />
           <Text>Loading previous run details...</Text>
         </Group>
       )}
       
       {!isLoadingLastRun && fetchError && !lastRun && ( // Show error only if no data to display from a previous successful fetch
-        <Alert title="Fetch Error" color="red" mb="lg" withCloseButton onClose={() => setFetchError(null)}>
+        <Alert title="Fetch Error" color="red" withCloseButton onClose={() => setFetchError(null)} className={styles.createRunPage__errorAlert}>
           {fetchError}
         </Alert>
       )}
 
       {!isLoadingLastRun && !fetchError && !lastRun && (
-         <Text mb="lg">No previous run data available to preview.</Text>
+         <Text className={styles.createRunPage__infoText}>No previous run data available to preview.</Text>
       )}
 
       {lastRun && (
-        <Card withBorder shadow="sm" padding="lg" mb="xl" radius="md" className={classes.previewCard}>
+        <Card className={styles.createRunPage__previewCard}>
           <Stack>
             <Title order={3} size="h4">Previous Run Details</Title>
             <Text><strong>ID:</strong> {lastRun.id}</Text>
             <Text><strong>Name:</strong> {lastRun.name || 'N/A'}</Text>
             <Text><strong>Created At:</strong> {new Date(lastRun.created_at).toLocaleString()}</Text>
             {lastRun.settings_snapshot && (
-              <Text size="sm">
+              <Text className={styles.createRunPage__snapshotText}>
                 <strong>Settings Snapshot:</strong> <pre>{JSON.stringify(lastRun.settings_snapshot, null, 2)}</pre>
               </Text>
             )}
@@ -91,8 +91,8 @@ export default function CreateRunPage() {
       )}
       
       {/* Render CreateRunForm */}
-      <Title order={2} size="h3" mb="md" mt="xl">Create New Run</Title>
-      <div className={classes.formSection}>
+      <Title order={2} size="h3" className={`${styles.createRunPage__subTitle} ${styles.createRunPage__subTitle_marginTopXl}`}>Create New Run</Title>
+      <div className={styles.createRunPage__formSection}>
         <CreateRunForm />
       </div>
     </Container>

@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import '@mantine/core/styles.css';
+import globalStyles from '../styles/global.module.css'; // Import global CSS module
 import { MantineProvider, ColorSchemeScript, AppShell, Burger } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { AppHeader } from '../components/Header'; // Adjust path if necessary

@@ -1,0 +1,17 @@
+/* frontend/src/styles/global.module.css */
+:root {
+  --runevolve-brand-primary-color: #1971c2; /* Example Mantine blue */
+  --runevolve-brand-secondary-color: #f08c00; /* Example Mantine orange */
+  --runevolve-global-border-radius: var(--mantine-radius-md);
+}
+
+.appContainer {
+  /* Example: if you wanted a global class for the main content area within AppShell.Main */
+  /* For now, this can be empty or have minimal styling. */
+  /* Mantine's AppShell.Main already provides good structure. */
+}
+
+.textEmphasis {
+  font-weight: bold;
+  color: var(--runevolve-brand-primary-color);
+}
