@@ -11,6 +11,8 @@ from .database import engine, get_db
 from .services.ai_model import predict_run_type # Import the prediction function
 from .models import RunStatus # Import RunStatus for setting planned runs
 
+from .routers import network
+
 # Load environment variables from .env file
 load_dotenv()
 
@@ -168,3 +170,5 @@ async def strava_webhook_placeholder():
 @app.get("/strava/fetch")
 async def strava_fetch_placeholder():
     return {"message": "Strava fetch placeholder"}
+
+app.include_router(network.router)

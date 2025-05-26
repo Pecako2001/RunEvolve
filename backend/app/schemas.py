@@ -1,33 +1,29 @@
 from pydantic import BaseModel
 from datetime import datetime
 from typing import Optional, Dict, Any
-from .models import RunStatus # Import the enum
+from .models import RunStatus
 
 class RunBase(BaseModel):
     name: Optional[str] = None
     settings_snapshot: Optional[Dict[Any, Any]] = None
     distance: Optional[float] = None
-    time: Optional[int] = None # Assuming in seconds
-    average_speed: Optional[float] = None
+    time: Optional[int] = None  # in seconds
+    average_speed: Optional[float] = None  # km/h
     heart_rate: Optional[int] = None
-    status: Optional[RunStatus] = RunStatus.COMPLETED # Default to completed
+    status: Optional[RunStatus] = RunStatus.COMPLETED
 
 class RunCreate(RunBase):
     copied_from: Optional[int] = None
-    # status will be inherited from RunBase, default can be overridden on creation
 
-class Run(RunBase): # This is effectively RunResponse
+class Run(RunBase):
     id: int
     created_at: datetime
     copied_from: Optional[int] = None
-    status: RunStatus # Ensure status is present in the response
+    status: RunStatus
 
     class Config:
         from_attributes = True
 
-# RunResponse can be an alias or removed if Run is used directly for responses.
-# For clarity, if Run is the main response model, RunResponse might be redundant.
-# Let's keep RunResponse as an alias for now, as it's used in main.py.
 class RunResponse(Run):
     pass
 
@@ -36,12 +32,20 @@ class StatsResponse(BaseModel):
     monthly: Dict[str, Dict[str, Any]] = {}
     yearly: Dict[str, Dict[str, Any]] = {}
 
-# New Schemas for AI Prediction Endpoint
 class RunPredictionRequest(BaseModel):
+    name: Optional[str] = "AI Suggested Run"
     distance: Optional[float] = None
-    time: Optional[int] = None # in seconds
-    average_speed: Optional[float] = None # km/h
-    name: Optional[str] = "AI Suggested Run" 
+    time: Optional[int] = None
+    average_speed: Optional[float] = None
 
-class RunPredictionResponse(RunResponse): # Inherits from RunResponse (which inherits from Run)
+class RunPredictionResponse(RunResponse):
     predicted_run_type: str
+    training_plan: Dict[str, Any]
+
+class RunPlanRequest(BaseModel):
+    run_type: str  # “Interval”, “Tempo Run”, “Long Run”, “Easy/Recovery Run”
+    distance: Optional[float] = None  # Used for long/easy runs
+
+class RunPlanResponse(BaseModel):
+    run_type: str
+    training_plan: Dict[str, Any]
