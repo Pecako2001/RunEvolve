@@ -24,4 +24,4 @@ ENV PORT 8000
 # Run uvicorn when the container launches
 # The command should refer to the FastAPI app instance in your main.py
 # Assuming your main FastAPI app instance is named 'app' in 'app.main'
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
