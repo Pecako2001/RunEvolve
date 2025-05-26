@@ -3,6 +3,41 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --navbar-bg: linear-gradient(135deg, #232526 0%, #414345 100%);
+  --navbar-accent: #5eead4;
+  --navbar-accent-dark: #2dd4bf;
+  --navbar-link: #e0e7ef;
+  --navbar-link-hover: #fff;
+  --navbar-link-active-bg: #5eead4;
+  --navbar-link-active: #232526;
+  --navbar-section: #a5b4fc;
+  --navbar-border: rgba(94, 234, 212, 0.15);
+  --navbar-footer-bg: #232526;
+  --navbar-footer-text: #a5b4fc;
+  --navbar-shadow: 0 2px 24px 0 rgba(94, 234, 212, 0.08);
+  --navbar-mini-width: 68px;
+  --navbar-full-width: 260px;
+  
+  /* Spacing */
+  --spacing-xs: var(--mantine-spacing-xs);
+  --spacing-sm: var(--mantine-spacing-sm);
+  --spacing-md: var(--mantine-spacing-md);
+  --spacing-lg: var(--mantine-spacing-lg);
+  --spacing-xl: var(--mantine-spacing-xl);
+  
+  /* Shadows */
+  --shadow-sm: var(--mantine-shadow-sm);
+  --shadow-md: var(--mantine-shadow-md);
+  --shadow-lg: var(--mantine-shadow-lg);
+  
+  /* Border Radius */
+  --radius-sm: var(--mantine-radius-sm);
+  --radius-md: var(--mantine-radius-md);
+  --radius-lg: var(--mantine-radius-lg);
+  
+  /* Colors */
+  --color-dimmed: var(--mantine-color-dimmed);
+  --color-border: var(--mantine-color-default-border);
 }
 
 @theme inline {
@@ -23,4 +58,162 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+body.theme-light {
+  --navbar-bg: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  --navbar-accent: #0ea5e9;
+  --navbar-accent-dark: #0369a1;
+  --navbar-link: #232526;
+  --navbar-link-hover: #0ea5e9;
+  --navbar-link-active-bg: #bae6fd;
+  --navbar-link-active: #0369a1;
+  --navbar-section: #2563eb;
+  --navbar-border: rgba(14, 165, 233, 0.15);
+  --navbar-footer-bg: #e2e8f0;
+  --navbar-footer-text: #2563eb;
+  
+  .card-base {
+    background: #ffffff;
+    border-color: #e2e8f0;
+  }
+  
+  .text-dimmed {
+    color: #64748b;
+  }
+}
+
+body.theme-dark {
+  /* Use the original dark values */
+  
+  .card-base {
+    background: #1a1b1e;
+    border-color: #373a40;
+  }
+  
+  .text-dimmed {
+    color: #909296;
+  }
+}
+
+/* --- CreateRunForm styles --- */
+.createRunForm__card {
+  border: 1px solid var(--navbar-border);
+  box-shadow: var(--navbar-shadow);
+  padding: var(--mantine-spacing-lg);
+  border-radius: var(--mantine-radius-md);
+  background: var(--background);
+  color: var(--foreground);
+}
+
+.createRunForm__noteText {
+  font-size: var(--mantine-font-size-xs);
+  color: var(--navbar-link);
+}
+
+.createRunForm__submitButton {
+  width: 100%;
+  margin-top: var(--mantine-spacing-md);
+  background: var(--navbar-accent);
+  color: var(--navbar-link-active);
+  border: none;
+  border-radius: var(--mantine-radius-md);
+  padding: var(--mantine-spacing-sm);
+  cursor: pointer;
+  transition: background 0.18s;
+}
+
+.createRunForm__submitButton:hover {
+  background: var(--navbar-accent-dark);
+}
+
+/* --- Header styles --- */
+.header__group {
+  height: 100%;
+  padding-left: var(--mantine-spacing-md);
+  padding-right: var(--mantine-spacing-md);
+  background: var(--navbar-bg);
+  color: var(--navbar-link);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* --- End CreateRunForm and Header styles --- */
+
+/* Layout Containers */
+.page-container {
+  padding: var(--spacing-md);
+  max-width: 100%;
+  width: 100%;
+}
+
+.content-stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
+/* Cards and Papers */
+.card-base {
+  box-shadow: var(--shadow-sm);
+  padding: var(--spacing-lg);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  background: var(--background);
+  color: var(--foreground);
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--spacing-xs);
+  width: 100%;
+}
+
+/* Typography */
+.page-title {
+  margin-bottom: var(--spacing-lg);
+  font-weight: 700;
+}
+
+.text-dimmed {
+  color: var(--color-dimmed);
+}
+
+.text-centered {
+  text-align: center;
+}
+
+.text-large {
+  font-size: var(--mantine-font-size-lg);
+  font-weight: 700;
+}
+
+/* Empty States */
+.empty-state {
+  margin-top: var(--spacing-md);
+  text-align: center;
+  color: var(--color-dimmed);
+}
+
+/* Form Elements */
+.form-section {
+  margin-bottom: var(--spacing-lg);
+}
+
+.form-group {
+  margin-bottom: var(--spacing-md);
+}
+
+/* Responsive Utilities */
+@media (max-width: 768px) {
+  .page-container {
+    padding: var(--spacing-sm);
+  }
+  
+  .card-base {
+    padding: var(--spacing-md);
+  }
 }

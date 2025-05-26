@@ -4,8 +4,8 @@ from datetime import datetime, timedelta
 from sqlalchemy.orm import Session
 
 # Use relative imports for running as a module within the 'app' package
-from .models import Run, Base
-from .database import SessionLocal, engine
+from models import Run, Base
+from database import SessionLocal, engine
 
 
 RUN_NAMES = ["Morning Run", "Evening Jog", "Lunch Break Run", "Weekend Long Run", "Trail Adventure", "Speed Work"]

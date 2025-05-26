@@ -1,64 +1,43 @@
 'use client'; // Required for useDisclosure and other client-side hooks
 
-import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
 import '@mantine/core/styles.css';
-import globalStyles from '../styles/global.module.css'; // Import global CSS module
-import { MantineProvider, ColorSchemeScript, AppShell, Burger } from '@mantine/core';
-import { useDisclosure } from '@mantine/hooks';
-import { AppHeader } from '../components/Header'; // Adjust path if necessary
-import { AppNavbar } from '../components/Navbar'; // Adjust path if necessary
+import '../styles/global.module.css';
+import './globals.css';
+import { MantineProvider, createTheme, ActionIcon, Loader } from '@mantine/core';
+import Providers from './providers';
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
+export const theme = createTheme({
+  primaryColor: 'indigo',
+  defaultRadius: 'md',
+  focusRing: 'auto',
+  fontFamily: 'Open Sans, sans-serif',
+  headings: { fontFamily: 'Open Sans, sans-serif' },
+  components: {
+    ActionIcon: ActionIcon.extend({
+      defaultProps: {
+        variant: 'subtle',
+      },
+    }),
+    Loader: Loader.extend({
+      defaultProps: {
+        type: 'bars',
+      },
+    }),
+  },
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
-// export const metadata: Metadata = { // Metadata should not be exported from client component
-//   title: "Run Tracker App",
-//   description: "Track your runs efficiently",
-// };
-
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
-  const [opened, { toggle }] = useDisclosure();
-
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <head>
-        <ColorSchemeScript />
-        {/* It's generally recommended to put metadata in a server component or pages/_document.js if using older Next.js */}
-        <title>Run Tracker App</title>
-        <meta name="description" content="Track your runs efficiently" />
+        <title>Run Evolve</title>
+        <link rel="icon" href="/Icon.png" />
       </head>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        <MantineProvider>
-          <AppShell
-            header={{ height: 60 }}
-            navbar={{ width: 300, breakpoint: 'sm', collapsed: { mobile: !opened, desktop: false } }}
-            padding="md"
-          >
-            <AppShell.Header>
-              <AppHeader navbarOpened={opened} toggleNavbar={toggle} />
-            </AppShell.Header>
-
-            <AppShell.Navbar p="md">
-              <AppNavbar _onClose={toggle} />
-            </AppShell.Navbar>
-
-            <AppShell.Main>{children}</AppShell.Main>
-          </AppShell>
+      <body>
+        <MantineProvider theme={theme}>
+          <Providers>
+            {children}
+          </Providers>
         </MantineProvider>
       </body>
     </html>

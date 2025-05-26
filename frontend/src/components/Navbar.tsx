@@ -1,42 +1,152 @@
 'use client';
 
-import { NavLink, Box, Text, Anchor, Stack, Divider } from '@mantine/core';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { useState, useEffect } from "react";
+import Link from "next/link";
+import {
+  ScrollArea,
+  Group,
+  Text,
+  Divider,
+  ActionIcon,
+  Box,
+  Tooltip,
+  Stack,
+  Anchor,
+} from "@mantine/core";
+import { useMediaQuery } from "@mantine/hooks";
+import {
+  IconHome,
+  IconInfoCircle,
+  IconChecklist,
+  IconX,
+  IconChartDots,
+  IconMenu2,
+  IconSun,
+  IconMoon,
+} from "@tabler/icons-react";
 import styles from './Navbar.module.css';
 
-interface NavbarLink {
-  href: string;
-  label: string;
-}
-
-const mainLinks: NavbarLink[] = [
-  { href: '/', label: 'Home' },
-  { href: '/statistics', label: 'Statistics' },
-  { href: '/CreateRunPage', label: 'Create Run' }, // Assuming this is the correct path
+const navSections = [
+  {
+    title: "Main",
+    links: [
+      { href: "/", label: "Home", icon: IconHome },
+      { href: "/statistics", label: "Statistics", icon: IconChartDots },
+      { href: "/CreateRunPage", label: "Create Run", icon: IconChecklist },
+    ],
+  },
+  {
+    title: "Other",
+    links: [
+      { href: "/info", label: "Project Info", icon: IconInfoCircle },
+    ],
+  },
 ];
 
-export function AppNavbar({_onClose}: { _onClose?: () => void }) { // _onClose for potential mobile use
-  const pathname = usePathname();
+type SidebarState = "full" | "mini";
+type Props = {
+  sidebarState?: SidebarState;
+  onSidebarStateChange?: () => void;
+  onClose?: () => void;
+  mobileOpened?: boolean;
+};
 
-  const links = mainLinks.map((link) => (
-    <NavLink
-      key={link.label}
-      href={link.href}
-      label={link.label}
-      component={Link}
-      active={pathname === link.href}
-      onClick={_onClose} // Close navbar on link click (mobile)
-    />
-  ));
+export function AppNavbar({
+  sidebarState = "full",
+  onSidebarStateChange,
+  onClose,
+  mobileOpened,
+}: Props) {
+  const [active, setActive] = useState("Home");
+  const isMobile = useMediaQuery("(max-width: 768px)");
+  const [theme, setTheme] = useState<'theme-dark' | 'theme-light'>(() => {
+    if (typeof window !== 'undefined') {
+      return document.body.classList.contains('theme-light') ? 'theme-light' : 'theme-dark';
+    }
+    return 'theme-dark';
+  });
+
+  useEffect(() => {
+    document.body.classList.remove('theme-dark', 'theme-light');
+    document.body.classList.add(theme);
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme((prev) => (prev === 'theme-dark' ? 'theme-light' : 'theme-dark'));
+  };
+
+  useEffect(() => {
+    if (isMobile && onClose && mobileOpened === true) onClose();
+    // eslint-disable-next-line
+  }, [active]);
 
   return (
-    <Box className={styles.navbar__container}>
-      <div className={styles.navbar__linksWrapper}>
-        {links}
-      </div>
-      {/* You can use a Divider component here if preferred over border-top in CSS */}
-      {/* <Divider my="sm" /> */}
+    <Box className={styles.navbar__container} data-sidebar-state={sidebarState}>
+      {/* HEADER */}
+      <Box className={styles.navbar__header}>
+        <Group justify="space-between" align="center">
+          <Group gap="xs">
+            <img src="/Icon.png" alt="Logo" width={32} height={32} />
+            {sidebarState === "full" && (
+              <Text fw={700} size="lg">
+                Run Evolve
+              </Text>
+            )}
+          </Group>
+        </Group>
+      </Box>
+
+      <Divider />
+
+      {/* LINKS WITH SECTION TITLES */}
+      <ScrollArea className={styles.navbar__linksWrapper}>
+        <Box className={styles.navbar__linksInner} data-sidebar-state={sidebarState}>
+          {navSections.map((section) => (
+            <Box key={section.title} mb={sidebarState === "mini" ? 0 : "md"}>
+              {sidebarState !== "mini" && (
+                <Text
+                  tt="uppercase"
+                  size="xs"
+                  pl="md"
+                  fw={500}
+                  mb="sm"
+                  className={styles.navbar__sectionTitle}
+                >
+                  {section.title}
+                </Text>
+              )}
+              {section.links.map((item) =>
+                sidebarState === "mini" ? (
+                  <Tooltip label={item.label} position="right" key={item.label}>
+                    <Link href={item.href} passHref legacyBehavior>
+                      <a
+                        className={styles.navbar__link}
+                        data-active={active === item.label ? "" : undefined}
+                        onClick={() => setActive(item.label)}
+                      >
+                        <item.icon className={styles.navbar__icon} stroke={1.5} />
+                      </a>
+                    </Link>
+                  </Tooltip>
+                ) : (
+                  <Link href={item.href} passHref legacyBehavior key={item.label}>
+                    <a
+                      className={styles.navbar__link}
+                      data-active={active === item.label ? "" : undefined}
+                      onClick={() => setActive(item.label)}
+                    >
+                      <item.icon className={styles.navbar__icon} stroke={1.5} />
+                      <span>{item.label}</span>
+                    </a>
+                  </Link>
+                )
+              )}
+            </Box>
+          ))}
+        </Box>
+      </ScrollArea>
+
+      {/* FOOTER / INFO SECTION */}
       <Box className={styles.navbar__infoSection}>
         <Stack gap="xs">
           <Text className={styles.navbar__infoText}>Version: 1.0.0</Text>
