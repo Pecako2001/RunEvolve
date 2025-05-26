@@ -1,0 +1,21 @@
+.pageContainer {
+    padding: var(--mantine-spacing-lg);
+    display: flex;
+    flex-direction: column;
+    gap: var(--mantine-spacing-xl);
+}
+
+.previewCard {
+    /* Base styles are good from Mantine Card */
+    transition: box-shadow 0.2s ease-in-out, transform 0.2s ease-in-out;
+}
+
+.previewCard:hover {
+    box-shadow: var(--mantine-shadow-lg);
+    transform: translateY(-2px);
+}
+
+.formSection {
+    /* Add any specific styling if needed, e.g., max-width or alignment */
+    max-width: 600px; /* Example: constrain width of the form card */
+}
