@@ -44,6 +44,7 @@ const IconGauge = dynamic(() =>
   { ssr: false }
 );
 import globalStyles from '../styles/global.module.css';
+import HeartRateZonesCard from '../components/HeartRateZonesCard';
 
 // Define interfaces for the data structures
 interface Run {
@@ -259,6 +260,8 @@ export default function Home() {
             <Text className="empty-state">No statistics available yet.</Text>
           )}
         </Paper>
+
+        <HeartRateZonesCard />
         
         {/* Placeholder for future charts or more detailed stats */}
         {/* 
