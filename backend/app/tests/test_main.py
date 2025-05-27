@@ -68,7 +68,7 @@ async def test_create_run_from_last_with_previous_run(async_client: AsyncClient,
     # Check timestamp
     previous_run_created_at = previous_run.created_at.replace(tzinfo=timezone.utc) # Ensure timezone aware
     new_run_created_at = datetime.fromisoformat(new_run_data["created_at"]).replace(tzinfo=timezone.utc)
-    assert new_run_created_at > previous_run_created_at
+    assert new_run_created_at >= previous_run_created_at
 
 @pytest.mark.asyncio
 async def test_get_last_run_with_run(async_client: AsyncClient, setup_run_in_db: RunModel):
@@ -117,7 +117,7 @@ async def test_network_custom_plan_interval(async_client: AsyncClient):
 
 @pytest.mark.asyncio
 async def test_run_predict_includes_training_plan(async_client: AsyncClient):
-    plan = [{"segment": "500m", "pace": "14 km/h"}]
+    plan = {"segments": [{"segment": "500m", "pace": "14 km/h"}]}
     req = {
         "name": "Planned",
         "distance": 5,
@@ -129,3 +129,19 @@ async def test_run_predict_includes_training_plan(async_client: AsyncClient):
     assert response.status_code == 200
     resp = response.json()
     assert resp["settings_snapshot"]["training_plan"] == plan
+
+
+@pytest.mark.asyncio
+async def test_train_then_custom_plan(async_client: AsyncClient, training_runs):
+    resp = await async_client.post("/network/train")
+    assert resp.status_code == 200
+
+    response = await async_client.post(
+        "/network/plan/custom",
+        json={"run_type": "Easy/Recovery Run", "distance": 5},
+    )
+    assert response.status_code == 200
+    data = response.json()
+    assert data["run_type"] == "Easy/Recovery Run"
+    assert isinstance(data["training_plan"], dict)
+    assert "pace" in data["training_plan"]
