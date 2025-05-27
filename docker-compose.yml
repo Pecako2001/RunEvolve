@@ -1,13 +1,13 @@
-version: '3.8'
+version: "3.8"
 
 services:
   db:
     image: postgres:13-alpine
     container_name: myapp_db
     environment:
-      POSTGRES_USER: user        # Matches backend/app/database.py
-      POSTGRES_PASSWORD: password  # Matches backend/app/database.py
-      POSTGRES_DB: appdb         # Matches backend/app/database.py
+      POSTGRES_USER: user # Matches backend/app/database.py
+      POSTGRES_PASSWORD: password # Matches backend/app/database.py
+      POSTGRES_DB: appdb # Matches backend/app/database.py
     volumes:
       - pgdata:/var/lib/postgresql/data
     ports:
@@ -33,7 +33,7 @@ services:
         condition: service_healthy # Wait for db to be healthy
     volumes:
       # For development, you might mount the code volume:
-      - ./backend:/app 
+      - ./backend:/app
       # But for production-like build, code is copied in Dockerfile
       - /app/__pycache__ # Example of a volume to persist pycache if needed, or ignore it
     # command: uvicorn app.main:app --host 0.0.0.0 --port 8000 # CMD is in Dockerfile

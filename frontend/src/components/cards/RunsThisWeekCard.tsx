@@ -23,7 +23,7 @@ export default function RunsThisWeekCard() {
 
   useEffect(() => {
     fetch(`${API_BASE_URL}/runs/stats`)
-      .then(r => {
+      .then((r) => {
         if (!r.ok) throw new Error("Failed to fetch stats");
         return r.json();
       })
@@ -32,7 +32,7 @@ export default function RunsThisWeekCard() {
         const stat = data.weekly?.[week];
         setCount(stat ? stat.count : 0);
       })
-      .catch(err => setError(err.message))
+      .catch((err) => setError(err.message))
       .finally(() => setLoading(false));
   }, []);
 

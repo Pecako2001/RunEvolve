@@ -34,10 +34,9 @@
 
 .navbar__header img {
   border-radius: 12px;
-  box-shadow: 0 2px 8px 0 rgba(94, 234, 212, 0.10);
+  box-shadow: 0 2px 8px 0 rgba(94, 234, 212, 0.1);
   background: #fff;
 }
-
 
 .navbar__linksWrapper {
   flex: 1;
@@ -92,7 +91,6 @@
   color: var(--dark_text-active);
 }
 
-
 .navbar__container[data-sidebar-state="mini"] .navbar__link span,
 .navbar__container[data-sidebar-state="mini"] .navbar__sectionTitle {
   display: none;
@@ -137,7 +135,10 @@
     min-width: 0;
     border-radius: 0 0 18px 18px;
   }
-  .navbar__header, .navbar__infoSection, .navbar__link, .navbar__sectionTitle {
+  .navbar__header,
+  .navbar__infoSection,
+  .navbar__link,
+  .navbar__sectionTitle {
     padding-left: 14px;
     padding-right: 14px;
   }

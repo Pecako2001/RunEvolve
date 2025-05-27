@@ -1,31 +1,31 @@
-'use client';
+"use client";
 
-import React from 'react';
-import { Burger, Box, ActionIcon, Group, Flex } from '@mantine/core';
-import globalStyles from '../../styles/global.module.css';
-import dynamic from 'next/dynamic';
+import React from "react";
+import { Burger, Box, ActionIcon, Group, Flex } from "@mantine/core";
+import globalStyles from "../../styles/global.module.css";
+import dynamic from "next/dynamic";
 
-const IconMoon = dynamic(() =>
-  import('@tabler/icons-react').then((mod) => mod.IconMoon),
-  { ssr: false }
+const IconMoon = dynamic(
+  () => import("@tabler/icons-react").then((mod) => mod.IconMoon),
+  { ssr: false },
 );
-const IconSun = dynamic(() =>
-  import('@tabler/icons-react').then((mod) => mod.IconSun),
-  { ssr: false }
+const IconSun = dynamic(
+  () => import("@tabler/icons-react").then((mod) => mod.IconSun),
+  { ssr: false },
 );
-const IconBell = dynamic(() =>
-  import('@tabler/icons-react').then((mod) => mod.IconBell),
-  { ssr: false }
+const IconBell = dynamic(
+  () => import("@tabler/icons-react").then((mod) => mod.IconBell),
+  { ssr: false },
 );
-const IconLogout = dynamic(() =>
-  import('@tabler/icons-react').then((mod) => mod.IconLogout),
-  { ssr: false }
+const IconLogout = dynamic(
+  () => import("@tabler/icons-react").then((mod) => mod.IconLogout),
+  { ssr: false },
 );
 
 interface AppHeaderProps {
   navbarOpened: boolean;
   toggleNavbar: () => void;
-  currentTheme: 'theme-dark' | 'theme-light';
+  currentTheme: "theme-dark" | "theme-light";
   onToggleTheme: () => void;
 }
 
@@ -36,15 +36,20 @@ export function AppHeader({
   onToggleTheme,
 }: AppHeaderProps) {
   const handleLogout = () => {
-    localStorage.removeItem('token');
-    window.location.href = '/login';
+    localStorage.removeItem("token");
+    window.location.href = "/login";
   };
 
   return (
     <Box className={globalStyles.header__group}>
       <Flex justify="space-between" align="center" w="100%">
         <Group gap="md">
-          <Burger opened={navbarOpened} onClick={toggleNavbar} hiddenFrom="sm" size="sm" />
+          <Burger
+            opened={navbarOpened}
+            onClick={toggleNavbar}
+            hiddenFrom="sm"
+            size="sm"
+          />
         </Group>
         <Group gap="xs">
           <ActionIcon variant="subtle" size="lg" aria-label="Notifications">
@@ -64,7 +69,11 @@ export function AppHeader({
             size="lg"
             aria-label="Toggle color scheme"
           >
-            {currentTheme === 'theme-dark' ? <IconSun size={20} /> : <IconMoon size={20} />}
+            {currentTheme === "theme-dark" ? (
+              <IconSun size={20} />
+            ) : (
+              <IconMoon size={20} />
+            )}
           </ActionIcon>
         </Group>
       </Flex>

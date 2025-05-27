@@ -11,9 +11,7 @@ interface MetricCardProps {
 
 export default function MetricCard({ label, children }: MetricCardProps) {
   return (
-    <Card
-      className={`card-base ${globalStyles.cardHover}`}
-    >
+    <Card className={`card-base ${globalStyles.cardHover}`}>
       <Text className="card-label" fw={700} mb="xs">
         {label}
       </Text>

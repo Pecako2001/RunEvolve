@@ -8,12 +8,16 @@
 .buttonHoverActive:hover {
   opacity: 0.9;
   transform: translateY(-1px);
-  transition: opacity 0.15s ease-out, transform 0.15s ease-out;
+  transition:
+    opacity 0.15s ease-out,
+    transform 0.15s ease-out;
 }
 .buttonHoverActive:active {
   transform: translateY(0px);
   opacity: 1;
-  transition: opacity 0.1s ease-out, transform 0.1s ease-out;
+  transition:
+    opacity 0.1s ease-out,
+    transform 0.1s ease-out;
 }
 
 /* Card Hover Effects */
@@ -68,4 +72,3 @@
   justify-content: flex-start;
   gap: var(--mantine-spacing-md);
 }
-

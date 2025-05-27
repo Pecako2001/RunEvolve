@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
@@ -14,7 +14,7 @@ import {
   Anchor,
 } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
-import dynamic from 'next/dynamic';
+import dynamic from "next/dynamic";
 
 import {
   IconHome,
@@ -25,8 +25,8 @@ import {
   IconBrain,
 } from "@tabler/icons-react";
 
-import styles from './Navbar.module.css';
-import UserSidebarCard from './UserSidebarCard';
+import styles from "./Navbar.module.css";
+import UserSidebarCard from "./UserSidebarCard";
 
 const navSections = [
   {
@@ -37,7 +37,6 @@ const navSections = [
       { href: "/CreateRunPage", label: "Create Run", icon: IconChecklist },
       { href: "/NetwerkPage", label: "Network", icon: IconBrain },
       { href: "/goals", label: "Goal", icon: IconBrain },
-
     ],
   },
   {
@@ -91,7 +90,10 @@ export function AppNavbar({
 
       {/* LINKS WITH SECTION TITLES */}
       <ScrollArea className={styles.navbar__linksWrapper}>
-        <Box className={styles.navbar__linksInner} data-sidebar-state={sidebarState}>
+        <Box
+          className={styles.navbar__linksInner}
+          data-sidebar-state={sidebarState}
+        >
           {navSections.map((section) => (
             <Box key={section.title} mb={sidebarState === "mini" ? 0 : "md"}>
               {sidebarState !== "mini" && (
@@ -109,7 +111,7 @@ export function AppNavbar({
               {section.links.map((item) =>
                 sidebarState === "mini" ? (
                   <Tooltip label={item.label} position="right" key={item.label}>
-                    <Link 
+                    <Link
                       href={item.href}
                       className={styles.navbar__link}
                       data-active={active === item.label ? "" : undefined}
@@ -119,7 +121,7 @@ export function AppNavbar({
                     </Link>
                   </Tooltip>
                 ) : (
-                  <Link 
+                  <Link
                     href={item.href}
                     key={item.label}
                     className={styles.navbar__link}
@@ -129,7 +131,7 @@ export function AppNavbar({
                     <item.icon className={styles.navbar__icon} stroke={1.5} />
                     <span>{item.label}</span>
                   </Link>
-                )
+                ),
               )}
             </Box>
           ))}
@@ -140,8 +142,14 @@ export function AppNavbar({
       <Box className={styles.navbar__infoSection}>
         <Stack gap="xs">
           <Text className={styles.navbar__infoText}>Version: 1.0.0</Text>
-          <Text className={styles.navbar__infoText}>Last Updated: 2025-05-27</Text>
-          <Anchor href="https://github.com/your-repo/runevolve" target="_blank" className={styles.navbar__infoLink}>
+          <Text className={styles.navbar__infoText}>
+            Last Updated: 2025-05-27
+          </Text>
+          <Anchor
+            href="https://github.com/your-repo/runevolve"
+            target="_blank"
+            className={styles.navbar__infoLink}
+          >
             View on GitHub
           </Anchor>
         </Stack>
