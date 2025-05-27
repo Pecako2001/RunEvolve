@@ -96,50 +96,6 @@ body.theme-dark {
   }
 }
 
-/* --- CreateRunForm styles --- */
-.createRunForm__card {
-  border: 1px solid var(--navbar-border);
-  box-shadow: var(--navbar-shadow);
-  padding: var(--mantine-spacing-lg);
-  border-radius: var(--mantine-radius-md);
-  background: var(--background);
-  color: var(--foreground);
-}
-
-.createRunForm__noteText {
-  font-size: var(--mantine-font-size-xs);
-  color: var(--navbar-link);
-}
-
-.createRunForm__submitButton {
-  width: 100%;
-  margin-top: var(--mantine-spacing-md);
-  background: var(--navbar-accent);
-  color: var(--navbar-link-active);
-  border: none;
-  border-radius: var(--mantine-radius-md);
-  padding: var(--mantine-spacing-sm);
-  cursor: pointer;
-  transition: background 0.18s;
-}
-
-.createRunForm__submitButton:hover {
-  background: var(--navbar-accent-dark);
-}
-
-/* --- Header styles --- */
-.header__group {
-  height: 100%;
-  padding-left: var(--mantine-spacing-md);
-  padding-right: var(--mantine-spacing-md);
-  background: var(--navbar-bg);
-  color: var(--navbar-link);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-/* --- End CreateRunForm and Header styles --- */
 
 /* Layout Containers */
 .page-container {

@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from 'react';
+import globalStyles from '../styles/global.module.css';
 import { TextInput, Button, Stack, Text, Box } from '@mantine/core';
 import { notifications } from '@mantine/notifications';
 import axios from 'axios';
@@ -55,7 +56,7 @@ export default function CreateRunForm() {
   };
 
   return (
-    <Box className="createRunForm__card">
+    <Box className={globalStyles.createRunForm__card}>
       <Stack>
         <TextInput
           label="Run Name (Optional)"
@@ -64,7 +65,7 @@ export default function CreateRunForm() {
           onChange={(event) => setRunName(event.currentTarget.value)}
           disabled={isSubmitting}
         />
-        <Text className="createRunForm__noteText">
+        <Text className={globalStyles.createRunForm__noteText}>
           Note: The run name is currently for local reference and not sent to the backend with this action.
           The new run will inherit its name from the previous run.
         </Text>
@@ -74,7 +75,7 @@ export default function CreateRunForm() {
         <Button
           onClick={handleSubmit}
           loading={isSubmitting}
-          className="createRunForm__submitButton buttonHoverActive" // Added buttonHoverActive
+          className={`${globalStyles.createRunForm__submitButton} ${globalStyles.buttonHoverActive}`}
         >
           Create Run From Last
         </Button>
