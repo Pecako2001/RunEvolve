@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 from datetime import datetime
-from typing import Optional, Dict, Any
+from typing import Optional, Dict, Any, List, Union
 from .models import RunStatus
 
 class RunBase(BaseModel):
@@ -37,6 +37,7 @@ class RunPredictionRequest(BaseModel):
     distance: Optional[float] = None
     time: Optional[int] = None
     average_speed: Optional[float] = None
+    training_plan: Optional[Dict[str, Any]] = None
 
 class RunPredictionResponse(RunResponse):
     predicted_run_type: str
@@ -48,4 +49,4 @@ class RunPlanRequest(BaseModel):
 
 class RunPlanResponse(BaseModel):
     run_type: str
-    training_plan: Dict[str, Any]
+    training_plan: Union[Dict[str, Any], List[Dict[str, str]]]

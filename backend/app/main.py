@@ -8,7 +8,7 @@ from datetime import datetime
 
 from . import crud, models, schemas
 from .database import engine, get_db
-from .services.ai_model import predict_run_type # Import the prediction function
+from .services.ai_model import predict_run_type, generate_training_plan
 from .models import RunStatus # Import RunStatus for setting planned runs
 
 from .routers import network
@@ -107,7 +107,8 @@ def predict_and_plan_run(
         settings_snapshot={
             "user_inputs": prediction_request.model_dump(),
             "predicted_run_type": predicted_type,
-            "ai_model_version": "0.1.0" 
+            "ai_model_version": "0.1.0",
+            **({"training_plan": prediction_request.training_plan} if prediction_request.training_plan else {})
         }
     )
     
@@ -118,11 +119,13 @@ def predict_and_plan_run(
     
     # Use model_validate to convert SQLAlchemy model to Pydantic model
     run_response_part = schemas.Run.model_validate(db_planned_run)
-    
+
     # Construct the final response
     final_response = schemas.RunPredictionResponse(
-        **run_response_part.model_dump(), # Spread fields from Run
-        predicted_run_type=predicted_type
+        **run_response_part.model_dump(),
+        predicted_run_type=predicted_type,
+        training_plan=prediction_request.training_plan
+        or generate_training_plan(predicted_type, prediction_request.distance or 0.0)["training_plan"]
     )
     
     return final_response
