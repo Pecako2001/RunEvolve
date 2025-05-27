@@ -19,13 +19,13 @@ export default function BestHMCard() {
 
   useEffect(() => {
     fetch(`${API_BASE_URL}/runs?limit=1000`)
-      .then(r => {
+      .then((r) => {
         if (!r.ok) throw new Error("Failed to fetch runs");
         return r.json();
       })
       .then((runs: Run[]) => {
         let min: number | null = null;
-        runs.forEach(run => {
+        runs.forEach((run) => {
           if (
             run.distance &&
             run.time &&
@@ -37,7 +37,7 @@ export default function BestHMCard() {
         });
         setBest(min);
       })
-      .catch(err => setError(err.message))
+      .catch((err) => setError(err.message))
       .finally(() => setLoading(false));
   }, []);
 
@@ -45,7 +45,9 @@ export default function BestHMCard() {
     <MetricCard label="Best Half Marathon">
       {loading && <Loader size="sm" />}
       {!loading && error && <Text>{error}</Text>}
-      {!loading && !error && best !== null && <Text fw={700}>{formatTime(best)}</Text>}
+      {!loading && !error && best !== null && (
+        <Text fw={700}>{formatTime(best)}</Text>
+      )}
       {!loading && !error && best === null && <Text>N/A</Text>}
     </MetricCard>
   );

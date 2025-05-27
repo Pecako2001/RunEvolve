@@ -32,7 +32,9 @@ const SalesCard: React.FC<SalesCardProps> = ({
       <div className="mb-2 text-sm font-medium text-gray-500 dark:text-gray-400">
         {title}
       </div>
-      <div className="text-2xl font-bold text-gray-900 dark:text-white">{value}</div>
+      <div className="text-2xl font-bold text-gray-900 dark:text-white">
+        {value}
+      </div>
       <div className="flex items-center gap-1 text-sm">
         <PercentageIcon
           data-testid="percentage-icon"
@@ -45,7 +47,9 @@ const SalesCard: React.FC<SalesCardProps> = ({
         </span>
       </div>
       {subtitle && (
-        <div className="mt-1 text-xs text-gray-500 dark:text-gray-400">{subtitle}</div>
+        <div className="mt-1 text-xs text-gray-500 dark:text-gray-400">
+          {subtitle}
+        </div>
       )}
     </div>
   );

@@ -2,8 +2,16 @@
 
 import { useState } from "react";
 import {
-  Card, Title, Text, Loader, Alert, Button,
-  Select, NumberInput, Group, Stack
+  Card,
+  Title,
+  Text,
+  Loader,
+  Alert,
+  Button,
+  Select,
+  NumberInput,
+  Group,
+  Stack,
 } from "@mantine/core";
 import { notifications } from "@mantine/notifications";
 
@@ -33,7 +41,7 @@ export default function NetwerkPage() {
       setError("Please select a run type");
       return;
     }
-    setLoading(true); 
+    setLoading(true);
     setError(null);
     try {
       const res = await fetch(`${API}/network/plan/custom`, {
@@ -55,17 +63,27 @@ export default function NetwerkPage() {
   };
 
   const retrainModel = async () => {
-    setLoading(true); setError(null); setModelMsg(null);
+    setLoading(true);
+    setError(null);
+    setModelMsg(null);
     try {
       const res = await fetch(`${API}/network/train`, { method: "POST" });
       const j = await res.json();
       if (!res.ok) throw new Error(j.detail || "Unknown error");
       setModelMsg(j.detail);
-      notifications.show({ title: "Model Updated", message: j.detail, color: "green" });
+      notifications.show({
+        title: "Model Updated",
+        message: j.detail,
+        color: "green",
+      });
     } catch (e: any) {
       const msg = `Retrain failed: ${e.message}`;
       setError(msg);
-      notifications.show({ title: "Training Failed", message: msg, color: "red" });
+      notifications.show({
+        title: "Training Failed",
+        message: msg,
+        color: "red",
+      });
     }
     setLoading(false);
   };
@@ -83,7 +101,7 @@ export default function NetwerkPage() {
         <Select
           label="Run Type"
           placeholder="Select one"
-          data={["Interval","Tempo Run","Long Run","Easy/Recovery Run"]}
+          data={["Interval", "Tempo Run", "Long Run", "Easy/Recovery Run"]}
           value={runType}
           onChange={setRunType}
         />
@@ -92,7 +110,9 @@ export default function NetwerkPage() {
           <NumberInput
             label="Distance (km)"
             value={distance}
-            onChange={(val) => setDistance(typeof val === 'number' ? val : undefined)}
+            onChange={(val) =>
+              setDistance(typeof val === "number" ? val : undefined)
+            }
             decimalScale={1}
             min={0}
           />
@@ -105,13 +125,26 @@ export default function NetwerkPage() {
         {planning && planning.training_plan && (
           <Card shadow="sm" p="md">
             <Text fw={600}>Run Type: {planning.run_type}</Text>
-            <Text mt="sm" fw={500}>{planning.training_plan.description}</Text>
+            <Text mt="sm" fw={500}>
+              {planning.training_plan.description}
+            </Text>
             <Text mt="sm">
               Recommended:
               <ul>
-                <li>Distance: {planning.training_plan.recommended.distance.toFixed(1)} km</li>
-                <li>Time: {Math.round(planning.training_plan.recommended.time / 60)} minutes</li>
-                <li>Average Speed: {planning.training_plan.recommended.average_speed.toFixed(1)} km/h</li>
+                <li>
+                  Distance:{" "}
+                  {planning.training_plan.recommended.distance.toFixed(1)} km
+                </li>
+                <li>
+                  Time:{" "}
+                  {Math.round(planning.training_plan.recommended.time / 60)}{" "}
+                  minutes
+                </li>
+                <li>
+                  Average Speed:{" "}
+                  {planning.training_plan.recommended.average_speed.toFixed(1)}{" "}
+                  km/h
+                </li>
               </ul>
             </Text>
           </Card>
