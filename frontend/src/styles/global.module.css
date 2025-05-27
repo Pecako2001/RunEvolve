@@ -5,12 +5,6 @@
   --runevolve-global-border-radius: var(--mantine-radius-md);
 }
 
-.appContainer {
-  /* Example: if you wanted a global class for the main content area within AppShell.Main */
-  /* For now, this can be empty or have minimal styling. */
-  /* Mantine's AppShell.Main already provides good structure. */
-}
-
 .textEmphasis {
   font-weight: bold;
   color: var(--runevolve-brand-primary-color);
