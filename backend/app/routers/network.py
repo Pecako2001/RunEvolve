@@ -38,7 +38,7 @@ def generate_plan(payload: schemas.RunPredictionRequest):
 @router.post("/plan/custom", response_model=schemas.RunPlanResponse)
 def custom_plan(request: schemas.RunPlanRequest):
     plan = generate_training_plan(request.run_type, request.distance or 0.0)
-    return {"run_type": request.run_type, "training_plan": plan}
+    return {"run_type": plan["run_type"], "training_plan": plan["training_plan"]}
 
 @router.post("/train")
 def retrain_model(db: Session = Depends(get_db)):

@@ -157,12 +157,53 @@ def predict_run_features(run_type: str) -> Dict[str, Any]:
     return {"distance": float(out[0]), "time": int(out[1]), "average_speed": float(out[2])}
 
 
+def _format_duration(seconds: int) -> str:
+    """Return duration string like '1h 15m' for a number of seconds."""
+    h = seconds // 3600
+    m = (seconds % 3600) // 60
+    if h:
+        return f"{h}h {m}m"
+    return f"{m}m"
+
+
 def generate_training_plan(run_type: str, distance: float = 10.0) -> Dict[str, Any]:
+    """Return a structured training plan based on the run type.
+
+    If ``run_type`` is "Interval" a list of interval segments is returned.  For
+    other types a general recommendation containing distance, target pace and
+    duration is provided.  ``distance`` can be used to override the predicted
+    distance for non interval runs.
+    """
+
     rec = predict_run_features(run_type)
+    # Allow caller supplied distance to override the prediction for steady runs
+    if distance:
+        rec["distance"] = distance
+
+    if run_type == "Interval":
+        # Basic configurable pattern: three fast intervals with recovery jogs
+        fast_pace = rec["average_speed"] + 2
+        recovery_pace = max(rec["average_speed"] - 3, 6)
+        pattern = []
+        for _ in range(3):
+            pattern.append({"segment": "500m", "pace": f"{fast_pace:.1f} km/h"})
+            pattern.append({"segment": "2min", "pace": f"{recovery_pace:.1f} km/h"})
+
+        return {
+            "run_type": run_type,
+            "training_plan": pattern,
+        }
+
+    # Non-interval plan
+    pace = f"{rec['average_speed']:.1f} km/h"
+    duration = _format_duration(rec["time"])
     return {
-        "type": run_type,
-        "description": f"Custom plan based on network for a {run_type}",
-        "recommended": rec
+        "run_type": run_type,
+        "training_plan": {
+            "distance": round(rec["distance"], 1),
+            "pace": pace,
+            "duration": duration,
+        },
     }
 
 
@@ -172,6 +213,6 @@ def get_run_plan(request: Dict[str, Any]) -> Dict[str, Any]:
         "time": request.get("time", 0),
         "average_speed": request.get("average_speed", 0.0),
     }
-    rt   = predict_run_type(features)
+    rt = predict_run_type(features)
     plan = generate_training_plan(rt, features["distance"])
-    return {"predicted_run_type": rt, "training_plan": plan}
+    return {"predicted_run_type": rt, "training_plan": plan["training_plan"]}

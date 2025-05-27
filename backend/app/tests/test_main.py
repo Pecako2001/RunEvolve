@@ -102,3 +102,30 @@ async def test_get_last_run_with_run(async_client: AsyncClient, setup_run_in_db:
     # assert validated_run.created_at.replace(tzinfo=None) == expected_run.created_at.replace(tzinfo=None) # Naive comparison if both naive
     # assert validated_run.copied_from == expected_run.copied_from
     pass # Basic checks above are sufficient for now.
+
+
+@pytest.mark.asyncio
+async def test_network_custom_plan_interval(async_client: AsyncClient):
+    payload = {"run_type": "Interval", "distance": 5}
+    response = await async_client.post("/network/plan/custom", json=payload)
+    assert response.status_code == 200
+    data = response.json()
+    assert data["run_type"] == "Interval"
+    assert isinstance(data["training_plan"], list)
+    assert len(data["training_plan"]) > 0
+
+
+@pytest.mark.asyncio
+async def test_run_predict_includes_training_plan(async_client: AsyncClient):
+    plan = [{"segment": "500m", "pace": "14 km/h"}]
+    req = {
+        "name": "Planned",
+        "distance": 5,
+        "time": 1500,
+        "average_speed": 10,
+        "training_plan": plan,
+    }
+    response = await async_client.post("/runs/predict", json=req)
+    assert response.status_code == 200
+    resp = response.json()
+    assert resp["settings_snapshot"]["training_plan"] == plan
