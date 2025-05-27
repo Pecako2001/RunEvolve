@@ -1,0 +1,31 @@
+.container {
+  display: flex;
+  align-items: center;
+}
+
+.rail {
+  width: 48px;
+  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-top-left-radius: var(--radius-md);
+  border-bottom-left-radius: var(--radius-md);
+}
+
+.card {
+  flex: 1;
+  background: var(--navbar-bg);
+  padding: var(--spacing-sm);
+  color: #ffffff;
+  border-top-right-radius: var(--radius-md);
+  border-bottom-right-radius: var(--radius-md);
+}
+
+.name {
+  color: #ffffff;
+}
+
+.email {
+  color: #cbd5e1;
+}
