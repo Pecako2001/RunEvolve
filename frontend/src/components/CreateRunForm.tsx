@@ -4,6 +4,8 @@ import React, { useState } from 'react';
 import { Card, TextInput, Button, Notification, Stack, Text, Box } from '@mantine/core';
 import axios from 'axios';
 
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+
 interface RunResponse {
   id: number;
   name: string | null;
@@ -29,7 +31,10 @@ export default function CreateRunForm() {
     try {
       // The backend endpoint POST /runs/new-from-last does not currently accept a body.
       // It creates a new run by copying the settings from the most recent previous run.
-      const response = await axios.post<RunResponse>('http://localhost:8000/runs/new-from-last', {});
+      const response = await axios.post<RunResponse>(
+        `${API_BASE_URL}/runs/new-from-last`,
+        {}
+      );
       
       setNotification({
         message: `New run created successfully! ID: ${response.data.id}. Name: ${response.data.name || 'N/A'}`,

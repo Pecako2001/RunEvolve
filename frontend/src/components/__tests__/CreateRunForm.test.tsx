@@ -61,8 +61,9 @@ describe('CreateRunForm', () => {
         expect(screen.getByText(/ID: 123/i)).toBeInTheDocument();
       });
       
+      const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
       expect(mockedAxios.post).toHaveBeenCalledTimes(1);
-      expect(mockedAxios.post).toHaveBeenCalledWith('http://localhost:8000/runs/new-from-last', {});
+      expect(mockedAxios.post).toHaveBeenCalledWith(`${baseUrl}/runs/new-from-last`, {});
       expect(button).not.toBeDisabled(); // Button should be re-enabled
     });
 
@@ -89,8 +90,9 @@ describe('CreateRunForm', () => {
         expect(screen.getByText(new RegExp(errorMessage, "i"))).toBeInTheDocument();
       });
       
+      const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
       expect(mockedAxios.post).toHaveBeenCalledTimes(1);
-      expect(mockedAxios.post).toHaveBeenCalledWith('http://localhost:8000/runs/new-from-last', {});
+      expect(mockedAxios.post).toHaveBeenCalledWith(`${baseUrl}/runs/new-from-last`, {});
       expect(button).not.toBeDisabled(); // Button should be re-enabled
     });
   });

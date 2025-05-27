@@ -3,6 +3,8 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Title, Text, Loader, Alert, Card, Stack, Group } from '@mantine/core';
 import axios from 'axios';
+
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
 import CreateRunForm from '@/components/CreateRunForm'; // Assuming alias @ is setup for src
 import styles from './CreateRun.module.css'; // Import CSS module
 
@@ -27,7 +29,7 @@ export default function CreateRunPage() {
       setIsLoadingLastRun(true);
       setFetchError(null);
       try {
-        const response = await axios.get<Run>('http://localhost:8000/runs/last');
+        const response = await axios.get<Run>(`${API_BASE_URL}/runs/last`);
         setLastRun(response.data);
       } catch (error) {
         if (axios.isAxiosError(error) && error.response?.status === 404) {
