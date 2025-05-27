@@ -42,6 +42,9 @@ export default function LoginPage() {
             <TextInput label="Email" required {...form.getInputProps('email')} />
             <PasswordInput label="Password" required mt="md" {...form.getInputProps('password')} />
             <Checkbox label="Remember me" mt="md" {...form.getInputProps('remember', { type: 'checkbox' })} />
+            <Anchor href="/forgot-password" size="sm" mt="xs" display="block">
+              Forgot Password?
+            </Anchor>
             {error && (
               <Text c="red" size="sm" mt="sm">
                 {error}

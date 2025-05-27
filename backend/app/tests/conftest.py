@@ -14,7 +14,7 @@ os.environ.setdefault("DATABASE_URL", "sqlite:///./test.db")
 # Assuming 'app' is the root package for the application code
 from app.main import app  # FastAPI app instance
 from app.database import SessionLocal  # DB session factory
-from app.models import Run as RunModel # SQLAlchemy model
+from app.models import Run as RunModel, User as UserModel  # SQLAlchemy models
 from app.schemas import RunCreate # Pydantic schema for creation
 from app.crud import create_run # CRUD function
 
@@ -98,10 +98,28 @@ def training_runs(db_session: Session):
         runs.append(create_run(db=db_session, run=rc))
     return runs
 
+
+@pytest.fixture()
+def test_user(db_session: Session):
+    """Create a user for authentication tests."""
+    from app.routers.auth import _hash_password
+
+    user = UserModel(
+        email="admin@example.com",
+        hashed_password=_hash_password("admin"),
+        first_name="Admin",
+        last_name="User",
+    )
+    db_session.add(user)
+    db_session.commit()
+    db_session.refresh(user)
+    return user
+
 # Helper used by the autouse fixture to ensure a clean state
 def _clear_all_runs(db_session: Session) -> None:
-    """Remove all Run rows from the database."""
+    """Remove all Run and User rows from the database."""
     db_session.query(RunModel).delete()
+    db_session.query(UserModel).delete()
     db_session.commit()
 
 
@@ -110,3 +128,4 @@ def clear_runs_before_test(db_session: Session):
     """Clear Run table before each test."""
     _clear_all_runs(db_session)
     yield
+    _clear_all_runs(db_session)

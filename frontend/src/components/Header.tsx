@@ -1,9 +1,10 @@
 'use client';
 
 import React from 'react';
-import { Burger, Box, ActionIcon, Stack } from '@mantine/core';
+import { Burger, Box, ActionIcon, Stack, Group } from '@mantine/core';
 import globalStyles from '../styles/global.module.css';
 import dynamic from 'next/dynamic';
+import UserMenu from './UserMenu';
 
 const IconMoon = dynamic(() =>
   import('@tabler/icons-react').then((mod) => mod.IconMoon),
@@ -30,7 +31,7 @@ export function AppHeader({
 }: AppHeaderProps) {
   return (
     <Box className={globalStyles.header__group}>
-      <Stack justify="center" gap="md">
+      <Group gap="md">
         <Burger opened={navbarOpened} onClick={toggleNavbar} hiddenFrom="sm" size="sm" />
         <ActionIcon
           onClick={onToggleTheme}
@@ -40,7 +41,8 @@ export function AppHeader({
         >
           {currentTheme === 'theme-dark' ? <IconSun size={20} /> : <IconMoon size={20} />}
         </ActionIcon>
-      </Stack>
+        <UserMenu />
+      </Group>
     </Box>
   );
 }

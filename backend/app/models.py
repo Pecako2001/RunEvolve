@@ -23,3 +23,15 @@ class Run(Base):
     average_speed = Column(Float, nullable=True)
     heart_rate = Column(Integer, nullable=True)
     status = Column(SQLAlchemyEnum(RunStatus), default=RunStatus.COMPLETED, nullable=False) # New field
+
+
+class User(Base):
+    __tablename__ = "users"
+
+    id = Column(Integer, primary_key=True, index=True, autoincrement=True)
+    email = Column(String, unique=True, index=True, nullable=False)
+    hashed_password = Column(String, nullable=False)
+    first_name = Column(String, nullable=True)
+    last_name = Column(String, nullable=True)
+    created_at = Column(DateTime(timezone=True), server_default=func.now())
+
