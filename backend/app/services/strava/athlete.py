@@ -26,6 +26,25 @@ def fetch_athlete_zones(token):
     resp.raise_for_status()
     return resp.json()
 
+
+def fetch_athlete_stats(token, athlete_id):
+    """Fetch overall stats for the athlete."""
+    url = f"https://www.strava.com/api/v3/athletes/{athlete_id}/stats"
+    headers = {"Authorization": f"Bearer {token}"}
+    resp = requests.get(url, headers=headers)
+    resp.raise_for_status()
+    return resp.json()
+
+
+def fetch_athlete_activities(token, page=1, per_page=30):
+    """Fetch athlete activities list."""
+    url = "https://www.strava.com/api/v3/athlete/activities"
+    headers = {"Authorization": f"Bearer {token}"}
+    params = {"page": page, "per_page": per_page}
+    resp = requests.get(url, headers=headers, params=params)
+    resp.raise_for_status()
+    return resp.json()
+
 def fetch_activity_details(activity_id, token, include_all_efforts=True):
     """
     Fetch the full details of a single activity (including all segment efforts).
