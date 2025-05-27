@@ -18,7 +18,7 @@ export default function Home() {
         <Grid.Col span={{ base: 12, md: 8 }}>
           <LastRunCard />
         </Grid.Col>
-        <Grid.Col span={{ base: 12, md: 4 }} rowSpan={2}>
+        <Grid.Col span={{ base: 12, md: 4 }}>
           <HeartRateCard />
         </Grid.Col>
         <Grid.Col span={{ base: 12, md: 4 }}>

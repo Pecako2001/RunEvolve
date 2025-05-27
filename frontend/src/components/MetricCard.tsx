@@ -13,7 +13,6 @@ export default function MetricCard({ label, children }: MetricCardProps) {
   return (
     <Card
       className={`card-base ${globalStyles.cardHover}`}
-      style={{ backgroundColor: "#facc15" }}
     >
       <Text className="card-label" fw={700} mb="xs">
         {label}

@@ -18,11 +18,7 @@
 
 /* Card Hover Effects */
 .cardHover {
-  transition: box-shadow 0.2s ease-out, transform 0.2s ease-out;
-}
-.cardHover:hover {
-  box-shadow: var(--mantine-shadow-md); /* Using Mantine's predefined shadow variable */
-  transform: translateY(-2px);
+  background: var(--card-bg);
 }
 
 /* General Smooth Transition Utility */
@@ -73,3 +69,4 @@
   justify-content: flex-start;
   gap: var(--mantine-spacing-md);
 }
+
