@@ -35,3 +35,30 @@ class User(Base):
     last_name = Column(String, nullable=True)
     created_at = Column(DateTime(timezone=True), server_default=func.now())
 
+
+class StravaHeartRateZoneCache(Base):
+    __tablename__ = "strava_heart_rate_zone_cache"
+
+    id = Column(Integer, primary_key=True, index=True, autoincrement=True)
+    user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
+    data = Column(JSON, nullable=False)
+    fetched_at = Column(DateTime(timezone=True), server_default=func.now())
+
+
+class StravaStatsCache(Base):
+    __tablename__ = "strava_stats_cache"
+
+    id = Column(Integer, primary_key=True, index=True, autoincrement=True)
+    user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
+    data = Column(JSON, nullable=False)
+    fetched_at = Column(DateTime(timezone=True), server_default=func.now())
+
+
+class StravaActivitiesCache(Base):
+    __tablename__ = "strava_activities_cache"
+
+    id = Column(Integer, primary_key=True, index=True, autoincrement=True)
+    user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
+    data = Column(JSON, nullable=False)
+    fetched_at = Column(DateTime(timezone=True), server_default=func.now())
+
