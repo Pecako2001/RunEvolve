@@ -1,9 +1,8 @@
 'use client';
 
 import React from 'react';
-import { Group, Burger, Box, ActionIcon } from '@mantine/core';
+import { Burger, Box, ActionIcon, Stack } from '@mantine/core';
 import globalStyles from '../styles/global.module.css';
-import { IconMenu2 } from '@tabler/icons-react';
 import { IconMoon } from '@tabler/icons-react';
 import { IconSun } from '@tabler/icons-react';
 
@@ -23,29 +22,17 @@ export function AppHeader({
 }: AppHeaderProps) {
   return (
     <Box className={globalStyles.header__group}>
-      <Group>
+      <Stack justify="center" gap="md">
         <Burger opened={navbarOpened} onClick={toggleNavbar} hiddenFrom="sm" size="sm" />
-      </Group>
-          <Group gap={0}>
-            <ActionIcon
-              onClick={onToggleTheme}
-              variant="subtle"
-              size="lg"
-              aria-label="Toggle color scheme"
-            >
-              {currentTheme === 'theme-dark' ? <IconSun size={20} /> : <IconMoon size={20} />}
-            </ActionIcon>
-            {toggleNavbar && (
-              <ActionIcon
-                onClick={toggleNavbar}
-                variant="subtle"
-                size="lg"
-                aria-label="Toggle sidebar"
-              >
-                <IconMenu2 size={20} />
-              </ActionIcon>
-            )}
-          </Group>
+        <ActionIcon
+          onClick={onToggleTheme}
+          variant="subtle"
+          size="lg"
+          aria-label="Toggle color scheme"
+        >
+          {currentTheme === 'theme-dark' ? <IconSun size={20} /> : <IconMoon size={20} />}
+        </ActionIcon>
+      </Stack>
     </Box>
   );
 }
