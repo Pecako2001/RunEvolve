@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { Burger, Box, ActionIcon, Group, Flex } from '@mantine/core';
-import globalStyles from '../styles/global.module.css';
+import globalStyles from '../../styles/global.module.css';
 import dynamic from 'next/dynamic';
 
 const IconMoon = dynamic(() =>

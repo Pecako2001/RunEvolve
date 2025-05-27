@@ -5,7 +5,7 @@ import { Container, Title, Text, Loader, Alert, Card, Stack, Group, Button, Sele
 import axios from 'axios';
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
-import CreateRunForm from '@/components/CreateRunForm'; // Assuming alias @ is setup for src
+import CreateRunForm from '@/components/forms/CreateRunForm';
 import styles from './CreateRun.module.css'; // Import CSS module
 
 // 1. Define Run Interface

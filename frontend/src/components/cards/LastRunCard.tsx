@@ -2,8 +2,8 @@
 
 import { Card, Loader, Stack, Text, Group } from "@mantine/core";
 import { useEffect, useState } from "react";
-import MetricCard from "./MetricCard";
-import { formatTime } from "../utils/time";
+import MetricCard from "../MetricCard";
+import { formatTime } from "../../utils/time";
 import dynamic from "next/dynamic";
 
 const IconRun = dynamic(() => import("@tabler/icons-react").then(m => m.IconRun), { ssr: false });

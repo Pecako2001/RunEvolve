@@ -1,7 +1,7 @@
 "use client";
 
 import { Card, Text } from "@mantine/core";
-import globalStyles from "../styles/global.module.css";
+import globalStyles from "../../styles/global.module.css";
 import { ReactNode } from "react";
 
 interface MetricCardProps {

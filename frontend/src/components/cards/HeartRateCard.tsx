@@ -2,7 +2,7 @@
 
 import { Card, Loader, Text, Group, Box, Stack } from "@mantine/core";
 import { useEffect, useState } from "react";
-import MetricCard from "./MetricCard";
+import MetricCard from "../MetricCard";
 
 interface Zone {
   min: number;

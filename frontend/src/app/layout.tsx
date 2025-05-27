@@ -8,8 +8,8 @@ import { Notifications } from '@mantine/notifications';
 import { useDisclosure } from '@mantine/hooks';
 import { usePathname } from 'next/navigation';
 import Providers, { useTheme } from './providers'; // Renamed to ThemeProvider internally but default export is Providers
-import { AppHeader } from '../components/Header';
-import { AppNavbar } from '../components/Navbar';
+import { AppHeader } from '../components/layout/Header';
+import { AppNavbar } from '../components/layout/Navbar';
 
 // Mantine theme configuration (can be kept or further customized)
 export const mantineThemeConfig = createTheme({

@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import SalesCard from '../SalesCard';
+import SalesCard from '../cards/SalesCard';
 
 describe('SalesCard', () => {
   test('renders title, value, subtitle and badge', () => {

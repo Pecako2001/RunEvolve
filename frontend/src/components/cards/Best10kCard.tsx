@@ -2,8 +2,8 @@
 
 import { Loader, Text } from "@mantine/core";
 import { useEffect, useState } from "react";
-import MetricCard from "./MetricCard";
-import { formatTime } from "../utils/time";
+import MetricCard from "../MetricCard";
+import { formatTime } from "../../utils/time";
 
 interface Run {
   distance?: number | null;
