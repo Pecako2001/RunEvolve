@@ -30,8 +30,20 @@ export default function LoginPage() {
   };
 
   return (
-    <div className={styles.authPage__container}>
-      <Paper withBorder shadow="md" p="xl" className={styles.authPage__card}>
+    <div
+      className={styles.authPage__container}
+      style={{
+        minHeight: '100vh',
+        backgroundImage: 'url("/background.png")',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}
+    >
+      <Paper withBorder shadow="md" p="xl" className={styles.authPage__card} style={{ background: 'rgba(255,255,255,1)' }}>
         <Stack>
           <img src="/Icon.png" alt="Logo" width={40} height={40} style={{ alignSelf: 'center' }} />
           <Title order={2} ta="center">Welcome back!</Title>

@@ -19,6 +19,7 @@ import dynamic from 'next/dynamic';
 import {
   IconHome,
   IconInfoCircle,
+  IconUser,
   IconChecklist,
   IconChartDots,
   IconBrain,
@@ -35,11 +36,13 @@ const navSections = [
       { href: "/CreateRunPage", label: "Create Run", icon: IconChecklist },
       { href: "/NetwerkPage", label: "Network", icon: IconBrain },
       { href: "/goals", label: "Goal", icon: IconBrain },
+
     ],
   },
   {
     title: "Other",
     links: [
+      { href: "/UserMenu", label: "User", icon: IconUser },
       { href: "/info", label: "Project Info", icon: IconInfoCircle },
     ],
   },

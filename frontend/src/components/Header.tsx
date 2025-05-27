@@ -4,7 +4,6 @@ import React from 'react';
 import { Burger, Box, ActionIcon, Stack, Group } from '@mantine/core';
 import globalStyles from '../styles/global.module.css';
 import dynamic from 'next/dynamic';
-import UserMenu from './UserMenu';
 
 const IconMoon = dynamic(() =>
   import('@tabler/icons-react').then((mod) => mod.IconMoon),
@@ -41,7 +40,6 @@ export function AppHeader({
         >
           {currentTheme === 'theme-dark' ? <IconSun size={20} /> : <IconMoon size={20} />}
         </ActionIcon>
-        <UserMenu />
       </Group>
     </Box>
   );
