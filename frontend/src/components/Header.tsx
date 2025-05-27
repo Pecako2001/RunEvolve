@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { Group, Title, Burger, Box, ActionIcon } from '@mantine/core';
+import globalStyles from '../styles/global.module.css';
 import { IconMenu2, IconX } from '@tabler/icons-react';
 import { IconMoon } from '@tabler/icons-react';
 import { IconSun } from '@tabler/icons-react';
@@ -32,7 +33,7 @@ export function AppHeader({ navbarOpened, toggleNavbar }: AppHeaderProps) {
     document.body.classList.add(theme);
   }, [theme]);
   return (
-    <Box className="header__group">
+    <Box className={globalStyles.header__group}>
       <Group>
         <Burger opened={navbarOpened} onClick={toggleNavbar} hiddenFrom="sm" size="sm" />
       </Group>
