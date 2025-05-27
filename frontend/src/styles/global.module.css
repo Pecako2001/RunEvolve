@@ -1,10 +1,4 @@
 /* frontend/src/styles/global.module.css */
-:root {
-  --runevolve-brand-primary-color: #1971c2; /* Example Mantine blue */
-  --runevolve-brand-secondary-color: #f08c00; /* Example Mantine orange */
-  --runevolve-global-border-radius: var(--mantine-radius-md);
-}
-
 .textEmphasis {
   font-weight: bold;
   color: var(--runevolve-brand-primary-color);

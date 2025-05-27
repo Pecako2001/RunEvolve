@@ -68,7 +68,7 @@ export function AppNavbar({
       {/* HEADER */}
       <Box className={styles.navbar__header}>
         <Group justify="space-between" align="center">
-          <Group gap="xs">
+          <Group>
             <img src="/Icon.png" alt="Logo" width={32} height={32} />
             {sidebarState === "full" && (
               <Text fw={700} size="lg">

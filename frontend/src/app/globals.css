@@ -3,7 +3,8 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
-  --navbar-bg: linear-gradient(135deg, #232526 0%, #414345 100%);
+  --navbar-header: #232526;
+  --navbar-bg: #3f3f3f;
   --navbar-accent: #5eead4;
   --navbar-accent-dark: #2dd4bf;
   --navbar-link: #e0e7ef;
@@ -63,7 +64,8 @@ body {
 body.theme-light {
   --background: #ffffff;
   --foreground: #171717;
-  --navbar-bg: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  --navbar-header: #c5ecff;
+  --navbar-bg: #f8fafc;
   --navbar-accent: #0ea5e9;
   --navbar-accent-dark: #0369a1;
   --navbar-link: #232526;
@@ -97,20 +99,6 @@ body.theme-dark {
   .text-dimmed {
     color: #909296;
   }
-}
-
-
-/* Layout Containers */
-.page-container {
-  padding: var(--spacing-md);
-  max-width: 100%;
-  width: 100%;
-}
-
-.content-stack {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-lg);
 }
 
 /* Cards and Papers */

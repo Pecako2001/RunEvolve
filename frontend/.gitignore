@@ -15,6 +15,36 @@
 
 # next.js
 /.next/
+
+# React
+*.jsx
+*.tsx
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pyc
+*.pyo
+*.pyd
+*.env
+*.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+*.egg-info/
+dist/
+build/
+*.log
+.mypy_cache/
+.pytest_cache/
+.coverage
+.tox/
+.idea/
+.vscode/
 /out/
 
 # production
