@@ -1,64 +1,66 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #f9fafb;
+  --foreground: #111827;
   --navbar-header: #232526;
-  --navbar-bg: #3f3f3f;
-  --navbar-accent: #5eead4;
-  --navbar-accent-dark: #2dd4bf;
-  --navbar-link: #e0e7ef;
+  --navbar-bg: #1f2937;
+  --navbar-accent: #0ea5e9;
+  --navbar-accent-dark: #0369a1;
+  --navbar-link: #d1d5db;
   --navbar-link-hover: #fff;
-  --navbar-link-active-bg: #5eead4;
-  --navbar-link-active: #232526;
-  --navbar-section: #a5b4fc;
-  --navbar-border: rgba(94, 234, 212, 0.15);
-  --navbar-footer-bg: #232526;
-  --navbar-footer-text: #a5b4fc;
-  --navbar-shadow: 0 2px 24px 0 rgba(94, 234, 212, 0.08);
+  --navbar-link-active-bg: #bae6fd;
+  --navbar-link-active: #1e3a8a;
+  --navbar-section: #2563eb;
+  --navbar-border: rgba(14, 165, 233, 0.15);
+  --navbar-footer-bg: #1f2937;
+  --navbar-footer-text: #60a5fa;
+  --navbar-shadow: 0 2px 24px 0 rgba(14, 165, 233, 0.08);
   --navbar-mini-width: 68px;
   --navbar-full-width: 240px;
-  
+
+  --card-bg: #ffffff;
+  --card-border: #e5e7eb;
+  --section-header: #1e40af;
+  --shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  --radius: 0.75rem;
+
   /* Spacing */
   --spacing-xs: var(--mantine-spacing-xs);
   --spacing-sm: var(--mantine-spacing-sm);
   --spacing-md: var(--mantine-spacing-md);
   --spacing-lg: var(--mantine-spacing-lg);
   --spacing-xl: var(--mantine-spacing-xl);
-  
+
   /* Shadows */
   --shadow-sm: var(--mantine-shadow-sm);
   --shadow-md: var(--mantine-shadow-md);
   --shadow-lg: var(--mantine-shadow-lg);
-  
+
   /* Border Radius */
   --radius-sm: var(--mantine-radius-sm);
   --radius-md: var(--mantine-radius-md);
   --radius-lg: var(--mantine-radius-lg);
-  
+
   /* Colors */
   --color-dimmed: var(--mantine-color-dimmed);
   --color-border: var(--mantine-color-default-border);
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
+    --card-bg: #1a1b1e;
+    --card-border: #373a40;
   }
 }
 
 body {
-  background: var(--background);
+  background-color: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Inter', sans-serif;
+  line-height: 1.5;
 }
 
 body.theme-light {
@@ -76,12 +78,14 @@ body.theme-light {
   --navbar-border: rgba(14, 165, 233, 0.15);
   --navbar-footer-bg: #e2e8f0;
   --navbar-footer-text: #2563eb;
-  
+  --card-bg: #ffffff;
+  --card-border: #e2e8f0;
+
   .card-base {
-    background: #ffffff;
-    border-color: #e2e8f0;
+    background: var(--card-bg);
+    border-color: var(--card-border);
   }
-  
+
   .text-dimmed {
     color: #64748b;
   }
@@ -90,33 +94,138 @@ body.theme-light {
 body.theme-dark {
   --background: #0a0a0a;
   --foreground: #ededed;
-  
+  --card-bg: #1a1b1e;
+  --card-border: #373a40;
+
   .card-base {
-    background: #1a1b1e;
-    border-color: #373a40;
+    background: var(--card-bg);
+    border-color: var(--card-border);
   }
-  
+
   .text-dimmed {
     color: #909296;
   }
 }
 
-/* Cards and Papers */
+/* Navbar */
+.navbar {
+  background-color: var(--navbar-bg);
+  color: var(--navbar-link);
+}
+
+.navbar a {
+  color: var(--navbar-link);
+}
+
+.navbar a:hover {
+  color: var(--navbar-link-hover);
+}
+
+.navbar a.active {
+  background-color: var(--navbar-accent);
+  color: var(--navbar-link-active);
+  border-radius: var(--radius);
+}
+
+/* Layout */
+.page-container {
+  padding: 2rem;
+  display: grid;
+  gap: 2rem;
+}
+
+@media (max-width: 768px) {
+  .page-container {
+    padding: 1rem;
+  }
+
+  .card-base {
+    padding: var(--spacing-md);
+  }
+}
+
+/* Cards */
 .card-base {
-  box-shadow: var(--shadow-sm);
-  padding: var(--spacing-lg);
-  border-radius: var(--radius-md);
-  border: 1px solid var(--color-border);
-  background: var(--background);
-  color: var(--foreground);
+  background-color: var(--card-bg);
+  border: 1px solid var(--card-border);
+  box-shadow: var(--shadow);
+  border-radius: var(--radius);
+  padding: 1.5rem;
 }
 
 .card-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: var(--spacing-xs);
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--section-header);
+  margin-bottom: 1rem;
+}
+
+.card-metric {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-top: 0.5rem;
+}
+
+.card-label {
+  color: #6b7280;
+  font-size: 0.875rem;
+}
+
+/* Dashboard grid */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+}
+
+.stat-block {
+  background-color: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius);
+  padding: 1rem;
+  text-align: center;
+}
+
+.stat-title {
+  font-size: 0.875rem;
+  color: #6b7280;
+}
+
+.stat-value {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--foreground);
+}
+
+/* Progress bars */
+.progress-bar {
   width: 100%;
+  height: 1rem;
+  background-color: #e5e7eb;
+  border-radius: 9999px;
+  overflow: hidden;
+  margin-bottom: 0.75rem;
+}
+
+.progress-fill {
+  height: 100%;
+  border-radius: 9999px;
+}
+
+.progress-red {
+  background-color: #ef4444;
+}
+
+.progress-green {
+  background-color: #10b981;
+}
+
+.progress-yellow {
+  background-color: #facc15;
+}
+
+.progress-blue {
+  background-color: #3b82f6;
 }
 
 /* Typography */
@@ -145,22 +254,11 @@ body.theme-dark {
   color: var(--color-dimmed);
 }
 
-/* Form Elements */
+/* Forms */
 .form-section {
   margin-bottom: var(--spacing-lg);
 }
 
 .form-group {
   margin-bottom: var(--spacing-md);
-}
-
-/* Responsive Utilities */
-@media (max-width: 768px) {
-  .page-container {
-    padding: var(--spacing-sm);
-  }
-  
-  .card-base {
-    padding: var(--spacing-md);
-  }
 }

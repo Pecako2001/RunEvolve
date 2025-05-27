@@ -1,51 +1,19 @@
-# Agents Setup Guide
+# Contributor Guide
 
-This guide describes how to run the application, including both the frontend and backend components.
+## Dev Environment Tips
+- Use npm run dev run where <project_name> to jump to a package instead of scanning with ls.
+- Run pnpm install --filter <project_name> to add the package to your workspace so Vite, ESLint, and TypeScript can see it.
+- Use pnpm create vite@latest <project_name> -- --template react-ts to spin up a new React + Vite package with TypeScript checks ready.
+- Check the name field inside each package's package.json to confirm the right name—skip the top-level one.
 
----
+## Testing Instructions
+- Find the CI plan in the .github/workflows folder.
+- Run pnpm turbo run test --filter <project_name> to run every check defined for that package.
+- From the package root you can just call pnpm test. The commit should pass all tests before you merge.
+- To focus on one step, add the Vitest pattern: pnpm vitest run -t "<test name>".
+- Fix any test or type errors until the whole suite is green.
+- After moving files or changing imports, run pnpm lint --filter <project_name> to be sure ESLint and TypeScript rules still pass.
+- Add or update tests for the code you change, even if nobody asked.
 
-
-## Running the Frontend
-
-Navigate to the `frontend` directory and start the development server:
-
-```bash
-cd frontend
-npm install        # Run once to install dependencies
-npm run dev
-```
-
-This will start the frontend on http://localhost:3000 by default.
-
----
-
-## Running the Backend
-
-Navigate to the `backend` directory and start the FastAPI backend server:
-
-```bash
-cd backend
-uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
-```
-
-This will start the API server on http://localhost:8000.
-
----
-
-## Notes
-
-- Ensure the backend and frontend are both running for full functionality.
-- You can configure API endpoints and database connections in the `.env` file if provided.
-- The frontend is expected to communicate with the backend at `localhost:8000`. Update `API_BASE_URL` in the frontend config if needed.
-
----
-
-## Docker (Optional)
-
-To run the project with Docker:
-
-```bash
-docker-compose up --build
-```
-
-Refer to `docker-compose.yml` for configuration details.
+## PR instructions
+Title format: [<project_name>] <Title>
