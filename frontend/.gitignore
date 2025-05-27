@@ -19,6 +19,7 @@
 # React
 *.jsx
 *.tsx
+!src/**/*.tsx
 
 # Python
 __pycache__/

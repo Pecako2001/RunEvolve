@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import {
   Stack,
   Card,
@@ -95,6 +96,7 @@ function getCurrentWeekKey(): string {
 }
 
 export default function Home() {
+  const router = useRouter();
   const [lastRun, setLastRun] = useState<Run | null>(null);
   const [loadingLastRun, setLoadingLastRun] = useState(true);
   const [errorLastRun, setErrorLastRun] = useState<string | null>(null);
@@ -102,6 +104,22 @@ export default function Home() {
   const [stats, setStats] = useState<Stats | null>(null);
   const [loadingStats, setLoadingStats] = useState(true);
   const [errorStats, setErrorStats] = useState<string | null>(null);
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      router.replace('/login');
+      return;
+    }
+    fetch(`${API_BASE_URL}/auth/me`, { headers: { Authorization: `Bearer ${token}` } })
+      .then((r) => {
+        if (!r.ok) throw new Error('auth');
+      })
+      .catch(() => {
+        localStorage.removeItem('token');
+        router.replace('/login');
+      });
+  }, [router]);
 
   useEffect(() => {
     // Fetch last run

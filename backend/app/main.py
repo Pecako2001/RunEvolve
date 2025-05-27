@@ -12,6 +12,7 @@ from .services.ai_model import predict_run_type, generate_training_plan
 from .models import RunStatus # Import RunStatus for setting planned runs
 
 from .routers import network
+from .routers import auth
 
 # Load environment variables from .env file
 load_dotenv()
@@ -175,3 +176,4 @@ async def strava_fetch_placeholder():
     return {"message": "Strava fetch placeholder"}
 
 app.include_router(network.router)
+app.include_router(auth.router)

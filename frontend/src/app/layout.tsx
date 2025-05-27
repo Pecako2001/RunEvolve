@@ -6,6 +6,7 @@ import './globals.css';
 import { MantineProvider, createTheme, ActionIcon, Loader, AppShell } from '@mantine/core';
 import { Notifications } from '@mantine/notifications';
 import { useDisclosure } from '@mantine/hooks';
+import { usePathname } from 'next/navigation';
 import Providers, { useTheme } from './providers'; // Renamed to ThemeProvider internally but default export is Providers
 import { AppHeader } from '../components/Header';
 import { AppNavbar } from '../components/Navbar';
@@ -34,18 +35,18 @@ export const mantineThemeConfig = createTheme({
 function AppLayout({ children }: { children: React.ReactNode }) {
   const [opened, { toggle }] = useDisclosure();
   const { theme, toggleTheme } = useTheme();
+  const pathname = usePathname();
+  const showNavbar = pathname !== '/login' && pathname !== '/register';
 
   return (
     <AppShell
-      navbar={{
-        width: 250,
-        breakpoint: 'sm',
-        collapsed: { mobile: !opened, desktop: false },
-      }}
+      navbar={showNavbar ? { width: 250, breakpoint: 'sm', collapsed: { mobile: !opened, desktop: false } } : undefined}
     >
-      <AppShell.Navbar px={0} py={0}>
-        <AppNavbar onClose={toggle} mobileOpened={opened} />
-      </AppShell.Navbar>
+      {showNavbar && (
+        <AppShell.Navbar px={0} py={0}>
+          <AppNavbar onClose={toggle} mobileOpened={opened} />
+        </AppShell.Navbar>
+      )}
 
       <AppShell.Header>
         <AppHeader

@@ -1,0 +1,11 @@
+.authPage__container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh;
+}
+
+.authPage__card {
+  width: 100%;
+  max-width: 420px;
+}
