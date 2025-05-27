@@ -14,13 +14,28 @@ import {
   Anchor,
 } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
-import {
-  IconHome,
-  IconInfoCircle,
-  IconChecklist,
-  IconChartDots,
-  IconBrain,
-} from "@tabler/icons-react";
+import dynamic from 'next/dynamic';
+
+const IconHome = dynamic(() =>
+  import('@tabler/icons-react').then((mod) => mod.IconHome),
+  { ssr: false }
+);
+const IconInfoCircle = dynamic(() =>
+  import('@tabler/icons-react').then((mod) => mod.IconInfoCircle),
+  { ssr: false }
+);
+const IconChecklist = dynamic(() =>
+  import('@tabler/icons-react').then((mod) => mod.IconChecklist),
+  { ssr: false }
+);
+const IconChartDots = dynamic(() =>
+  import('@tabler/icons-react').then((mod) => mod.IconChartDots),
+  { ssr: false }
+);
+const IconBrain = dynamic(() =>
+  import('@tabler/icons-react').then((mod) => mod.IconBrain),
+  { ssr: false }
+);
 import styles from './Navbar.module.css';
 
 const navSections = [

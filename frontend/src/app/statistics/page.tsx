@@ -27,7 +27,12 @@ import {
   Line,
   Bar,
 } from 'recharts';
-import { IconAlertCircle } from '@tabler/icons-react';
+import dynamic from 'next/dynamic';
+
+const IconAlertCircle = dynamic(() =>
+  import('@tabler/icons-react').then((mod) => mod.IconAlertCircle),
+  { ssr: false }
+);
 
 // Define interfaces for the data structures (consistent with home page)
 type Optional<T> = T | null | undefined;
