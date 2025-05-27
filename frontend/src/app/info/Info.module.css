@@ -1,0 +1,28 @@
+/* frontend/src/app/info/Info.module.css */
+.infoPage__container {
+  padding: var(--mantine-spacing-md);
+}
+
+.infoPage__title {
+  margin-bottom: var(--mantine-spacing-xl);
+  text-align: center;
+}
+
+.infoPage__card {
+  padding: var(--mantine-spacing-lg);
+  margin-bottom: var(--mantine-spacing-xl);
+  border: 1px solid var(--mantine-color-default-border);
+  box-shadow: var(--mantine-shadow-sm);
+  border-radius: var(--mantine-radius-md);
+}
+
+.infoPage__sectionTitle {
+  margin-bottom: var(--mantine-spacing-md);
+  font-size: var(--mantine-font-size-xl);
+  font-weight: 600;
+}
+
+.infoPage__link {
+  color: var(--navbar-accent);
+  font-weight: 600;
+}
