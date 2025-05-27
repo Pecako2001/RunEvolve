@@ -15,3 +15,29 @@
   font-weight: bold;
   color: var(--runevolve-brand-primary-color);
 }
+
+/* Button Hover and Active States */
+.buttonHoverActive:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+  transition: opacity 0.15s ease-out, transform 0.15s ease-out;
+}
+.buttonHoverActive:active {
+  transform: translateY(0px);
+  opacity: 1;
+  transition: opacity 0.1s ease-out, transform 0.1s ease-out;
+}
+
+/* Card Hover Effects */
+.cardHover {
+  transition: box-shadow 0.2s ease-out, transform 0.2s ease-out;
+}
+.cardHover:hover {
+  box-shadow: var(--mantine-shadow-md); /* Using Mantine's predefined shadow variable */
+  transform: translateY(-2px);
+}
+
+/* General Smooth Transition Utility */
+.transitionAllSmooth {
+  transition: all 0.2s ease-in-out;
+}

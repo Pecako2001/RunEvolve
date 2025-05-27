@@ -20,7 +20,7 @@ import {
   IconChecklist,
   IconX,
   IconChartDots,
-  IconMenu2,
+  IconBrain,
   IconSun,
   IconMoon,
 } from "@tabler/icons-react";
@@ -33,6 +33,7 @@ const navSections = [
       { href: "/", label: "Home", icon: IconHome },
       { href: "/statistics", label: "Statistics", icon: IconChartDots },
       { href: "/CreateRunPage", label: "Create Run", icon: IconChecklist },
+      { href: "/NetwerkPage", label: "Network", icon: IconBrain },
     ],
   },
   {
@@ -59,21 +60,6 @@ export function AppNavbar({
 }: Props) {
   const [active, setActive] = useState("Home");
   const isMobile = useMediaQuery("(max-width: 768px)");
-  const [theme, setTheme] = useState<'theme-dark' | 'theme-light'>(() => {
-    if (typeof window !== 'undefined') {
-      return document.body.classList.contains('theme-light') ? 'theme-light' : 'theme-dark';
-    }
-    return 'theme-dark';
-  });
-
-  useEffect(() => {
-    document.body.classList.remove('theme-dark', 'theme-light');
-    document.body.classList.add(theme);
-  }, [theme]);
-
-  const toggleTheme = () => {
-    setTheme((prev) => (prev === 'theme-dark' ? 'theme-light' : 'theme-dark'));
-  };
 
   useEffect(() => {
     if (isMobile && onClose && mobileOpened === true) onClose();
@@ -118,26 +104,25 @@ export function AppNavbar({
               {section.links.map((item) =>
                 sidebarState === "mini" ? (
                   <Tooltip label={item.label} position="right" key={item.label}>
-                    <Link href={item.href} passHref legacyBehavior>
-                      <a
-                        className={styles.navbar__link}
-                        data-active={active === item.label ? "" : undefined}
-                        onClick={() => setActive(item.label)}
-                      >
-                        <item.icon className={styles.navbar__icon} stroke={1.5} />
-                      </a>
-                    </Link>
-                  </Tooltip>
-                ) : (
-                  <Link href={item.href} passHref legacyBehavior key={item.label}>
-                    <a
+                    <Link 
+                      href={item.href}
                       className={styles.navbar__link}
                       data-active={active === item.label ? "" : undefined}
                       onClick={() => setActive(item.label)}
                     >
                       <item.icon className={styles.navbar__icon} stroke={1.5} />
-                      <span>{item.label}</span>
-                    </a>
+                    </Link>
+                  </Tooltip>
+                ) : (
+                  <Link 
+                    href={item.href}
+                    key={item.label}
+                    className={styles.navbar__link}
+                    data-active={active === item.label ? "" : undefined}
+                    onClick={() => setActive(item.label)}
+                  >
+                    <item.icon className={styles.navbar__icon} stroke={1.5} />
+                    <span>{item.label}</span>
                   </Link>
                 )
               )}

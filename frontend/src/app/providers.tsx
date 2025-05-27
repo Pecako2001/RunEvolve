@@ -1,28 +1,53 @@
 'use client';
 
-import { MantineProvider, AppShell } from '@mantine/core';
-import { useDisclosure } from '@mantine/hooks';
-import { AppHeader } from '../components/Header';
-import { AppNavbar } from '../components/Navbar';
+import { useState, useEffect, createContext, useContext, ReactNode } from 'react';
 
-export default function Providers({ children }: { children: React.ReactNode }) {
-  const [opened, { toggle }] = useDisclosure();
+// Define the shape of the theme context
+interface ThemeContextType {
+  theme: 'theme-dark' | 'theme-light';
+  toggleTheme: () => void;
+}
+
+// Create the context with a default undefined value
+const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
+
+// Custom hook to use the theme context
+export function useTheme() {
+  const context = useContext(ThemeContext);
+  if (context === undefined) {
+    throw new Error('useTheme must be used within a ThemeProvider');
+  }
+  return context;
+}
+
+// ThemeProvider component
+export default function Providers({ children }: { children: ReactNode }) {
+  const [theme, setTheme] = useState<'theme-dark' | 'theme-light'>(() => {
+    if (typeof window !== 'undefined') {
+      const storedTheme = localStorage.getItem('runevolve-theme');
+      if (storedTheme === 'theme-light' || storedTheme === 'theme-dark') {
+        return storedTheme;
+      }
+      return document.body.classList.contains('theme-light') ? 'theme-light' : 'theme-dark';
+    }
+    return 'theme-dark'; // Default for SSR
+  });
+
+  useEffect(() => {
+    document.body.classList.remove('theme-dark', 'theme-light');
+    document.body.classList.add(theme);
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('runevolve-theme', theme);
+    }
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme((prev) => (prev === 'theme-dark' ? 'theme-light' : 'theme-dark'));
+  };
 
   return (
-    <MantineProvider>
-      <AppShell
-        header={{ height: 60 }}
-        navbar={{ width: 300, breakpoint: 'sm', collapsed: { mobile: !opened, desktop: false } }}
-        padding="md"
-      >
-        <AppShell.Header>
-          <AppHeader navbarOpened={opened} toggleNavbar={toggle} />
-        </AppShell.Header>
-        <AppShell.Navbar p="md">
-          <AppNavbar onClose={toggle} />
-        </AppShell.Navbar>
-        <AppShell.Main>{children}</AppShell.Main>
-      </AppShell>
-    </MantineProvider>
+    <ThemeContext.Provider value={{ theme, toggleTheme }}>
+      {children}
+    </ThemeContext.Provider>
   );
 }

@@ -41,6 +41,7 @@ interface Run {
   average_speed: Optional<number>; // km/h
   heart_rate: Optional<number>; // bpm
   settings_snapshot: Optional<Record<string, any>>;
+  status: Optional<string>; // "planned" or "completed"
 }
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
@@ -58,43 +59,67 @@ function formatTime(seconds: Optional<number>): string {
 }
 
 export default function StatisticsPage() {
-  const [runs, setRuns] = useState<Run[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [completedRuns, setCompletedRuns] = useState<Run[]>([]);
+  const [loadingCompletedRuns, setLoadingCompletedRuns] = useState(true);
+  const [errorCompletedRuns, setErrorCompletedRuns] = useState<string | null>(null);
+
+  const [plannedRuns, setPlannedRuns] = useState<Run[]>([]);
+  const [loadingPlannedRuns, setLoadingPlannedRuns] = useState(true);
+  const [errorPlannedRuns, setErrorPlannedRuns] = useState<string | null>(null);
 
   useEffect(() => {
-    setLoading(true);
-    setError(null); // Reset error on new fetch attempt
-
-    fetch(`${API_BASE_URL}/runs`)
+    // Fetch completed runs
+    setLoadingCompletedRuns(true);
+    setErrorCompletedRuns(null);
+    fetch(`${API_BASE_URL}/runs`) // This endpoint now returns completed runs
       .then(async (response) => {
         if (!response.ok) {
-          // Try to parse error message from backend if available
-          const errorData = await response.json().catch(() => ({ detail: 'Failed to fetch runs data.' }));
+          const errorData = await response.json().catch(() => ({ detail: 'Failed to fetch completed runs data.' }));
           throw new Error(errorData.detail || `HTTP error! status: ${response.status}`);
         }
         return response.json();
       })
       .then((data: Run[]) => {
-        setRuns(data);
-        if (data.length === 0) {
-          // You might want to set a specific message or handle this in the UI differently
-          console.log("No runs found from the backend.");
-        }
+        setCompletedRuns(data);
       })
       .catch((err) => {
-        console.error('Error fetching runs:', err);
-        setError(err.message || 'An unexpected error occurred while fetching run data.');
-        setRuns([]); // Clear runs on error to avoid showing stale data
+        console.error('Error fetching completed runs:', err);
+        setErrorCompletedRuns(err.message || 'An unexpected error occurred while fetching completed run data.');
+        setCompletedRuns([]);
       })
       .finally(() => {
-        setLoading(false);
+        setLoadingCompletedRuns(false);
+      });
+
+    // Fetch planned runs
+    setLoadingPlannedRuns(true);
+    setErrorPlannedRuns(null);
+    fetch(`${API_BASE_URL}/runs/planned`)
+      .then(async (response) => {
+        if (!response.ok) {
+          const errorData = await response.json().catch(() => ({ detail: 'Failed to fetch planned runs' }));
+          throw new Error(errorData.detail || `HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then((data: Run[]) => {
+        setPlannedRuns(data);
+      })
+      .catch((err) => {
+        console.error('Error fetching planned runs:', err);
+        setErrorPlannedRuns(err.message || 'An unexpected error occurred');
+        setPlannedRuns([]);
+      })
+      .finally(() => {
+        setLoadingPlannedRuns(false);
       });
   }, []);
 
-  // Data transformation for charts
-  // This logic should be robust enough, assuming the Run interface matches backend
-  const monthlyAvgSpeedData = runs.reduce((acc, run) => {
+  // Data transformation for charts (using completedRuns)
+  // Backend /runs endpoint already ensures these are completed runs.
+  // The status field might not even be present if not explicitly selected in backend schema for this endpoint.
+  // Assuming API returns only completed runs for this array.
+  const monthlyAvgSpeedData = completedRuns.reduce((acc, run) => {
     if (!run.created_at || run.average_speed === null || run.average_speed === undefined) return acc;
     const monthYear = new Date(run.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'short' });
     const existingEntry = acc.find(entry => entry.month === monthYear);
@@ -111,7 +136,7 @@ export default function StatisticsPage() {
   .map(item => ({month: item.month, avgSpeed: parseFloat(item.avgSpeed.toFixed(2))}));
 
 
-  const yearlyDistanceData = runs.reduce((acc, run) => {
+  const yearlyDistanceData = completedRuns.reduce((acc, run) => {
     if (!run.created_at || run.distance === null || run.distance === undefined) return acc;
     const year = new Date(run.created_at).getFullYear().toString();
     const existingEntry = acc.find(entry => entry.year === year);
@@ -126,37 +151,46 @@ export default function StatisticsPage() {
   .map(item => ({year: item.year, totalDistance: parseFloat(item.totalDistance.toFixed(2))}));
 
 
-  if (loading) {
+  if (loadingCompletedRuns || loadingPlannedRuns) {
     return (
       <Container fluid className={styles.statisticsPage__container}>
         <Stack className={styles.statisticsPage__loadingStack}>
-          <Loader size="xl" /> {/* Mantine Loader size prop is fine */}
+          <Loader size="xl" />
           <Text>Loading statistics...</Text>
         </Stack>
       </Container>
     );
   }
 
-  if (error) {
+  if (errorCompletedRuns || errorPlannedRuns) {
     return (
       <Container fluid className={styles.statisticsPage__container}>
-        <Alert title="Error Fetching Run Data" color="red" icon={<IconAlertCircle />}>
-          {error}
-        </Alert>
+        <Stack>
+          {errorCompletedRuns && (
+            <Alert title="Error Fetching Completed Runs" color="red" icon={<IconAlertCircle />}>
+              {errorCompletedRuns}
+            </Alert>
+          )}
+          {errorPlannedRuns && (
+            <Alert title="Error Fetching Planned Runs" color="red" icon={<IconAlertCircle />}>
+              {errorPlannedRuns}
+            </Alert>
+          )}
+        </Stack>
       </Container>
     );
   }
   
-  if (runs.length === 0 && !loading && !error) { // Added !error condition here
+  if (completedRuns.length === 0 && plannedRuns.length === 0 && !loadingCompletedRuns && !loadingPlannedRuns && !errorCompletedRuns && !errorPlannedRuns) {
     return (
       <Container fluid className={styles.statisticsPage__container}>
         <Title order={2} className={styles.statisticsPage__mainTitle}>Run Statistics</Title>
-        <Text>No run data available to display statistics. Try creating some runs first!</Text>
+        <Text>No run data available. Create some completed or planned runs first!</Text>
       </Container>
     );
   }
 
-  const tableRows = runs.map((run) => (
+  const completedTableRows = completedRuns.map((run) => (
     <Table.Tr key={run.id}>
       <Table.Td>{run.name || 'Unnamed Run'}</Table.Td>
       <Table.Td>{new Date(run.created_at).toLocaleDateString()}</Table.Td>
@@ -164,6 +198,17 @@ export default function StatisticsPage() {
       <Table.Td>{formatTime(run.time)}</Table.Td>
       <Table.Td>{run.average_speed?.toFixed(2) || 'N/A'} km/h</Table.Td>
       <Table.Td>{run.heart_rate || 'N/A'} bpm</Table.Td>
+    </Table.Tr>
+  ));
+
+  const plannedTableRows = plannedRuns.map((run) => (
+    <Table.Tr key={run.id}>
+      <Table.Td>{run.name || 'Unnamed Planned Run'}</Table.Td>
+      <Table.Td>{new Date(run.created_at).toLocaleDateString()}</Table.Td>
+      <Table.Td>{run.distance?.toFixed(2) || 'N/A'} km (target)</Table.Td>
+      <Table.Td>{formatTime(run.time)} (target)</Table.Td>
+      {/* For settings_snapshot, you might want to display specific key-value pairs or a summary */}
+      <Table.Td>{run.settings_snapshot?.notes || run.settings_snapshot?.predicted_run_type || 'N/A'}</Table.Td>
     </Table.Tr>
   ));
 
@@ -220,26 +265,64 @@ export default function StatisticsPage() {
           </Grid.Col>
         </Grid>
         
+        {/* Completed Runs Table */}
         <Paper className={styles.statisticsPage__tablePaper}>
-          <Title order={4} className={styles.statisticsPage__paperTitle}>All Runs</Title>
-          <ScrollArea>
-            <Table 
-              className={`${styles.statisticsPage__runsTable} ${styles.statisticsPage__runsTable_striped} ${styles.statisticsPage__runsTable_highlightOnHover} ${styles.statisticsPage__runsTable_withTableBorder} ${styles.statisticsPage__runsTable_withColumnBorders}`}
-              miw={600}
-            >
-              <Table.Thead>
-                <Table.Tr>
-                  <Table.Th>Name</Table.Th>
-                  <Table.Th>Date</Table.Th>
-                  <Table.Th>Distance</Table.Th>
-                  <Table.Th>Time</Table.Th>
-                  <Table.Th>Avg Speed</Table.Th>
-                  <Table.Th>Heart Rate</Table.Th>
-                </Table.Tr>
-              </Table.Thead>
-              <Table.Tbody>{tableRows}</Table.Tbody>
-            </Table>
-          </ScrollArea>
+          <Title order={4} className={styles.statisticsPage__paperTitle}>Completed Runs</Title>
+          {completedRuns.length > 0 ? (
+            <ScrollArea>
+              <Table 
+                className={`${styles.statisticsPage__runsTable} ${styles.statisticsPage__runsTable_striped} ${styles.statisticsPage__runsTable_highlightOnHover} ${styles.statisticsPage__runsTable_withTableBorder} ${styles.statisticsPage__runsTable_withColumnBorders}`}
+                miw={600}
+              >
+                <Table.Thead>
+                  <Table.Tr>
+                    <Table.Th>Name</Table.Th>
+                    <Table.Th>Date</Table.Th>
+                    <Table.Th>Distance</Table.Th>
+                    <Table.Th>Time</Table.Th>
+                    <Table.Th>Avg Speed</Table.Th>
+                    <Table.Th>Heart Rate</Table.Th>
+                  </Table.Tr>
+                </Table.Thead>
+                <Table.Tbody>{completedTableRows}</Table.Tbody>
+              </Table>
+            </ScrollArea>
+          ) : (
+            <Text>No completed runs yet.</Text>
+          )}
+        </Paper>
+
+        {/* Planned Runs Table */}
+        <Paper className={styles.statisticsPage__tablePaper}>
+          <Title order={4} className={styles.statisticsPage__paperTitle}>Planned Runs</Title>
+          {loadingPlannedRuns && !errorPlannedRuns && <Loader />}
+          {errorPlannedRuns && (
+             <Alert title="Error Fetching Planned Runs" color="red" icon={<IconAlertCircle />}>
+              {errorPlannedRuns}
+            </Alert>
+          )}
+          {!loadingPlannedRuns && !errorPlannedRuns && plannedRuns.length === 0 && (
+            <Text>No planned runs yet.</Text>
+          )}
+          {!loadingPlannedRuns && !errorPlannedRuns && plannedRuns.length > 0 && (
+            <ScrollArea>
+              <Table 
+                className={`${styles.statisticsPage__runsTable} ${styles.statisticsPage__runsTable_striped} ${styles.statisticsPage__runsTable_highlightOnHover} ${styles.statisticsPage__runsTable_withTableBorder} ${styles.statisticsPage__runsTable_withColumnBorders}`}
+                miw={600}
+              >
+                <Table.Thead>
+                  <Table.Tr>
+                    <Table.Th>Name</Table.Th>
+                    <Table.Th>Date Planned</Table.Th>
+                    <Table.Th>Target Distance</Table.Th>
+                    <Table.Th>Target Time</Table.Th>
+                    <Table.Th>Notes/Type</Table.Th>
+                  </Table.Tr>
+                </Table.Thead>
+                <Table.Tbody>{plannedTableRows}</Table.Tbody>
+              </Table>
+            </ScrollArea>
+          )}
         </Paper>
       </Stack>
     </Container>

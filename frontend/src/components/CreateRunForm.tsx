@@ -1,7 +1,8 @@
 "use client";
 
 import React, { useState } from 'react';
-import { Card, TextInput, Button, Notification, Stack, Text, Box } from '@mantine/core';
+import { TextInput, Button, Stack, Text, Box } from '@mantine/core';
+import { notifications } from '@mantine/notifications';
 import axios from 'axios';
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
@@ -14,19 +15,12 @@ interface RunResponse {
   settings_snapshot: any;
 }
 
-interface NotificationState {
-  message: string;
-  color: 'green' | 'red';
-}
-
 export default function CreateRunForm() {
   const [runName, setRunName] = useState(''); // Local state, not sent to backend for now
-  const [isLoading, setIsLoading] = useState(false);
-  const [notification, setNotification] = useState<NotificationState | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false); // Renamed from isLoading for clarity
 
   const handleSubmit = async () => {
-    setIsLoading(true);
-    setNotification(null);
+    setIsSubmitting(true);
 
     try {
       // The backend endpoint POST /runs/new-from-last does not currently accept a body.
@@ -36,7 +30,8 @@ export default function CreateRunForm() {
         {}
       );
       
-      setNotification({
+      notifications.show({
+        title: 'Success',
         message: `New run created successfully! ID: ${response.data.id}. Name: ${response.data.name || 'N/A'}`,
         color: 'green',
       });
@@ -49,12 +44,13 @@ export default function CreateRunForm() {
       } else if (error instanceof Error) {
         errorMessage = `Failed to create run: ${error.message}`;
       }
-      setNotification({
+      notifications.show({
+        title: 'Error',
         message: errorMessage,
         color: 'red',
       });
     } finally {
-      setIsLoading(false);
+      setIsSubmitting(false);
     }
   };
 
@@ -66,27 +62,19 @@ export default function CreateRunForm() {
           placeholder="Enter a name for this run"
           value={runName}
           onChange={(event) => setRunName(event.currentTarget.value)}
-          disabled={isLoading}
+          disabled={isSubmitting}
         />
         <Text className="createRunForm__noteText">
           Note: The run name is currently for local reference and not sent to the backend with this action.
           The new run will inherit its name from the previous run.
         </Text>
         
-        {notification && (
-          <Notification
-            color={notification.color}
-            onClose={() => setNotification(null)}
-            title={notification.color === 'green' ? 'Success' : 'Error'}
-          >
-            {notification.message}
-          </Notification>
-        )}
+        {/* Notification component removed, will use Mantine's global notifications */}
 
         <Button
           onClick={handleSubmit}
-          loading={isLoading}
-          className="createRunForm__submitButton"
+          loading={isSubmitting}
+          className="createRunForm__submitButton buttonHoverActive" // Added buttonHoverActive
         >
           Create Run From Last
         </Button>

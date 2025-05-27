@@ -1,3 +1,6 @@
+backend/app/services/models/
+*.pyc
+
 # Logs
 logs
 *.log
