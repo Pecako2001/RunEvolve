@@ -2,7 +2,7 @@
 
 import { Card, Title, Text, Group, Avatar, Stack, Button } from '@mantine/core';
 import { IconUser, IconLogout } from '@tabler/icons-react';
-
+import UserSidebarCard from '@/components/UserSidebarCard';
 export default function ProfilePage() {
   // Dummy user data for demonstration
   const user = {
@@ -31,7 +31,7 @@ export default function ProfilePage() {
             onClick={handleLogout}
           >
             Logout
-          </Button>
+          </Button >
         </Stack>
       </Card>
     </Group>
