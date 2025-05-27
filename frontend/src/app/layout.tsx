@@ -57,7 +57,7 @@ function AppLayout({ children }: { children: React.ReactNode }) {
         />
       </AppShell.Header>
 
-      <AppShell.Main style={{ paddingTop: 0 }}>
+      <AppShell.Main style={{ paddingTop: 60 }}>
         {children}
       </AppShell.Main>
     </AppShell>
