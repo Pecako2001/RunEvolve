@@ -58,7 +58,6 @@
 }
 
 .header__group {
-  padding-left: var(--navbar-full-width);
   height: 100%;
   padding: var(--mantine-spacing-md);
   background: var(--header-bg);
