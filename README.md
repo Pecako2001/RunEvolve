@@ -141,6 +141,12 @@ The following scripts are available in the `frontend` directory (via `package.js
 *   `npm run lint`: Lints the codebase using Next.js's integrated ESLint configuration.
 *   `npm run test`: Runs tests using Jest.
 
+### Styling
+
+Shared utilities and theme-aware classes live in `frontend/src/styles/global.module.css`.
+Import this module in components to access base styles like `cardHover` or
+`createRunForm__submitButton` and ensure consistent dark/light theme behavior.
+
 ## API Endpoints (Backend)
 
 The backend API is built with FastAPI, which provides automatic interactive API documentation.
