@@ -1,28 +1,27 @@
 @import "tailwindcss";
 
+/* Dark Theme */
 :root {
   --background: #f9fafb;
   --foreground: #111827;
-  --navbar-header: #232526;
-  --navbar-bg: #1f2937;
+  --navbar-header: #242424;
+  --navbar-bg: #242424;
   --navbar-accent: #0ea5e9;
   --navbar-accent-dark: #0369a1;
-  --navbar-link: #d1d5db;
-  --navbar-link-hover: #fff;
-  --navbar-link-active-bg: #bae6fd;
-  --navbar-link-active: #1e3a8a;
-  --navbar-section: #2563eb;
+  --dark_text-hover: #91a7ff;
+  --dark_text-active-bg: #000000;
+  --dark_text-active: #91a7ff;
+  --dark_text: #ffff;
   --navbar-border: rgba(14, 165, 233, 0.15);
   --navbar-footer-bg: #1f2937;
   --navbar-footer-text: #60a5fa;
-  --navbar-shadow: 0 2px 24px 0 rgba(14, 165, 233, 0.08);
   --navbar-mini-width: 68px;
   --navbar-full-width: 240px;
 
-  --card-bg: #ffffff;
+  --header-bg: #242424;
+  --card-bg: #f1f3f5;
   --card-border: #e5e7eb;
   --section-header: #1e40af;
-  --shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
   --radius: 0.75rem;
 
   /* Spacing */
@@ -64,26 +63,27 @@ body {
 }
 
 body.theme-light {
-  --background: #ffffff;
+  --background: #f1f3f5;
   --foreground: #171717;
-  --navbar-header: #c5ecff;
-  --navbar-bg: #f8fafc;
+  --navbar-header: #4c6ef5;
+  --navbar-bg: #4c6ef5;
   --navbar-accent: #0ea5e9;
   --navbar-accent-dark: #0369a1;
-  --navbar-link: #232526;
-  --navbar-link-hover: #0ea5e9;
-  --navbar-link-active-bg: #bae6fd;
-  --navbar-link-active: #0369a1;
-  --navbar-section: #2563eb;
-  --navbar-border: rgba(14, 165, 233, 0.15);
+  --dark_text-hover: #0ea5e9;
+  --dark_text-active-bg: #fff;
+  --dark_text-active: #4c6ef5;
+  --dark_text: #ffff;
   --navbar-footer-bg: #e2e8f0;
   --navbar-footer-text: #2563eb;
-  --card-bg: #ffffff;
+  --card-bg: #f1f3f5;
   --card-border: #e2e8f0;
 
+  --header-bg: #ffffff;
+
   .card-base {
-    background: var(--card-bg);
+    background: #ffffff;
     border-color: var(--card-border);
+    border-radius: 1rem;
   }
 
   .text-dimmed {
@@ -105,26 +105,6 @@ body.theme-dark {
   .text-dimmed {
     color: #909296;
   }
-}
-
-/* Navbar */
-.navbar {
-  background-color: var(--navbar-bg);
-  color: var(--navbar-link);
-}
-
-.navbar a {
-  color: var(--navbar-link);
-}
-
-.navbar a:hover {
-  color: var(--navbar-link-hover);
-}
-
-.navbar a.active {
-  background-color: var(--navbar-accent);
-  color: var(--navbar-link-active);
-  border-radius: var(--radius);
 }
 
 /* Layout */

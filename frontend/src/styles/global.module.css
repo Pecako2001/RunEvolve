@@ -42,14 +42,14 @@
 
 .createRunForm__noteText {
   font-size: var(--mantine-font-size-xs);
-  color: var(--navbar-link);
+  color: var(--dark_text);
 }
 
 .createRunForm__submitButton {
   width: 100%;
   margin-top: var(--mantine-spacing-md);
   background: var(--navbar-accent);
-  color: var(--navbar-link-active);
+  color: var(--dark_text-active);
   border: none;
   border-radius: var(--mantine-radius-md);
   padding: var(--mantine-spacing-sm);
@@ -65,8 +65,8 @@
   padding-left: var(--navbar-full-width);
   height: 100%;
   padding: var(--mantine-spacing-md);
-  background: var(--navbar-bg);
-  color: var(--navbar-link);
+  background: var(--header-bg);
+  color: var(--dark_text);
   display: flex;
   flex-direction: column;
   align-items: center;

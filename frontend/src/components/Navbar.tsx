@@ -147,7 +147,7 @@ export function AppNavbar({
       <Box className={styles.navbar__infoSection}>
         <Stack gap="xs">
           <Text className={styles.navbar__infoText}>Version: 1.0.0</Text>
-          <Text className={styles.navbar__infoText}>Last Updated: 2024-07-01</Text>
+          <Text className={styles.navbar__infoText}>Last Updated: 2025-05-27</Text>
           <Anchor href="https://github.com/your-repo/runevolve" target="_blank" className={styles.navbar__infoLink}>
             View on GitHub
           </Anchor>
