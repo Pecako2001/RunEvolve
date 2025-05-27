@@ -50,3 +50,13 @@ class RunPlanRequest(BaseModel):
 class RunPlanResponse(BaseModel):
     run_type: str
     training_plan: Union[Dict[str, Any], List[Dict[str, str]]]
+
+class Token(BaseModel):
+    access_token: str
+    token_type: str
+
+class User(BaseModel):
+    username: str
+    email: str
+    first_name: Optional[str] = None
+    last_name: Optional[str] = None
