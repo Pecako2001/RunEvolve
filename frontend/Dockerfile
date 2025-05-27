@@ -6,13 +6,9 @@ WORKDIR /app
 
 # Copy package.json and package-lock.json (or yarn.lock)
 COPY package.json package-lock.json* ./
-# If using yarn, it would be:
-# COPY package.json yarn.lock ./
 
 # Install dependencies
 RUN npm install
-# If using yarn:
-# RUN yarn install
 
 # Copy the rest of the frontend application code
 COPY . .
