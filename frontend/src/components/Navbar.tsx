@@ -89,14 +89,6 @@ export function AppNavbar({
 
       <Divider />
 
-      <Box my="md">
-        <UserSidebarCard
-          name="Kelvin Kiprop"
-          email="kelvin.kiprop96@gmail.com"
-          avatarSrc="/Icon.png"
-        />
-      </Box>
-
       {/* LINKS WITH SECTION TITLES */}
       <ScrollArea className={styles.navbar__linksWrapper}>
         <Box className={styles.navbar__linksInner} data-sidebar-state={sidebarState}>

@@ -43,7 +43,7 @@ export default function LoginPage() {
         justifyContent: 'center',
       }}
     >
-      <Paper withBorder shadow="md" p="xl" className={styles.authPage__card} style={{ background: 'rgba(255,255,255,1)' }}>
+      <Paper withBorder shadow="md" p="xl" className={styles.authPage__card} >
         <Stack>
           <img src="/Icon.png" alt="Logo" width={40} height={40} style={{ alignSelf: 'center' }} />
           <Title order={2} ta="center">Welcome back!</Title>

@@ -1,5 +1,6 @@
 from fastapi import APIRouter
 from dotenv import load_dotenv
+import os
 
 from app.services.strava.athlete import fetch_athlete_zones
 

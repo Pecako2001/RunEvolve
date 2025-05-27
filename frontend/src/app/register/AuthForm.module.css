@@ -6,6 +6,9 @@
 }
 
 .authPage__card {
+  margin-top: 8rem;
   width: 100%;
   max-width: 420px;
+  background: var(--dark_text-active-bg);
+  border-radius: 4rem;
 }

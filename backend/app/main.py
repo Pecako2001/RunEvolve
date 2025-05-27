@@ -11,8 +11,7 @@ from .database import engine, get_db
 from .services.ai_model import predict_run_type, generate_training_plan
 from .models import RunStatus # Import RunStatus for setting planned runs
 
-from .routers import network
-from .routers import auth
+from .routers import network, strava, auth
 
 # Load environment variables from .env file
 load_dotenv()
@@ -177,3 +176,4 @@ async def strava_fetch_placeholder():
 
 app.include_router(network.router)
 app.include_router(auth.router)
+app.include_router(strava.router)

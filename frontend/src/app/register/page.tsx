@@ -35,7 +35,19 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className={styles.authPage__container}>
+    <div
+      className={styles.authPage__container}
+      style={{
+        minHeight: '100vh',
+        backgroundImage: 'url("/background.png")',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}
+    >
       <Paper withBorder shadow="md" p="xl" className={styles.authPage__card}>
         <Stack>
           <img src="/Icon.png" alt="Logo" width={40} height={40} style={{ alignSelf: 'center' }} />
