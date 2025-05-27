@@ -16,7 +16,7 @@
   --navbar-footer-text: #a5b4fc;
   --navbar-shadow: 0 2px 24px 0 rgba(94, 234, 212, 0.08);
   --navbar-mini-width: 68px;
-  --navbar-full-width: 260px;
+  --navbar-full-width: 240px;
   
   /* Spacing */
   --spacing-xs: var(--mantine-spacing-xs);

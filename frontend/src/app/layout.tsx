@@ -37,25 +37,25 @@ function AppLayout({ children }: { children: React.ReactNode }) {
 
   return (
     <AppShell
-      padding="md"
-      aside={{ width: 60, breakpoint: 'sm' }}
       navbar={{
         width: 250,
         breakpoint: 'sm',
         collapsed: { mobile: !opened, desktop: false },
       }}
     >
-      <AppShell.Aside>
+      <AppShell.Navbar px={0} py={0}>
+        <AppNavbar onClose={toggle} mobileOpened={opened} />
+      </AppShell.Navbar>
+
+      <AppShell.Header>
         <AppHeader
           navbarOpened={opened}
           toggleNavbar={toggle}
           currentTheme={theme}
           onToggleTheme={toggleTheme}
         />
-      </AppShell.Aside>
-      <AppShell.Navbar p="md">
-        <AppNavbar onClose={toggle} mobileOpened={opened} />
-      </AppShell.Navbar>
+      </AppShell.Header>
+
       <AppShell.Main>
         {children}
       </AppShell.Main>

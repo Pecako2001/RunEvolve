@@ -18,11 +18,8 @@ import {
   IconHome,
   IconInfoCircle,
   IconChecklist,
-  IconX,
   IconChartDots,
   IconBrain,
-  IconSun,
-  IconMoon,
 } from "@tabler/icons-react";
 import styles from './Navbar.module.css';
 
