@@ -12,7 +12,8 @@ from sklearn.metrics import classification_report, mean_squared_error
 from app import crud
 from app.database import SessionLocal
 
-MODEL_DIR    = "app/services/models"
+BASE_DIR = os.path.dirname(__file__)
+MODEL_DIR = os.path.join(BASE_DIR, "models")
 CLASSIF_PATH = os.path.join(MODEL_DIR, "run_type_classifier.joblib")
 REGRESS_PATH = os.path.join(MODEL_DIR, "run_feature_regressor.joblib")
 
