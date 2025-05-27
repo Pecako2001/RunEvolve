@@ -31,9 +31,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-@app.get("/")
-async def root():
-    return {"message": "Hello World"}
 
 @app.post("/runs/new-from-last", response_model=schemas.RunResponse)
 def create_new_run_from_last(db: Session = Depends(get_db)):
@@ -162,17 +159,6 @@ def get_run_stats(db: Session = Depends(get_db)):
     
     return stats
 
-@app.get("/strava/auth")
-async def strava_auth_placeholder():
-    return {"message": "Strava auth placeholder"}
-
-@app.post("/strava/webhook")
-async def strava_webhook_placeholder():
-    return {"message": "Strava webhook placeholder"}
-
-@app.get("/strava/fetch")
-async def strava_fetch_placeholder():
-    return {"message": "Strava fetch placeholder"}
 
 app.include_router(network.router)
 app.include_router(auth.router)

@@ -77,9 +77,6 @@ def get_current_user(
     return user
 
 
-@router.get("/me", response_model=User)
-def read_users_me(current_user: models.User = Depends(get_current_user)):
-    return current_user
 
 
 @router.post("/register", response_model=User)
