@@ -2,7 +2,7 @@
 
 import { Card, Title, Text, Group, Avatar, Stack, Button } from '@mantine/core';
 import { IconUser, IconLogout } from '@tabler/icons-react';
-import UserSidebarCard from '@/components/UserSidebarCard';
+import UserSidebarCard from '@/components/layout/UserSidebarCard';
 export default function ProfilePage() {
   // Dummy user data for demonstration
   const user = {

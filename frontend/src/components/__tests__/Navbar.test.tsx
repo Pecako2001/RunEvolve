@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { AppNavbar } from '../Navbar';
+import { AppNavbar } from '../layout/Navbar';
 
 // Mock matchMedia used by useMediaQuery
 Object.defineProperty(window, 'matchMedia', {

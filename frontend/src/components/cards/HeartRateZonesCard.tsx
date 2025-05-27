@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { Card, Text, Group, Box, Loader, Stack } from "@mantine/core";
-import globalStyles from "../styles/global.module.css";
+import globalStyles from "../../styles/global.module.css";
 
 interface Zone {
   min: number;

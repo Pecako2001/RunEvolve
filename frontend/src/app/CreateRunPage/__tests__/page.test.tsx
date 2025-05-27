@@ -9,7 +9,7 @@ jest.mock('axios');
 const mockedAxios = axios as jest.Mocked<typeof axios>;
 
 // Mock the CreateRunForm component to simplify page testing
-jest.mock('@/components/CreateRunForm', () => {
+jest.mock('@/components/forms/CreateRunForm', () => {
   return function DummyCreateRunForm() {
     return <div data-testid="create-run-form-mock">Create Run Form Mock</div>;
   };

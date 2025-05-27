@@ -1,15 +1,15 @@
 "use client";
 
 import { Grid } from "@mantine/core";
-import LastRunCard from "../components/LastRunCard";
-import HeartRateCard from "../components/HeartRateCard";
-import Best5kCard from "../components/Best5kCard";
-import Best10kCard from "../components/Best10kCard";
-import BestHMCard from "../components/BestHMCard";
-import ThisWeekKmCard from "../components/ThisWeekKmCard";
-import RunsThisWeekCard from "../components/RunsThisWeekCard";
-import TotalRunsCard from "../components/TotalRunsCard";
-import TotalKmCard from "../components/TotalKmCard";
+import LastRunCard from "../components/cards/LastRunCard";
+import HeartRateCard from "../components/cards/HeartRateCard";
+import Best5kCard from "../components/cards/Best5kCard";
+import Best10kCard from "../components/cards/Best10kCard";
+import BestHMCard from "../components/cards/BestHMCard";
+import ThisWeekKmCard from "../components/cards/ThisWeekKmCard";
+import RunsThisWeekCard from "../components/cards/RunsThisWeekCard";
+import TotalRunsCard from "../components/cards/TotalRunsCard";
+import TotalKmCard from "../components/cards/TotalKmCard";
 
 export default function Home() {
   return (

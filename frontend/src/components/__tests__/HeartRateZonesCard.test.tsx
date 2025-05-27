@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import HeartRateZonesCard from '../HeartRateZonesCard';
+import HeartRateZonesCard from '../cards/HeartRateZonesCard';
 
 const mockZones = {
   heart_rate: {

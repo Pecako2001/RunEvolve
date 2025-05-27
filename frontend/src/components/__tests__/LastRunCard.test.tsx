@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import LastRunCard from '../LastRunCard';
+import LastRunCard from '../cards/LastRunCard';
 
 describe('LastRunCard', () => {
   beforeEach(() => {
