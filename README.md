@@ -1,9 +1,8 @@
 # RunEvolve - Full-Stack Running Tracker
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![Pecako2001/RunEvolve context](https://badge.forgithub.com/Pecako2001/RunEvolve?accept=text%2Fhtml&maxTokens=20000)](https://github.com/Pecako2001/RunEvolve?accept=text%2Fhtml&maxTokens=20000)
-
-[![Build Status](https://img.shields.io/badge/build-passing-brightgreen)](https://github.com/your-repo/runevolve)
-[![Last Commit](https://img.shields.io/github/last-commit/your-repo/runevolve)](https://github.com/your-repo/runevolve/commits/main)
+[![Build Status](https://img.shields.io/badge/build-passing-brightgreen)](https://https://github.com/Pecako2001/RunEvolve)
+[![Last Commit](https://img.shields.io/github/last-commit/your-repo/runevolve)](https://https://github.com/Pecako2001/RunEvolve/commits/main)
 
 RunEvolve is a full-stack running tracker application designed to help users monitor their running activities, analyze performance statistics, and connect with their fitness goals. The frontend is built with Next.js, featuring a modern and responsive UI using the Mantine component library. The backend is powered by FastAPI, providing a robust and efficient API. Future plans include integration with Strava for seamless activity syncing.
 
