@@ -12,7 +12,7 @@ import {
   SimpleGrid,
   Select,
   Progress,
-  Box, // Added Box for potentially more layout control
+  Box, 
 } from '@mantine/core';
 import styles from './Goals.module.css';
 
