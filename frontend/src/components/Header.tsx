@@ -24,6 +24,11 @@ export function AppHeader({ navbarOpened, toggleNavbar }: AppHeaderProps) {
   const toggleTheme = () => {
     setTheme((prev) => (prev === 'theme-dark' ? 'theme-light' : 'theme-dark'));
   };
+
+  useEffect(() => {
+    document.body.classList.remove('theme-dark', 'theme-light');
+    document.body.classList.add(theme);
+  }, [theme]);
   return (
     <Box className="header__group">
       <Group>

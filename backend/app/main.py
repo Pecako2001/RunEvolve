@@ -68,7 +68,7 @@ def get_run_stats(db: Session = Depends(get_db)):
     """
     Retrieves statistics about runs, grouped by week, month, and year.
     """
-    runs = crud.get_runs(db=db)
+    runs = crud.get_runs(db=db, limit=None)
     stats = {"weekly": {}, "monthly": {}, "yearly": {}}
 
     for run in runs:

@@ -1,6 +1,7 @@
 # RunEvolve - Full-Stack Running Tracker
-[![Pecako2001/RunEvolve context](https://badge.forgithub.com/Pecako2001/RunEvolve?accept=text%2Fhtml&maxTokens=20000)](https://uithub.com/Pecako2001/RunEvolve?accept=text%2Fhtml&maxTokens=20000)
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+[![Pecako2001/RunEvolve context](https://badge.forgithub.com/Pecako2001/RunEvolve?accept=text%2Fhtml&maxTokens=20000)](https://github.com/Pecako2001/RunEvolve?accept=text%2Fhtml&maxTokens=20000)
+
 [![Build Status](https://img.shields.io/badge/build-passing-brightgreen)](https://github.com/your-repo/runevolve)
 [![Last Commit](https://img.shields.io/github/last-commit/your-repo/runevolve)](https://github.com/your-repo/runevolve/commits/main)
 
