@@ -5,6 +5,7 @@ import {
   Card, Title, Text, Loader, Alert, Button,
   Select, NumberInput, Group, Stack
 } from "@mantine/core";
+import { notifications } from "@mantine/notifications";
 
 const API = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
 
@@ -60,8 +61,11 @@ export default function NetwerkPage() {
       const j = await res.json();
       if (!res.ok) throw new Error(j.detail || "Unknown error");
       setModelMsg(j.detail);
+      notifications.show({ title: "Model Updated", message: j.detail, color: "green" });
     } catch (e: any) {
-      setError(`Retrain failed: ${e.message}`);
+      const msg = `Retrain failed: ${e.message}`;
+      setError(msg);
+      notifications.show({ title: "Training Failed", message: msg, color: "red" });
     }
     setLoading(false);
   };

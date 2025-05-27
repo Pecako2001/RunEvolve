@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, createContext, useContext, ReactNode } from 'react';
+import { notifications } from '@mantine/notifications';
 
 // Define the shape of the theme context
 interface ThemeContextType {
@@ -40,6 +41,22 @@ export default function Providers({ children }: { children: ReactNode }) {
       localStorage.setItem('runevolve-theme', theme);
     }
   }, [theme]);
+
+  // Global listener for React hydration errors
+  useEffect(() => {
+    const handleError = (e: ErrorEvent) => {
+      if (e.message && e.message.toLowerCase().includes('hydration')) {
+        notifications.show({
+          title: 'Hydration Error',
+          message: 'There was a problem loading this page. Refresh to continue.',
+          color: 'red',
+        });
+      }
+    };
+
+    window.addEventListener('error', handleError);
+    return () => window.removeEventListener('error', handleError);
+  }, []);
 
   const toggleTheme = () => {
     setTheme((prev) => (prev === 'theme-dark' ? 'theme-light' : 'theme-dark'));
