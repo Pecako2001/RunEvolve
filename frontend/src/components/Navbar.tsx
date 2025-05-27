@@ -16,26 +16,14 @@ import {
 import { useMediaQuery } from "@mantine/hooks";
 import dynamic from 'next/dynamic';
 
-const IconHome = dynamic(() =>
-  import('@tabler/icons-react').then((mod) => mod.IconHome),
-  { ssr: false }
-);
-const IconInfoCircle = dynamic(() =>
-  import('@tabler/icons-react').then((mod) => mod.IconInfoCircle),
-  { ssr: false }
-);
-const IconChecklist = dynamic(() =>
-  import('@tabler/icons-react').then((mod) => mod.IconChecklist),
-  { ssr: false }
-);
-const IconChartDots = dynamic(() =>
-  import('@tabler/icons-react').then((mod) => mod.IconChartDots),
-  { ssr: false }
-);
-const IconBrain = dynamic(() =>
-  import('@tabler/icons-react').then((mod) => mod.IconBrain),
-  { ssr: false }
-);
+import {
+  IconHome,
+  IconInfoCircle,
+  IconChecklist,
+  IconChartDots,
+  IconBrain,
+} from "@tabler/icons-react";
+
 import styles from './Navbar.module.css';
 
 const navSections = [
@@ -46,6 +34,7 @@ const navSections = [
       { href: "/statistics", label: "Statistics", icon: IconChartDots },
       { href: "/CreateRunPage", label: "Create Run", icon: IconChecklist },
       { href: "/NetwerkPage", label: "Network", icon: IconBrain },
+      { href: "/goals", label: "Goal", icon: IconBrain },
     ],
   },
   {
