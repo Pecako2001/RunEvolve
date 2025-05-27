@@ -1,6 +1,7 @@
 # RunEvolve - Full-Stack Running Tracker
+[![License: Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![Pecako2001/RunEvolve context](https://badge.forgithub.com/Pecako2001/RunEvolve?accept=text%2Fhtml&maxTokens=20000)](https://github.com/Pecako2001/RunEvolve?accept=text%2Fhtml&maxTokens=20000)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 [![Build Status](https://img.shields.io/badge/build-passing-brightgreen)](https://github.com/your-repo/runevolve)
 [![Last Commit](https://img.shields.io/github/last-commit/your-repo/runevolve)](https://github.com/your-repo/runevolve/commits/main)
 
@@ -168,4 +169,4 @@ Contributions are welcome! Please follow the standard fork and pull request (PR)
 
 ## License
 
-This project is licensed under the MIT License. See the `LICENSE` file in the root directory for more details.
+This project is licensed under the Apache License 2.0. See the `LICENSE` file in the root directory for more details.
