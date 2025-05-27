@@ -3,8 +3,16 @@
 import React from 'react';
 import { Burger, Box, ActionIcon, Stack } from '@mantine/core';
 import globalStyles from '../styles/global.module.css';
-import { IconMoon } from '@tabler/icons-react';
-import { IconSun } from '@tabler/icons-react';
+import dynamic from 'next/dynamic';
+
+const IconMoon = dynamic(() =>
+  import('@tabler/icons-react').then((mod) => mod.IconMoon),
+  { ssr: false }
+);
+const IconSun = dynamic(() =>
+  import('@tabler/icons-react').then((mod) => mod.IconSun),
+  { ssr: false }
+);
 
 interface AppHeaderProps {
   navbarOpened: boolean;

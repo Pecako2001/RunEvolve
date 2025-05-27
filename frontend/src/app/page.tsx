@@ -12,7 +12,36 @@ import {
   Paper,
   Group,
 } from '@mantine/core';
-import { IconAlertCircle, IconRun, IconChartBar, IconCalendarStats, IconClockHour4, IconHeartbeat, IconGauge } from '@tabler/icons-react';
+import dynamic from 'next/dynamic';
+
+const IconAlertCircle = dynamic(() =>
+  import('@tabler/icons-react').then((mod) => mod.IconAlertCircle),
+  { ssr: false }
+);
+const IconRun = dynamic(() =>
+  import('@tabler/icons-react').then((mod) => mod.IconRun),
+  { ssr: false }
+);
+const IconChartBar = dynamic(() =>
+  import('@tabler/icons-react').then((mod) => mod.IconChartBar),
+  { ssr: false }
+);
+const IconCalendarStats = dynamic(() =>
+  import('@tabler/icons-react').then((mod) => mod.IconCalendarStats),
+  { ssr: false }
+);
+const IconClockHour4 = dynamic(() =>
+  import('@tabler/icons-react').then((mod) => mod.IconClockHour4),
+  { ssr: false }
+);
+const IconHeartbeat = dynamic(() =>
+  import('@tabler/icons-react').then((mod) => mod.IconHeartbeat),
+  { ssr: false }
+);
+const IconGauge = dynamic(() =>
+  import('@tabler/icons-react').then((mod) => mod.IconGauge),
+  { ssr: false }
+);
 import globalStyles from '../styles/global.module.css';
 
 // Define interfaces for the data structures
