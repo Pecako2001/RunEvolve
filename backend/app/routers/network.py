@@ -8,32 +8,6 @@ from app.services.ai_model import get_run_plan, generate_training_plan, train_mo
 
 router = APIRouter(prefix="/network", tags=["network"])
 
-@router.get("/stats", response_model=schemas.StatsResponse)
-def get_network_stats(db: Session = Depends(get_db)):
-    runs = __import__("app.crud", fromlist=["get_runs"]).get_runs(db=db)
-    stats = {"weekly": {}, "monthly": {}, "yearly": {}}
-    for run in runs:
-        yw = run.created_at.isocalendar()
-        wk = f"{yw.year}-W{yw.week:02d}"
-        stats["weekly"].setdefault(wk, {"count": 0, "total_distance": 0.0})
-        stats["weekly"][wk]["count"] += 1
-        stats["weekly"][wk]["total_distance"] += run.distance or 0.0
-
-        ym = f"{run.created_at.year}-{run.created_at.month:02d}"
-        stats["monthly"].setdefault(ym, {"count": 0, "total_distance": 0.0})
-        stats["monthly"][ym]["count"] += 1
-        stats["monthly"][ym]["total_distance"] += run.distance or 0.0
-
-        yr = str(run.created_at.year)
-        stats["yearly"].setdefault(yr, {"count": 0, "total_distance": 0.0})
-        stats["yearly"][yr]["count"] += 1
-        stats["yearly"][yr]["total_distance"] += run.distance or 0.0
-
-    return stats
-
-@router.post("/plan", response_model=schemas.RunPredictionResponse)
-def generate_plan(payload: schemas.RunPredictionRequest):
-    return get_run_plan(payload.dict())
 
 @router.post("/plan/custom", response_model=schemas.RunPlanResponse)
 def custom_plan(request: schemas.RunPlanRequest):
