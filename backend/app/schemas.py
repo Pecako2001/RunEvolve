@@ -56,7 +56,10 @@ class Token(BaseModel):
     token_type: str
 
 class User(BaseModel):
-    username: str
+    id: int
     email: str
     first_name: Optional[str] = None
     last_name: Optional[str] = None
+
+    class Config:
+        from_attributes = True
