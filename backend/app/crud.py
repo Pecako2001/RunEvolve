@@ -2,6 +2,7 @@ from sqlalchemy.orm import Session
 from sqlalchemy import desc
 from . import models, schemas
 from .models import RunStatus # Import RunStatus
+from datetime import datetime
 
 def get_last_run(db: Session) -> models.Run | None:
     """
@@ -70,3 +71,39 @@ def get_planned_runs(db: Session, skip: int = 0, limit: int = 100) -> list[model
     Orders by created_at descending (or by another relevant field like a planned_date if added later).
     """
     return db.query(models.Run).filter(models.Run.status == RunStatus.PLANNED).order_by(desc(models.Run.created_at)).offset(skip).limit(limit).all()
+
+
+def get_cached_zones(db: Session, user_id: int) -> models.StravaHeartRateZoneCache | None:
+    return db.query(models.StravaHeartRateZoneCache).filter(models.StravaHeartRateZoneCache.user_id == user_id).first()
+
+
+def store_cached_zones(db: Session, user_id: int, data: dict) -> models.StravaHeartRateZoneCache:
+    cache = models.StravaHeartRateZoneCache(user_id=user_id, data=data, fetched_at=datetime.utcnow())
+    db.add(cache)
+    db.commit()
+    db.refresh(cache)
+    return cache
+
+
+def get_cached_stats(db: Session, user_id: int) -> models.StravaStatsCache | None:
+    return db.query(models.StravaStatsCache).filter(models.StravaStatsCache.user_id == user_id).first()
+
+
+def store_cached_stats(db: Session, user_id: int, data: dict) -> models.StravaStatsCache:
+    cache = models.StravaStatsCache(user_id=user_id, data=data, fetched_at=datetime.utcnow())
+    db.add(cache)
+    db.commit()
+    db.refresh(cache)
+    return cache
+
+
+def get_cached_activities(db: Session, user_id: int) -> models.StravaActivitiesCache | None:
+    return db.query(models.StravaActivitiesCache).filter(models.StravaActivitiesCache.user_id == user_id).first()
+
+
+def store_cached_activities(db: Session, user_id: int, data: dict) -> models.StravaActivitiesCache:
+    cache = models.StravaActivitiesCache(user_id=user_id, data=data, fetched_at=datetime.utcnow())
+    db.add(cache)
+    db.commit()
+    db.refresh(cache)
+    return cache
