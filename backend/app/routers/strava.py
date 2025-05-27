@@ -1,6 +1,8 @@
 from fastapi import APIRouter
 from dotenv import load_dotenv
 
+from app.services.strava.athlete import fetch_athlete_zones
+
 load_dotenv()
 
 CLIENT_ID     = os.getenv("STRAVA_CLIENT_ID")
