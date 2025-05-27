@@ -75,3 +75,16 @@ def setup_run_in_db(db_session: Session):
     # If needed, one could add:
     # db_session.delete(created_run)
     # db_session.commit()
+
+# Helper used by the autouse fixture to ensure a clean state
+def _clear_all_runs(db_session: Session) -> None:
+    """Remove all Run rows from the database."""
+    db_session.query(RunModel).delete()
+    db_session.commit()
+
+
+@pytest.fixture(autouse=True)
+def clear_runs_before_test(db_session: Session):
+    """Clear Run table before each test."""
+    _clear_all_runs(db_session)
+    yield
