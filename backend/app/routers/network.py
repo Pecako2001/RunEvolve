@@ -47,6 +47,11 @@ def retrain_model(db: Session = Depends(get_db)):
     """
     try:
         train_models(limit=10000)
+    except RuntimeError as e:
+        # Known training issues such as insufficient data
+        raise HTTPException(status_code=400, detail=str(e))
     except Exception as e:
+        # Unexpected failures
         raise HTTPException(status_code=500, detail=f"Training failed: {e}")
+
     return {"detail": "Model retrained successfully"}

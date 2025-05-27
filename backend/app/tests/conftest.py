@@ -1,13 +1,19 @@
+import os
 import pytest
+import pytest_asyncio
 import asyncio
 import uuid
 from httpx import AsyncClient
+import httpx
 from sqlalchemy.orm import Session
+
+# Use SQLite for tests if DATABASE_URL not provided
+os.environ.setdefault("DATABASE_URL", "sqlite:///./test.db")
 
 # Adjust imports to reflect the project structure
 # Assuming 'app' is the root package for the application code
 from app.main import app  # FastAPI app instance
-from app.database import SessionLocal, engine, Base # For DB session and potentially Base if creating tables
+from app.database import SessionLocal  # DB session factory
 from app.models import Run as RunModel # SQLAlchemy model
 from app.schemas import RunCreate # Pydantic schema for creation
 from app.crud import create_run # CRUD function
@@ -31,7 +37,7 @@ def event_loop():
     yield loop
     loop.close()
 
-@pytest.fixture(scope="function")
+@pytest_asyncio.fixture()
 async def async_client():
     """
     Provides an HTTPX AsyncClient for making requests to the FastAPI app.
@@ -40,10 +46,8 @@ async def async_client():
     # Forcing lifespan events if not automatically handled by AsyncClient in test mode.
     # However, recent versions of FastAPI and httpx handle this better.
     # If startup/shutdown logic is critical and not firing, this might be needed:
-    # async with LifespanManager(app):
-    #     async with AsyncClient(app=app, base_url="http://127.0.0.1:8000") as client:
-    #         yield client
-    async with AsyncClient(app=app, base_url="http://127.0.0.1:8000") as client:
+    transport = httpx.ASGITransport(app=app)
+    async with AsyncClient(transport=transport, base_url="http://testserver") as client:
         yield client
 
 @pytest.fixture(scope="function")
@@ -67,7 +71,10 @@ def setup_run_in_db(db_session: Session):
     unique_name = f"Test Run {uuid.uuid4()}"
     run_create_data = RunCreate(
         name=unique_name,
-        settings_snapshot={"setting1": "value1", "fixture_id": str(uuid.uuid4())}
+        settings_snapshot={"setting1": "value1", "fixture_id": str(uuid.uuid4())},
+        distance=5.0,
+        time=1800,
+        average_speed=8.0
     )
     created_run = create_run(db=db_session, run=run_create_data)
     yield created_run
@@ -75,6 +82,21 @@ def setup_run_in_db(db_session: Session):
     # If needed, one could add:
     # db_session.delete(created_run)
     # db_session.commit()
+
+@pytest.fixture()
+def training_runs(db_session: Session):
+    """Insert multiple runs for training purposes."""
+    runs = []
+    for i in range(3):
+        rc = RunCreate(
+            name=f"Train Run {i}",
+            settings_snapshot={"src": "training"},
+            distance=5.0 + i,
+            time=1800 + i * 60,
+            average_speed=8.0 + i * 0.5,
+        )
+        runs.append(create_run(db=db_session, run=rc))
+    return runs
 
 # Helper used by the autouse fixture to ensure a clean state
 def _clear_all_runs(db_session: Session) -> None:
