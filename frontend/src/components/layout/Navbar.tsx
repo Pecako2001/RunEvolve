@@ -14,7 +14,6 @@ import {
   Anchor,
 } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
-import dynamic from "next/dynamic";
 
 import {
   IconHome,
@@ -26,7 +25,6 @@ import {
 } from "@tabler/icons-react";
 
 import styles from "./Navbar.module.css";
-import UserSidebarCard from "./UserSidebarCard";
 
 const navSections = [
   {
