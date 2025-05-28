@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { Card, Text, Group, Box, Loader, Stack } from "@mantine/core";
 import globalStyles from "../../styles/global.module.css";
+import styles from "./HeartRateZonesCard.module.css";
 
 interface Zone {
   min: number;
@@ -56,16 +57,14 @@ const HeartRateZonesCard: React.FC = () => {
         <Text>No zones available</Text>
       )}
       {!loading && !error && zones.length > 0 && (
-        <Stack>
+        <Stack className={styles.container}>
           {zones.map((zone, idx) => (
             <Box
               key={idx}
+              className={styles.zoneBar}
               style={{
                 backgroundColor:
                   zoneColors[idx] || zoneColors[zoneColors.length - 1],
-                borderRadius: 4,
-                padding: "0.5rem",
-                color: "#000",
               }}
             >
               <Group justify="space-between">
