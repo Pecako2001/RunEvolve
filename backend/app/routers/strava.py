@@ -6,6 +6,7 @@ from app.services.strava.athlete import (
     fetch_athlete_zones,
     fetch_athlete_stats,
     fetch_athlete_activities,
+    fetch_activity_details,
 )
 from app.crud import (
     get_cached_zones,
@@ -14,6 +15,8 @@ from app.crud import (
     store_cached_stats,
     get_cached_activities,
     store_cached_activities,
+    get_cached_activity,
+    store_cached_activity,
 )
 from app.routers.auth import get_current_user
 from app.database import get_db
@@ -43,6 +46,35 @@ async def get_athlete_zones(
         return cached.data
     live = fetch_athlete_zones(ACCESS_TOKEN)
     store_cached_zones(db, current_user.id, live)
+    return live
+
+
+@router.get("/athlete/activities")
+async def get_athlete_activities(
+    current_user=Depends(get_current_user),
+    db: Session = Depends(get_db),
+):
+    """Return athlete activities, caching per user."""
+    cached = get_cached_activities(db, current_user.id)
+    if cached:
+        return cached.data
+    live = fetch_athlete_activities(ACCESS_TOKEN)
+    store_cached_activities(db, current_user.id, live)
+    return live
+
+
+@router.get("/activities/{activity_id}")
+async def get_activity_details(
+    activity_id: int,
+    current_user=Depends(get_current_user),
+    db: Session = Depends(get_db),
+):
+    """Return full activity details, caching per activity."""
+    cached = get_cached_activity(db, current_user.id, activity_id)
+    if cached:
+        return cached.data
+    live = fetch_activity_details(activity_id, ACCESS_TOKEN)
+    store_cached_activity(db, current_user.id, activity_id, live)
     return live
 
 
