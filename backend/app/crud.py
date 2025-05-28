@@ -107,3 +107,28 @@ def store_cached_activities(db: Session, user_id: int, data: dict) -> models.Str
     db.commit()
     db.refresh(cache)
     return cache
+
+
+def get_cached_activity(db: Session, user_id: int, activity_id: int) -> models.StravaActivityCache | None:
+    """Retrieve cached single activity details."""
+    return (
+        db.query(models.StravaActivityCache)
+        .filter(
+            models.StravaActivityCache.user_id == user_id,
+            models.StravaActivityCache.activity_id == activity_id,
+        )
+        .first()
+    )
+
+
+def store_cached_activity(db: Session, user_id: int, activity_id: int, data: dict) -> models.StravaActivityCache:
+    cache = models.StravaActivityCache(
+        user_id=user_id,
+        activity_id=activity_id,
+        data=data,
+        fetched_at=datetime.utcnow(),
+    )
+    db.add(cache)
+    db.commit()
+    db.refresh(cache)
+    return cache

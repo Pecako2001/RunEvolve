@@ -62,3 +62,15 @@ class StravaActivitiesCache(Base):
     data = Column(JSON, nullable=False)
     fetched_at = Column(DateTime(timezone=True), server_default=func.now())
 
+
+class StravaActivityCache(Base):
+    """Cache for a single Strava activity."""
+
+    __tablename__ = "strava_activity_cache"
+
+    id = Column(Integer, primary_key=True, index=True, autoincrement=True)
+    user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
+    activity_id = Column(Integer, nullable=False)
+    data = Column(JSON, nullable=False)
+    fetched_at = Column(DateTime(timezone=True), server_default=func.now())
+
