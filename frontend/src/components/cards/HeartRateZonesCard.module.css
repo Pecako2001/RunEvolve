@@ -1,0 +1,26 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.zoneBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  color: #000;
+  transition: opacity 0.2s ease-in-out;
+}
+
+.zoneBar:hover {
+  opacity: 0.9;
+}
+
+@media (max-width: 480px) {
+  .zoneBar {
+    padding: 0.4rem;
+    font-size: 0.875rem;
+  }
+}
