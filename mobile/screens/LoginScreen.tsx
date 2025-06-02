@@ -18,11 +18,14 @@ type LoginCallbacks = {
 
 type Props = NativeStackScreenProps<any> & LoginCallbacks;
 
+import { PixelRatio } from "react-native";
+
 export default function LoginScreen({ navigation, onSuccess, onError }: Props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const { colors } = useContext(ThemeContext);
+  const scale = PixelRatio.getFontScale ? PixelRatio.getFontScale() : 1;
   const styles = useMemo(() =>
     StyleSheet.create({
       container: {

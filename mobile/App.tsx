@@ -34,9 +34,9 @@ function Navigation() {
             )}
           </Stack.Screen>
           <Stack.Screen name="Register" component={RegisterScreen} />
-          <Stack.Screen name="Home" component={HomeScreen} />
-          <Stack.Screen name="Statistics" component={StatisticsScreen} />
-          <Stack.Screen name="Settings" component={SettingsScreen} />
+          {/* <Stack.Screen name="Home" component={HomeScreen} /> */}
+          {/* <Stack.Screen name="Statistics" component={StatisticsScreen} /> */}
+          {/* <Stack.Screen name="Settings" component={SettingsScreen} /> */}
         </Stack.Navigator>
       </NavigationContainer>
     </FontSizeProvider>
