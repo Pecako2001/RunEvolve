@@ -2,12 +2,14 @@ import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import BottomNavBar from "../components/BottomNavBar";
 import { colors, spacing } from "../theme";
+import { useFontScale } from "../FontSizeContext";
 
 export default function StatisticsScreen() {
+  const { scale } = useFontScale();
   return (
     <View style={styles.root}>
       <View style={styles.container}>
-        <Text style={styles.title}>Statistics Page</Text>
+        <Text style={[styles.title, { fontSize: 20 * scale }]}>Statistics Page</Text>
       </View>
       <BottomNavBar />
     </View>

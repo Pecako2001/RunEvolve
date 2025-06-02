@@ -2,9 +2,11 @@ import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { colors, spacing } from "../theme";
+import { useFontScale } from "../FontSizeContext";
 
 export default function BottomNavBar() {
   const navigation = useNavigation();
+  const { scale } = useFontScale();
   return (
     <View style={styles.container}>
       <TouchableOpacity
@@ -12,21 +14,21 @@ export default function BottomNavBar() {
         style={styles.item}
         onPress={() => navigation.navigate("Home" as never)}
       >
-        <Text style={styles.text}>Home</Text>
+        <Text style={[styles.text, { fontSize: 16 * scale }]}>Home</Text>
       </TouchableOpacity>
       <TouchableOpacity
         accessibilityRole="button"
         style={styles.item}
         onPress={() => navigation.navigate("Statistics" as never)}
       >
-        <Text style={styles.text}>Stats</Text>
+        <Text style={[styles.text, { fontSize: 16 * scale }]}>Stats</Text>
       </TouchableOpacity>
       <TouchableOpacity
         accessibilityRole="button"
         style={styles.item}
         onPress={() => navigation.navigate("Settings" as never)}
       >
-        <Text style={styles.text}>Settings</Text>
+        <Text style={[styles.text, { fontSize: 16 * scale }]}>Settings</Text>
       </TouchableOpacity>
     </View>
   );

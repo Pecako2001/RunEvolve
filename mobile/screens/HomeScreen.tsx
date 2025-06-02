@@ -4,12 +4,16 @@ import PrimaryButton from "../components/PrimaryButton";
 import BottomNavBar from "../components/BottomNavBar";
 import { colors, spacing } from "../theme";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { useFontScale } from "../FontSizeContext";
 
-export default function HomeScreen({ navigation }: NativeStackScreenProps<any>) {
+export default function HomeScreen({
+  navigation,
+}: NativeStackScreenProps<any>) {
+  const { scale } = useFontScale();
   return (
     <View style={styles.root}>
       <View style={styles.container}>
-        <Text style={styles.title}>Home Page</Text>
+        <Text style={[styles.title, { fontSize: 20 * scale }]}>Home Page</Text>
         <PrimaryButton
           title="Statistics"
           onPress={() => navigation.navigate("Statistics")}

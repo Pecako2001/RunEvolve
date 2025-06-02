@@ -2,10 +2,12 @@ import React, { useState } from "react";
 import { View, TextInput, Text, StyleSheet } from "react-native";
 import PrimaryButton from "../components/PrimaryButton";
 import { colors, spacing, radius, font } from "../theme";
+import { useFontScale } from "../FontSizeContext";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const API_BASE_URL = process.env.EXPO_PUBLIC_API_URL || "http://192.168.7.138:8000";
+const API_BASE_URL =
+  process.env.EXPO_PUBLIC_API_URL || "http://192.168.7.138:8000";
 
 type LoginCallbacks = {
   /** Called when login succeeds */
@@ -20,6 +22,7 @@ export default function LoginScreen({ navigation, onSuccess, onError }: Props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const { scale } = useFontScale();
 
   const handleLogin = async () => {
     try {
@@ -49,7 +52,7 @@ export default function LoginScreen({ navigation, onSuccess, onError }: Props) {
         placeholderTextColor="#6b7280"
         value={email}
         onChangeText={setEmail}
-        style={styles.input}
+        style={[styles.input, { fontSize: 16 * scale }]}
       />
       <TextInput
         placeholder="Password"
@@ -57,9 +60,9 @@ export default function LoginScreen({ navigation, onSuccess, onError }: Props) {
         value={password}
         onChangeText={setPassword}
         secureTextEntry
-        style={styles.input}
+        style={[styles.input, { fontSize: 16 * scale }]}
       />
-      {error ? <Text style={styles.error}>{error}</Text> : null}
+      {error ? <Text style={[styles.error, { fontSize: 14 * scale }]}>{error}</Text> : null}
       <PrimaryButton title="Sign in" onPress={handleLogin} />
       <PrimaryButton
         title="Create account"
