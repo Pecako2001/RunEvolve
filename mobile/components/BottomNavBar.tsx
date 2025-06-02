@@ -1,10 +1,29 @@
-import React from "react";
+import React, { useContext, useMemo } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { colors, spacing } from "../theme";
+import { spacing } from "../theme";
+import { ThemeContext } from "../ThemeContext";
 
 export default function BottomNavBar() {
   const navigation = useNavigation();
+  const { colors } = useContext(ThemeContext);
+  const styles = useMemo(() =>
+    StyleSheet.create({
+      container: {
+        flexDirection: "row",
+        justifyContent: "space-around",
+        backgroundColor: colors.accent,
+        paddingVertical: spacing.sm,
+      },
+      item: {
+        flex: 1,
+        alignItems: "center",
+      },
+      text: {
+        color: "#ffffff",
+      },
+    }),
+  [colors]);
   return (
     <View style={styles.container}>
       <TouchableOpacity
@@ -31,19 +50,3 @@ export default function BottomNavBar() {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: "row",
-    justifyContent: "space-around",
-    backgroundColor: colors.accent,
-    paddingVertical: spacing.sm,
-  },
-  item: {
-    flex: 1,
-    alignItems: "center",
-  },
-  text: {
-    color: "#ffffff",
-  },
-});

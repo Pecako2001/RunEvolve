@@ -1,11 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useMemo } from "react";
 import { View, TextInput, Text, StyleSheet } from "react-native";
 import PrimaryButton from "../components/PrimaryButton";
-import { colors, spacing, radius, font } from "../theme";
+import { spacing, radius, font } from "../theme";
+import { ThemeContext } from "../ThemeContext";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const API_BASE_URL = process.env.EXPO_PUBLIC_API_URL || "http://192.168.7.138:8000";
+const API_BASE_URL =
+  process.env.EXPO_PUBLIC_API_URL || "http://192.168.7.138:8000";
 
 type LoginCallbacks = {
   /** Called when login succeeds */
@@ -20,6 +22,34 @@ export default function LoginScreen({ navigation, onSuccess, onError }: Props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const { colors } = useContext(ThemeContext);
+  const styles = useMemo(() =>
+    StyleSheet.create({
+      container: {
+        flex: 1,
+        alignItems: "center",
+        justifyContent: "center",
+        padding: spacing.md,
+        backgroundColor: colors.background,
+      },
+      input: {
+        width: "100%",
+        paddingVertical: spacing.sm,
+        paddingHorizontal: spacing.md,
+        marginVertical: spacing.sm,
+        borderWidth: 1,
+        borderColor: colors.border,
+        borderRadius: radius.md,
+        backgroundColor: colors.inputBg,
+        fontFamily: font.regular,
+        color: colors.foreground,
+      },
+      error: {
+        color: colors.error,
+        marginVertical: spacing.sm,
+      },
+    }),
+  [colors]);
 
   const handleLogin = async () => {
     try {
@@ -69,28 +99,3 @@ export default function LoginScreen({ navigation, onSuccess, onError }: Props) {
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    padding: spacing.md,
-    backgroundColor: colors.background,
-  },
-  input: {
-    width: "100%",
-    paddingVertical: spacing.sm,
-    paddingHorizontal: spacing.md,
-    marginVertical: spacing.sm,
-    borderWidth: 1,
-    borderColor: colors.border,
-    borderRadius: radius.md,
-    backgroundColor: colors.inputBg,
-    fontFamily: font.regular,
-    color: colors.foreground,
-  },
-  error: {
-    color: colors.error,
-    marginVertical: spacing.sm,
-  },
-});
