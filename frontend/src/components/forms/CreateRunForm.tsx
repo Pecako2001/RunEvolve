@@ -6,7 +6,7 @@ import { TextInput, Button, Stack, Text, Box } from '@mantine/core';
 import { notifications } from '@mantine/notifications';
 import axios from 'axios';
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
 
 interface RunResponse {
   id: number;
@@ -17,7 +17,7 @@ interface RunResponse {
 }
 
 export default function CreateRunForm() {
-  const [runName, setRunName] = useState(''); // Local state, not sent to backend for now
+  const [runName, setRunName] = useState(""); // Local state, not sent to backend for now
   const [isSubmitting, setIsSubmitting] = useState(false); // Renamed from isLoading for clarity
 
   const handleSubmit = async () => {
@@ -28,27 +28,27 @@ export default function CreateRunForm() {
       // It creates a new run by copying the settings from the most recent previous run.
       const response = await axios.post<RunResponse>(
         `${API_BASE_URL}/runs/new-from-last`,
-        {}
+        {},
       );
-      
+
       notifications.show({
-        title: 'Success',
-        message: `New run created successfully! ID: ${response.data.id}. Name: ${response.data.name || 'N/A'}`,
-        color: 'green',
+        title: "Success",
+        message: `New run created successfully! ID: ${response.data.id}. Name: ${response.data.name || "N/A"}`,
+        color: "green",
       });
       // Optionally, clear the runName input if it were being used
-      // setRunName(''); 
+      // setRunName('');
     } catch (error) {
-      let errorMessage = 'Failed to create run.';
+      let errorMessage = "Failed to create run.";
       if (axios.isAxiosError(error) && error.response) {
         errorMessage = `Failed to create run: ${error.response.data.detail || error.message}`;
       } else if (error instanceof Error) {
         errorMessage = `Failed to create run: ${error.message}`;
       }
       notifications.show({
-        title: 'Error',
+        title: "Error",
         message: errorMessage,
-        color: 'red',
+        color: "red",
       });
     } finally {
       setIsSubmitting(false);
@@ -66,10 +66,11 @@ export default function CreateRunForm() {
           disabled={isSubmitting}
         />
         <Text className={globalStyles.createRunForm__noteText}>
-          Note: The run name is currently for local reference and not sent to the backend with this action.
-          The new run will inherit its name from the previous run.
+          Note: The run name is currently for local reference and not sent to
+          the backend with this action. The new run will inherit its name from
+          the previous run.
         </Text>
-        
+
         {/* Notification component removed, will use Mantine's global notifications */}
 
         <Button

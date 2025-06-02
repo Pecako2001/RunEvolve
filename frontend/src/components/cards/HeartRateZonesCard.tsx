@@ -61,7 +61,8 @@ const HeartRateZonesCard: React.FC = () => {
             <Box
               key={idx}
               style={{
-                backgroundColor: zoneColors[idx] || zoneColors[zoneColors.length - 1],
+                backgroundColor:
+                  zoneColors[idx] || zoneColors[zoneColors.length - 1],
                 borderRadius: 4,
                 padding: "0.5rem",
                 color: "#000",

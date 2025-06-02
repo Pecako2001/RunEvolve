@@ -27,20 +27,23 @@
 .profilePage__userInfo {
   display: flex;
   align-items: center;
-  gap: var(--mantine-spacing-lg); /* Increased gap for better visual separation */
-  margin-bottom: var(--mantine-spacing-md); /* Add some margin below user info before next element if any in same paper */
+  gap: var(
+    --mantine-spacing-lg
+  ); /* Increased gap for better visual separation */
+  margin-bottom: var(
+    --mantine-spacing-md
+  ); /* Add some margin below user info before next element if any in same paper */
 }
 
 .profilePage__userName {
-    font-size: var(--mantine-font-size-xl);
-    font-weight: bold;
+  font-size: var(--mantine-font-size-xl);
+  font-weight: bold;
 }
 
 .profilePage__joinDate {
-    font-size: var(--mantine-font-size-sm);
-    color: var(--mantine-color-dimmed);
+  font-size: var(--mantine-font-size-sm);
+  color: var(--mantine-color-dimmed);
 }
-
 
 /* Strava Integration Section */
 .profilePage__stravaSection {
@@ -48,15 +51,15 @@
 }
 
 .profilePage__stravaStatusGroup {
-    display: flex;
-    align-items: center;
-    justify-content: space-between; /* To space out title and badge/button */
-    gap: var(--mantine-spacing-md);
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* To space out title and badge/button */
+  gap: var(--mantine-spacing-md);
 }
 
-
 /* Run Summaries & Personal Bests Sections */
-.profilePage__summaryCard { /* For individual stat cards in SimpleGrid */
+.profilePage__summaryCard {
+  /* For individual stat cards in SimpleGrid */
   text-align: center;
   padding: var(--mantine-spacing-sm);
   /* border: 1px solid var(--mantine-color-gray-2); */ /* Optional: if cards need individual borders */
@@ -64,7 +67,9 @@
 }
 
 .profilePage__summaryValue {
-  font-size: var(--mantine-font-size-xl); /* Made slightly larger for emphasis */
+  font-size: var(
+    --mantine-font-size-xl
+  ); /* Made slightly larger for emphasis */
   font-weight: bold;
   color: var(--runevolve-brand-primary-color); /* Using global variable */
 }
@@ -81,6 +86,6 @@
 }
 
 .profilePage__pbLabel {
-    font-weight: 600;
-    color: var(--mantine-color-dark-2); /* Slightly more emphasis for PB labels */
+  font-weight: 600;
+  color: var(--mantine-color-dark-2); /* Slightly more emphasis for PB labels */
 }

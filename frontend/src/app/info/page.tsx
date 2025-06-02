@@ -1,23 +1,42 @@
-'use client';
+"use client";
 
-import { Container, Title, Text, Paper, Stack, Anchor, List, ThemeIcon } from '@mantine/core';
-import { IconInfoCircle } from '@tabler/icons-react';
-import styles from './Info.module.css';
+import {
+  Container,
+  Title,
+  Text,
+  Paper,
+  Stack,
+  Anchor,
+  List,
+  ThemeIcon,
+} from "@mantine/core";
+import { IconInfoCircle } from "@tabler/icons-react";
+import styles from "./Info.module.css";
 
 export default function InfoPage() {
   return (
     <Container className={styles.infoPage__container}>
-      <Title order={1} className={styles.infoPage__title}>Project Information</Title>
+      <Title order={1} className={styles.infoPage__title}>
+        Project Information
+      </Title>
 
       <Paper className={styles.infoPage__card}>
         <Stack gap="sm">
-          <Title order={2} className={styles.infoPage__sectionTitle}>About RunEvolve</Title>
+          <Title order={2} className={styles.infoPage__sectionTitle}>
+            About RunEvolve
+          </Title>
           <Text>
-            RunEvolve helps you track runs, analyse statistics and reach your fitness goals. The frontend is built with Next.js and Mantine while the backend uses FastAPI.
+            RunEvolve helps you track runs, analyse statistics and reach your
+            fitness goals. The frontend is built with Next.js and Mantine while
+            the backend uses FastAPI.
           </Text>
           <Text>
             Explore the repository on GitHub:
-            <Anchor href="https://github.com/your-repo/runevolve" target="_blank" className={styles.infoPage__link}>
+            <Anchor
+              href="https://github.com/your-repo/runevolve"
+              target="_blank"
+              className={styles.infoPage__link}
+            >
               RunEvolve GitHub
             </Anchor>
           </Text>
@@ -25,7 +44,9 @@ export default function InfoPage() {
       </Paper>
 
       <Paper className={styles.infoPage__card}>
-        <Title order={2} className={styles.infoPage__sectionTitle}>Key Features</Title>
+        <Title order={2} className={styles.infoPage__sectionTitle}>
+          Key Features
+        </Title>
         <List
           size="sm"
           spacing="xs"

@@ -1,12 +1,24 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
-import { Container, Title, Text, Loader, Alert, Card, Stack, Group, Button, Select, NumberInput } from '@mantine/core';
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import {
+  Container,
+  Title,
+  Text,
+  Loader,
+  Alert,
+  Card,
+  Stack,
+  Group,
+  Button,
+  Select,
+  NumberInput,
+} from "@mantine/core";
+import axios from "axios";
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
-import CreateRunForm from '@/components/forms/CreateRunForm';
-import styles from './CreateRun.module.css'; // Import CSS module
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+import CreateRunForm from "@/components/forms/CreateRunForm";
+import styles from "./CreateRun.module.css"; // Import CSS module
 
 // 1. Define Run Interface
 interface Run {
@@ -43,7 +55,9 @@ export default function CreateRunPage() {
         } else if (error instanceof Error) {
           setFetchError(`Error fetching last run: ${error.message}`);
         } else {
-          setFetchError('An unknown error occurred while fetching the last run.');
+          setFetchError(
+            "An unknown error occurred while fetching the last run.",
+          );
         }
       } finally {
         setIsLoadingLastRun(false);
@@ -64,7 +78,7 @@ export default function CreateRunPage() {
       });
       setPlan(res.data);
     } catch (e: any) {
-      setPlanError(e.message || 'Failed to fetch plan');
+      setPlanError(e.message || "Failed to fetch plan");
     }
     setPlanLoading(false);
   };
@@ -73,7 +87,7 @@ export default function CreateRunPage() {
     if (!plan) return;
     try {
       await axios.post(`${API_BASE_URL}/runs/predict`, {
-        name: 'Planned Run',
+        name: "Planned Run",
         distance,
         training_plan: plan.training_plan,
       });
@@ -90,50 +104,86 @@ export default function CreateRunPage() {
       </Title>
 
       {/* 4. Display Last Run Data (Preview) */}
-      <Title order={2} size="h3" className={styles.createRunPage__subTitle}>Preview Previous Run</Title>
+      <Title order={2} size="h3" className={styles.createRunPage__subTitle}>
+        Preview Previous Run
+      </Title>
       {isLoadingLastRun && (
         <Group className={styles.createRunPage__loaderGroup}>
           <Loader />
           <Text>Loading previous run details...</Text>
         </Group>
       )}
-      
-      {!isLoadingLastRun && fetchError && !lastRun && ( // Show error only if no data to display from a previous successful fetch
-        <Alert title="Fetch Error" color="red" withCloseButton onClose={() => setFetchError(null)} className={styles.createRunPage__errorAlert}>
-          {fetchError}
-        </Alert>
-      )}
+
+      {!isLoadingLastRun &&
+        fetchError &&
+        !lastRun && ( // Show error only if no data to display from a previous successful fetch
+          <Alert
+            title="Fetch Error"
+            color="red"
+            withCloseButton
+            onClose={() => setFetchError(null)}
+            className={styles.createRunPage__errorAlert}
+          >
+            {fetchError}
+          </Alert>
+        )}
 
       {!isLoadingLastRun && !fetchError && !lastRun && (
-         <Text className={styles.createRunPage__infoText}>No previous run data available to preview.</Text>
+        <Text className={styles.createRunPage__infoText}>
+          No previous run data available to preview.
+        </Text>
       )}
 
       {lastRun && (
         <Card className={styles.createRunPage__previewCard}>
           <Stack>
-            <Title order={3} size="h4">Previous Run Details</Title>
-            <Text><strong>ID:</strong> {lastRun.id}</Text>
-            <Text><strong>Name:</strong> {lastRun.name || 'N/A'}</Text>
-            <Text><strong>Created At:</strong> {new Date(lastRun.created_at).toLocaleString()}</Text>
+            <Title order={3} size="h4">
+              Previous Run Details
+            </Title>
+            <Text>
+              <strong>ID:</strong> {lastRun.id}
+            </Text>
+            <Text>
+              <strong>Name:</strong> {lastRun.name || "N/A"}
+            </Text>
+            <Text>
+              <strong>Created At:</strong>{" "}
+              {new Date(lastRun.created_at).toLocaleString()}
+            </Text>
             {lastRun.settings_snapshot && (
               <Text className={styles.createRunPage__snapshotText}>
-                <strong>Settings Snapshot:</strong> <pre>{JSON.stringify(lastRun.settings_snapshot, null, 2)}</pre>
+                <strong>Settings Snapshot:</strong>{" "}
+                <pre>{JSON.stringify(lastRun.settings_snapshot, null, 2)}</pre>
               </Text>
             )}
             {lastRun.copied_from !== null && (
-                 <Text><strong>Copied From Run ID:</strong> {lastRun.copied_from}</Text>
+              <Text>
+                <strong>Copied From Run ID:</strong> {lastRun.copied_from}
+              </Text>
             )}
           </Stack>
         </Card>
       )}
-      
+
       {/* Render CreateRunForm */}
-      <Title order={2} size="h3" className={`${styles.createRunPage__subTitle} ${styles.createRunPage__subTitle_marginTopXl}`}>Create New Run</Title>
+      <Title
+        order={2}
+        size="h3"
+        className={`${styles.createRunPage__subTitle} ${styles.createRunPage__subTitle_marginTopXl}`}
+      >
+        Create New Run
+      </Title>
       <div className={styles.createRunPage__formSection}>
         <CreateRunForm />
       </div>
 
-      <Title order={2} size="h3" className={`${styles.createRunPage__subTitle} ${styles.createRunPage__subTitle_marginTopXl}`}>AI Training Plan</Title>
+      <Title
+        order={2}
+        size="h3"
+        className={`${styles.createRunPage__subTitle} ${styles.createRunPage__subTitle_marginTopXl}`}
+      >
+        AI Training Plan
+      </Title>
       <Stack>
         <Select
           label="Run Type"
@@ -143,22 +193,35 @@ export default function CreateRunPage() {
           onChange={setRunType}
         />
         {(runType === "Long Run" || runType === "Easy/Recovery Run") && (
-          <NumberInput label="Distance (km)" value={distance} onChange={(v) => setDistance(typeof v === 'number' ? v : undefined)} />
+          <NumberInput
+            label="Distance (km)"
+            value={distance}
+            onChange={(v) => setDistance(typeof v === "number" ? v : undefined)}
+          />
         )}
-        <Button onClick={fetchPlan} loading={planLoading}>Generate Plan</Button>
+        <Button onClick={fetchPlan} loading={planLoading}>
+          Generate Plan
+        </Button>
         {planError && <Alert color="red">{planError}</Alert>}
         {plan && (
           <Card>
             {Array.isArray(plan.training_plan) ? (
               <ul>
                 {plan.training_plan.map((seg: any, idx: number) => (
-                  <li key={idx}>{seg.segment} @ {seg.pace}</li>
+                  <li key={idx}>
+                    {seg.segment} @ {seg.pace}
+                  </li>
                 ))}
               </ul>
             ) : (
-              <Text>Distance: {plan.training_plan.distance} km | Pace: {plan.training_plan.pace} | Time: {plan.training_plan.duration}</Text>
+              <Text>
+                Distance: {plan.training_plan.distance} km | Pace:{" "}
+                {plan.training_plan.pace} | Time: {plan.training_plan.duration}
+              </Text>
             )}
-            <Button mt="sm" onClick={acceptPlan}>Accept Plan</Button>
+            <Button mt="sm" onClick={acceptPlan}>
+              Accept Plan
+            </Button>
           </Card>
         )}
       </Stack>

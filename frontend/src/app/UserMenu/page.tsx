@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import { Card, Title, Text, Group, Avatar, Stack, Button } from '@mantine/core';
-import { IconUser, IconLogout } from '@tabler/icons-react';
-import UserSidebarCard from '@/components/layout/UserSidebarCard';
+import { Card, Title, Text, Group, Avatar, Stack, Button } from "@mantine/core";
+import { IconUser, IconLogout } from "@tabler/icons-react";
+import UserSidebarCard from "@/components/layout/UserSidebarCard";
 export default function ProfilePage() {
   // Dummy user data for demonstration
   const user = {
@@ -12,13 +12,19 @@ export default function ProfilePage() {
   };
 
   const handleLogout = () => {
-    localStorage.removeItem('token');
-    window.location.href = '/login';
+    localStorage.removeItem("token");
+    window.location.href = "/login";
   };
 
   return (
-    <Group align="center" justify="center" style={{ minHeight: '80vh' }}>
-      <Card shadow="md" padding="xl" radius="md" withBorder style={{ minWidth: 340 }}>
+    <Group align="center" justify="center" style={{ minHeight: "80vh" }}>
+      <Card
+        shadow="md"
+        padding="xl"
+        radius="md"
+        withBorder
+        style={{ minWidth: 340 }}
+      >
         <Stack align="center" gap="md">
           <Avatar src={user.avatar} size={80} radius="xl" />
           <Title order={3}>{user.name}</Title>
@@ -31,7 +37,7 @@ export default function ProfilePage() {
             onClick={handleLogout}
           >
             Logout
-          </Button >
+          </Button>
         </Stack>
       </Card>
     </Group>

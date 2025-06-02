@@ -181,3 +181,4 @@ dist
 .yarn/install-state.gz
 .pnp.*
 backend/app/Test.py
+backend/test.db

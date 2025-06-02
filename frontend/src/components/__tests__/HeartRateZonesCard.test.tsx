@@ -1,7 +1,7 @@
-import React from 'react';
-import { render, screen, waitFor } from '@testing-library/react';
-import '@testing-library/jest-dom';
-import HeartRateZonesCard from '../cards/HeartRateZonesCard';
+import React from "react";
+import { render, screen, waitFor } from "@testing-library/react";
+import "@testing-library/jest-dom";
+import HeartRateZonesCard from "../cards/HeartRateZonesCard";
 
 const mockZones = {
   heart_rate: {
@@ -15,34 +15,34 @@ const mockZones = {
   },
 };
 
-describe('HeartRateZonesCard', () => {
+describe("HeartRateZonesCard", () => {
   beforeEach(() => {
     // @ts-ignore
     global.fetch = jest.fn(() =>
       Promise.resolve({
         ok: true,
         json: () => Promise.resolve(mockZones),
-      })
+      }),
     );
   });
 
-  test('renders zones after fetch', async () => {
+  test("renders zones after fetch", async () => {
     render(<HeartRateZonesCard />);
-    expect(screen.getByTestId('hrzones-loader')).toBeInTheDocument();
+    expect(screen.getByTestId("hrzones-loader")).toBeInTheDocument();
 
     await waitFor(() => {
-      expect(screen.getByText('Zone 1')).toBeInTheDocument();
-      expect(screen.getByText('0 - 100 bpm')).toBeInTheDocument();
+      expect(screen.getByText("Zone 1")).toBeInTheDocument();
+      expect(screen.getByText("0 - 100 bpm")).toBeInTheDocument();
     });
   });
 
-  test('shows message on fetch failure', async () => {
+  test("shows message on fetch failure", async () => {
     // @ts-ignore
-    global.fetch = jest.fn(() => Promise.reject(new Error('fail')));
+    global.fetch = jest.fn(() => Promise.reject(new Error("fail")));
     render(<HeartRateZonesCard />);
 
     await waitFor(() => {
-      expect(screen.getByText('No zones available')).toBeInTheDocument();
+      expect(screen.getByText("No zones available")).toBeInTheDocument();
     });
   });
 });

@@ -19,7 +19,9 @@
 
 /* Stack for the main content area (charts and table) */
 .statisticsPage__contentStack {
-  gap: var(--mantine-spacing-xl); /* from gap="xl", was lg before, xl is used in main stack */
+  gap: var(
+    --mantine-spacing-xl
+  ); /* from gap="xl", was lg before, xl is used in main stack */
 }
 
 /* Paper component styling for charts */
@@ -48,16 +50,16 @@
 /* Group holding charts */
 .statisticsPage__chartGroup {
   min-height: 300px; /* from style={{ height: 300 }} - Mantine Group is flex */
-  width: 100%; 
+  width: 100%;
   display: flex;
-  justify-content: center; 
+  justify-content: center;
   align-items: center;
 }
 
 /* Text for "Not enough data" message */
 .statisticsPage__noDataText {
-  text-align: center; 
-  color: var(--mantine-color-dimmed); 
+  text-align: center;
+  color: var(--mantine-color-dimmed);
   margin-top: var(--mantine-spacing-md); /* from mt="md" (was lg before) */
   height: 300px; /* from style */
   display: flex;

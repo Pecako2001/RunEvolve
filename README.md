@@ -1,4 +1,5 @@
 # RunEvolve - Full-Stack Running Tracker
+
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![Pecako2001/RunEvolve context](https://badge.forgithub.com/Pecako2001/RunEvolve?accept=text%2Fhtml&maxTokens=20000)](https://github.com/Pecako2001/RunEvolve?accept=text%2Fhtml&maxTokens=20000)
 [![Build Status](https://img.shields.io/badge/build-passing-brightgreen)](https://https://github.com/Pecako2001/RunEvolve)
@@ -8,39 +9,39 @@ RunEvolve is a full-stack running tracker application designed to help users mon
 
 ## Features
 
-*   **Track Running Activities:** Log essential details about your runs, such as distance, time, average speed, and heart rate.
-*   **View Detailed Statistics:** Analyze your performance with comprehensive summaries, charts, and historical data.
-*   **User-Friendly Interface:** Experience a clean, modern, and responsive UI built with Mantine.
-*   **(Planned) Strava Integration:** Automatically sync your activities from Strava.
-*   **New & Upcoming Pages:**
-    *   `/goals`: Define and track weekly/monthly distance or time goals.
-    *   `/profile`: View past run summaries, personal bests, and manage Strava sync status.
-    *   `/calendar`: Visualize your runs on a calendar view.
+- **Track Running Activities:** Log essential details about your runs, such as distance, time, average speed, and heart rate.
+- **View Detailed Statistics:** Analyze your performance with comprehensive summaries, charts, and historical data.
+- **User-Friendly Interface:** Experience a clean, modern, and responsive UI built with Mantine.
+- **(Planned) Strava Integration:** Automatically sync your activities from Strava.
+- **New & Upcoming Pages:**
+  - `/goals`: Define and track weekly/monthly distance or time goals.
+  - `/profile`: View past run summaries, personal bests, and manage Strava sync status.
+  - `/calendar`: Visualize your runs on a calendar view.
 
 ## Tech Stack
 
-*   **Frontend:**
-    *   Next.js (v15)
-    *   React (v19)
-    *   TypeScript
-    *   Mantine UI
-    *   CSS Modules
-    *   Recharts
-*   **Backend:**
-    *   FastAPI (Python)
-    *   PostgreSQL
-    *   SQLAlchemy (ORM)
-*   **DevOps & Tooling:**
-    *   Docker & Docker Compose
-    *   ESLint
-    *   Jest
+- **Frontend:**
+  - Next.js (v15)
+  - React (v19)
+  - TypeScript
+  - Mantine UI
+  - CSS Modules
+  - Recharts
+- **Backend:**
+  - FastAPI (Python)
+  - PostgreSQL
+  - SQLAlchemy (ORM)
+- **DevOps & Tooling:**
+  - Docker & Docker Compose
+  - ESLint
+  - Jest
 
 ## Prerequisites
 
-*   Node.js (v18 or later recommended)
-*   npm (comes with Node.js) or yarn
-*   Docker Desktop (or Docker Engine and Docker Compose CLI)
-*   Python (v3.9 or later, if setting up the backend manually without Docker)
+- Node.js (v18 or later recommended)
+- npm (comes with Node.js) or yarn
+- Docker Desktop (or Docker Engine and Docker Compose CLI)
+- Python (v3.9 or later, if setting up the backend manually without Docker)
 
 ## Setup Instructions
 
@@ -50,7 +51,8 @@ RunEvolve is a full-stack running tracker application designed to help users mon
 git clone https://github.com/your-repo/runevolve.git
 cd runevolve
 ```
-*(Remember to replace `your-repo/runevolve` with the actual repository URL if you fork it).*
+
+_(Remember to replace `your-repo/runevolve` with the actual repository URL if you fork it)._
 
 ### 2. Backend Setup (using Docker - Recommended)
 
@@ -66,14 +68,17 @@ The backend, along with the PostgreSQL database, is containerized using Docker.
     cp .env.example .env
     ```
 3.  **Configure Environment Variables (in `backend/.env`):**
-    *   **`DATABASE_URL`**: The default `DATABASE_URL` in `.env.example` is configured to work with the PostgreSQL service defined in the `docker-compose.yml` file at the root of the project (`postgresql://user:password@db/app`). Update this if your PostgreSQL setup differs (e.g., if you're using an external database).
-    *   **Strava Integration (Future):** The `.env` file also contains placeholders for `STRAVA_CLIENT_ID`, `STRAVA_CLIENT_SECRET`, and `STRAVA_WEBHOOK_CALLBACK_URL`. These will be used for the planned Strava integration.
+
+    - **`DATABASE_URL`**: The default `DATABASE_URL` in `.env.example` is configured to work with the PostgreSQL service defined in the `docker-compose.yml` file at the root of the project (`postgresql://user:password@db/app`). Update this if your PostgreSQL setup differs (e.g., if you're using an external database).
+    - **Strava Integration (Future):** The `.env` file also contains placeholders for `STRAVA_CLIENT_ID`, `STRAVA_CLIENT_SECRET`, and `STRAVA_WEBHOOK_CALLBACK_URL`. These will be used for the planned Strava integration.
 
 4.  **Build and Run Docker Containers:**
     From the **root `runevolve` directory** (where `docker-compose.yml` is located):
+
     ```bash
     docker-compose up -d --build
     ```
+
     This command will build the images for the backend and database services and start them in detached mode.
 
 5.  **Verify Backend:**
@@ -84,35 +89,44 @@ The backend, along with the PostgreSQL database, is containerized using Docker.
 
 1.  **Navigate to the `frontend` directory:**
     If you are in the `backend` directory, go back to the root and then into `frontend`:
+
     ```bash
-    cd ../frontend 
+    cd ../frontend
     ```
+
     If you are in the root `runevolve` directory:
+
     ```bash
     cd frontend
     ```
 
 2.  **Install Dependencies:**
+
     ```bash
     npm install
     ```
+
     Alternatively, if you prefer using yarn:
+
     ```bash
-    # yarn install 
+    # yarn install
     ```
 
 3.  **Configure Environment Variables (Optional - `frontend/.env.local`):**
-    *   If your backend API is running on a URL different from the default (`http://localhost:8000`), create a `.env.local` file in the `frontend` directory.
-    *   Add the following line, replacing the URL with your backend's actual URL:
-        ```
-        NEXT_PUBLIC_API_URL=http://your_backend_api_url:port
-        ```
-    *   If this file is not present, the application defaults to `http://localhost:8000` for API calls.
+
+    - If your backend API is running on a URL different from the default (`http://localhost:8000`), create a `.env.local` file in the `frontend` directory.
+    - Add the following line, replacing the URL with your backend's actual URL:
+      ```
+      NEXT_PUBLIC_API_URL=http://your_backend_api_url:port
+      ```
+    - If this file is not present, the application defaults to `http://localhost:8000` for API calls.
 
 4.  **Run the Development Server:**
+
     ```bash
     npm run dev
     ```
+
     This will start the Next.js development server (typically with Turbopack).
 
 5.  **Access the Application:**
@@ -122,24 +136,24 @@ The backend, along with the PostgreSQL database, is containerized using Docker.
 
 ### Backend (`backend/.env`)
 
-*   `DATABASE_URL`: PostgreSQL connection string. (e.g., `postgresql://user:password@host:port/database`)
-*   `STRAVA_CLIENT_ID`: (Optional) Your Strava application's Client ID for future Strava integration.
-*   `STRAVA_CLIENT_SECRET`: (Optional) Your Strava application's Client Secret.
-*   `STRAVA_WEBHOOK_CALLBACK_URL`: (Optional) Your Strava webhook callback URL.
+- `DATABASE_URL`: PostgreSQL connection string. (e.g., `postgresql://user:password@host:port/database`)
+- `STRAVA_CLIENT_ID`: (Optional) Your Strava application's Client ID for future Strava integration.
+- `STRAVA_CLIENT_SECRET`: (Optional) Your Strava application's Client Secret.
+- `STRAVA_WEBHOOK_CALLBACK_URL`: (Optional) Your Strava webhook callback URL.
 
 ### Frontend (`frontend/.env.local` - Optional)
 
-*   `NEXT_PUBLIC_API_URL`: The base URL for the backend API. If not set, the application defaults to `http://localhost:8000`.
+- `NEXT_PUBLIC_API_URL`: The base URL for the backend API. If not set, the application defaults to `http://localhost:8000`.
 
 ## Available Scripts (Frontend)
 
 The following scripts are available in the `frontend` directory (via `package.json`):
 
-*   `npm run dev`: Starts the Next.js development server with Turbopack.
-*   `npm run build`: Builds the application for production deployment.
-*   `npm run start`: Starts a Next.js production server (requires a prior build).
-*   `npm run lint`: Lints the codebase using Next.js's integrated ESLint configuration.
-*   `npm run test`: Runs tests using Jest.
+- `npm run dev`: Starts the Next.js development server with Turbopack.
+- `npm run build`: Builds the application for production deployment.
+- `npm run start`: Starts a Next.js production server (requires a prior build).
+- `npm run lint`: Lints the codebase using Next.js's integrated ESLint configuration.
+- `npm run test`: Runs tests using Jest.
 
 ### Styling
 
@@ -153,8 +167,8 @@ The backend API is built with FastAPI, which provides automatic interactive API 
 
 Once the backend service is running (e.g., via `docker-compose up`), you can access the API documentation at:
 
-*   **Swagger UI:** `http://localhost:8000/docs`
-*   **ReDoc:** `http://localhost:8000/redoc`
+- **Swagger UI:** `http://localhost:8000/docs`
+- **ReDoc:** `http://localhost:8000/redoc`
 
 These interfaces provide detailed information about all available endpoints, request parameters, and response models.
 

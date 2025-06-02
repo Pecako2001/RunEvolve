@@ -17,14 +17,14 @@
 }
 
 .goalsPage__sectionTitle {
-    font-size: var(--mantine-font-size-xl); /* Larger than card titles */
-    font-weight: 600;
-    margin-bottom: var(--mantine-spacing-lg);
-    text-align: left; /* Align section titles to the left */
+  font-size: var(--mantine-font-size-xl); /* Larger than card titles */
+  font-weight: 600;
+  margin-bottom: var(--mantine-spacing-lg);
+  text-align: left; /* Align section titles to the left */
 }
 
 .goalsPage__goalCardsGrid {
-    /* SimpleGrid handles layout, this class is for potential future overall styling of the grid */
+  /* SimpleGrid handles layout, this class is for potential future overall styling of the grid */
 }
 
 .goalsPage__goalCard {
