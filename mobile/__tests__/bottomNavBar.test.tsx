@@ -16,6 +16,6 @@ test("bottom nav shows navigation buttons", () => {
     </PaperProvider>,
   );
   expect(getByText("Home")).toBeTruthy();
-  expect(getByText("Stats")).toBeTruthy();
+  expect(getByText("Statistics")).toBeTruthy();
   expect(getByText("Settings")).toBeTruthy();
 });
