@@ -182,3 +182,4 @@ dist
 .pnp.*
 backend/app/Test.py
 backend/test.db
+mobile/package-lock.json
