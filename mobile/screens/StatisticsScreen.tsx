@@ -1,7 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { View, Text, StyleSheet, ScrollView } from "react-native";
 import BottomNavBar from "../components/BottomNavBar";
 import { colors, spacing } from "../theme";
+import { useTheme } from "react-native-paper";
+import { ThemeContext } from "../ThemeContext";
 import Svg, { Polyline, Rect } from "react-native-svg";
 
 const API_BASE_URL = process.env.EXPO_PUBLIC_API_URL || "http://localhost:8000";
@@ -34,6 +36,9 @@ function formatTime(seconds: Optional<number>): string {
 }
 
 export default function StatisticsScreen() {
+  const { colors } = useContext(ThemeContext);
+  const { colors: paperColors } = useTheme();
+  const accent = paperColors.accent ?? colors.accent;
   const [completedRuns, setCompletedRuns] = useState<Run[]>([]);
   const [plannedRuns, setPlannedRuns] = useState<Run[]>([]);
   const [loading, setLoading] = useState(true);
@@ -61,27 +66,35 @@ export default function StatisticsScreen() {
   }, []);
 
   const monthlyAvgSpeedData = completedRuns
-    .reduce((acc, run) => {
-      if (!run.created_at || run.average_speed == null) return acc;
-      const monthYear = new Date(run.created_at).toLocaleDateString("en-US", {
-        year: "numeric",
-        month: "short",
-      });
-      const entry = acc.find((r) => r.month === monthYear);
-      if (entry) {
-        entry.totalSpeed += run.average_speed!;
-        entry.count += 1;
-        entry.avgSpeed = entry.totalSpeed / entry.count;
-      } else {
-        acc.push({
-          month: monthYear,
-          totalSpeed: run.average_speed!,
-          count: 1,
-          avgSpeed: run.average_speed!,
+    .reduce(
+      (acc, run) => {
+        if (!run.created_at || run.average_speed == null) return acc;
+        const monthYear = new Date(run.created_at).toLocaleDateString("en-US", {
+          year: "numeric",
+          month: "short",
         });
-      }
-      return acc;
-    }, [] as { month: string; totalSpeed: number; count: number; avgSpeed: number }[])
+        const entry = acc.find((r) => r.month === monthYear);
+        if (entry) {
+          entry.totalSpeed += run.average_speed!;
+          entry.count += 1;
+          entry.avgSpeed = entry.totalSpeed / entry.count;
+        } else {
+          acc.push({
+            month: monthYear,
+            totalSpeed: run.average_speed!,
+            count: 1,
+            avgSpeed: run.average_speed!,
+          });
+        }
+        return acc;
+      },
+      [] as {
+        month: string;
+        totalSpeed: number;
+        count: number;
+        avgSpeed: number;
+      }[],
+    )
     .sort((a, b) => new Date(a.month).getTime() - new Date(b.month).getTime())
     .map((item) => ({
       month: item.month,
@@ -89,17 +102,20 @@ export default function StatisticsScreen() {
     }));
 
   const yearlyDistanceData = completedRuns
-    .reduce((acc, run) => {
-      if (!run.created_at || run.distance == null) return acc;
-      const year = new Date(run.created_at).getFullYear().toString();
-      const entry = acc.find((r) => r.year === year);
-      if (entry) {
-        entry.totalDistance += run.distance!;
-      } else {
-        acc.push({ year, totalDistance: run.distance! });
-      }
-      return acc;
-    }, [] as { year: string; totalDistance: number }[])
+    .reduce(
+      (acc, run) => {
+        if (!run.created_at || run.distance == null) return acc;
+        const year = new Date(run.created_at).getFullYear().toString();
+        const entry = acc.find((r) => r.year === year);
+        if (entry) {
+          entry.totalDistance += run.distance!;
+        } else {
+          acc.push({ year, totalDistance: run.distance! });
+        }
+        return acc;
+      },
+      [] as { year: string; totalDistance: number }[],
+    )
     .sort((a, b) => parseInt(a.year) - parseInt(b.year))
     .map((item) => ({
       year: item.year,
@@ -112,19 +128,25 @@ export default function StatisticsScreen() {
         <Text style={styles.title}>Run Statistics</Text>
 
         <Text style={styles.sectionTitle}>Average Speed per Month</Text>
-        <LineChart data={monthlyAvgSpeedData} />
+        <LineChart data={monthlyAvgSpeedData} accent={accent} />
 
         <Text style={styles.sectionTitle}>Total Distance per Year</Text>
-        <BarChart data={yearlyDistanceData} />
+        <BarChart data={yearlyDistanceData} accent={accent} />
 
         <Text style={styles.sectionTitle}>Completed Runs</Text>
         {completedRuns.map((run) => (
           <View key={run.id} style={styles.row}>
             <Text style={styles.cell}>{run.name || "Unnamed Run"}</Text>
-            <Text style={styles.cell}>{new Date(run.created_at).toLocaleDateString()}</Text>
-            <Text style={styles.cell}>{run.distance?.toFixed(2) || "N/A"} km</Text>
+            <Text style={styles.cell}>
+              {new Date(run.created_at).toLocaleDateString()}
+            </Text>
+            <Text style={styles.cell}>
+              {run.distance?.toFixed(2) || "N/A"} km
+            </Text>
             <Text style={styles.cell}>{formatTime(run.time)}</Text>
-            <Text style={styles.cell}>{run.average_speed?.toFixed(2) || "N/A"} km/h</Text>
+            <Text style={styles.cell}>
+              {run.average_speed?.toFixed(2) || "N/A"} km/h
+            </Text>
           </View>
         ))}
 
@@ -132,8 +154,12 @@ export default function StatisticsScreen() {
         {plannedRuns.map((run) => (
           <View key={run.id} style={styles.row}>
             <Text style={styles.cell}>{run.name || "Unnamed Planned Run"}</Text>
-            <Text style={styles.cell}>{new Date(run.created_at).toLocaleDateString()}</Text>
-            <Text style={styles.cell}>{run.distance?.toFixed(2) || "N/A"} km</Text>
+            <Text style={styles.cell}>
+              {new Date(run.created_at).toLocaleDateString()}
+            </Text>
+            <Text style={styles.cell}>
+              {run.distance?.toFixed(2) || "N/A"} km
+            </Text>
             <Text style={styles.cell}>{formatTime(run.time)}</Text>
           </View>
         ))}
@@ -145,11 +171,7 @@ export default function StatisticsScreen() {
   );
 }
 
-function LineChart({
-  data,
-}: {
-  data: { month: string; avgSpeed: number }[];
-}) {
+function LineChart({ data, accent }: { data: { month: string; avgSpeed: number }[]; accent: string }) {
   if (data.length === 0) return <Text>No data</Text>;
   const width = 300;
   const height = 150;
@@ -166,7 +188,7 @@ function LineChart({
       <Polyline
         points={points}
         fill="none"
-        stroke={colors.accent}
+        stroke={accent}
         strokeWidth={2}
       />
     </Svg>
@@ -175,8 +197,10 @@ function LineChart({
 
 function BarChart({
   data,
+  accent,
 }: {
   data: { year: string; totalDistance: number }[];
+  accent: string;
 }) {
   if (data.length === 0) return <Text>No data</Text>;
   const width = 300;
@@ -194,7 +218,7 @@ function BarChart({
             y={height - barHeight - 10}
             width={barWidth - 4}
             height={barHeight}
-            fill={colors.accent}
+            fill={accent}
           />
         );
       })}
