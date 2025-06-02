@@ -21,6 +21,13 @@ export default function BottomNavBar() {
       >
         <Text style={styles.text}>Stats</Text>
       </TouchableOpacity>
+      <TouchableOpacity
+        accessibilityRole="button"
+        style={styles.item}
+        onPress={() => navigation.navigate("Settings" as never)}
+      >
+        <Text style={styles.text}>Settings</Text>
+      </TouchableOpacity>
     </View>
   );
 }
