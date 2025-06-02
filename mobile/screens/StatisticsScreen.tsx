@@ -1,9 +1,7 @@
 import React, { useEffect, useState, useContext } from "react";
 import { View, Text, StyleSheet, ScrollView } from "react-native";
 import BottomNavBar from "../components/BottomNavBar";
-import { colors, spacing } from "../theme";
 import { useTheme } from "react-native-paper";
-import { ThemeContext } from "../ThemeContext";
 import Svg, { Polyline, Rect } from "react-native-svg";
 
 const API_BASE_URL = process.env.EXPO_PUBLIC_API_URL || "http://localhost:8000";
@@ -36,9 +34,14 @@ function formatTime(seconds: Optional<number>): string {
 }
 
 export default function StatisticsScreen() {
-  const { colors } = useContext(ThemeContext);
-  const { colors: paperColors } = useTheme();
-  const accent = paperColors.accent ?? colors.accent;
+  // Use theme colors from react-native-paper or fallback to defaults
+  const paperTheme = useTheme();
+  const themeColors = paperTheme.colors || {};
+  const accent = themeColors.primary || "#0ea5e9";
+  const background = themeColors.background || "#fff";
+  const foreground = themeColors.onBackground || "#222";
+  const border = themeColors.outline || "#e5e7eb";
+
   const [completedRuns, setCompletedRuns] = useState<Run[]>([]);
   const [plannedRuns, setPlannedRuns] = useState<Run[]>([]);
   const [loading, setLoading] = useState(true);
@@ -123,44 +126,44 @@ export default function StatisticsScreen() {
     }));
 
   return (
-    <View style={styles.root}>
-      <ScrollView contentContainerStyle={styles.container}>
-        <Text style={styles.title}>Run Statistics</Text>
+    <View style={[styles.root, { backgroundColor: background }]}>
+      <ScrollView contentContainerStyle={[styles.container, { backgroundColor: background }]}>
+        <Text style={[styles.title, { color: foreground }]}>Run Statistics</Text>
 
-        <Text style={styles.sectionTitle}>Average Speed per Month</Text>
+        <Text style={[styles.sectionTitle, { color: foreground }]}>Average Speed per Month</Text>
         <LineChart data={monthlyAvgSpeedData} accent={accent} />
 
-        <Text style={styles.sectionTitle}>Total Distance per Year</Text>
+        <Text style={[styles.sectionTitle, { color: foreground }]}>Total Distance per Year</Text>
         <BarChart data={yearlyDistanceData} accent={accent} />
 
-        <Text style={styles.sectionTitle}>Completed Runs</Text>
+        <Text style={[styles.sectionTitle, { color: foreground }]}>Completed Runs</Text>
         {completedRuns.map((run) => (
-          <View key={run.id} style={styles.row}>
-            <Text style={styles.cell}>{run.name || "Unnamed Run"}</Text>
-            <Text style={styles.cell}>
+          <View key={run.id} style={[styles.row, { borderColor: border }]}>
+            <Text style={[styles.cell, { color: foreground }]}>{run.name || "Unnamed Run"}</Text>
+            <Text style={[styles.cell, { color: foreground }]}>
               {new Date(run.created_at).toLocaleDateString()}
             </Text>
-            <Text style={styles.cell}>
+            <Text style={[styles.cell, { color: foreground }]}>
               {run.distance?.toFixed(2) || "N/A"} km
             </Text>
-            <Text style={styles.cell}>{formatTime(run.time)}</Text>
-            <Text style={styles.cell}>
+            <Text style={[styles.cell, { color: foreground }]}>{formatTime(run.time)}</Text>
+            <Text style={[styles.cell, { color: foreground }]}>
               {run.average_speed?.toFixed(2) || "N/A"} km/h
             </Text>
           </View>
         ))}
 
-        <Text style={styles.sectionTitle}>Planned Runs</Text>
+        <Text style={[styles.sectionTitle, { color: foreground }]}>Planned Runs</Text>
         {plannedRuns.map((run) => (
-          <View key={run.id} style={styles.row}>
-            <Text style={styles.cell}>{run.name || "Unnamed Planned Run"}</Text>
-            <Text style={styles.cell}>
+          <View key={run.id} style={[styles.row, { borderColor: border }]}>
+            <Text style={[styles.cell, { color: foreground }]}>{run.name || "Unnamed Planned Run"}</Text>
+            <Text style={[styles.cell, { color: foreground }]}>
               {new Date(run.created_at).toLocaleDateString()}
             </Text>
-            <Text style={styles.cell}>
+            <Text style={[styles.cell, { color: foreground }]}>
               {run.distance?.toFixed(2) || "N/A"} km
             </Text>
-            <Text style={styles.cell}>{formatTime(run.time)}</Text>
+            <Text style={[styles.cell, { color: foreground }]}>{formatTime(run.time)}</Text>
           </View>
         ))}
 
@@ -231,32 +234,27 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   container: {
-    padding: spacing.md,
-    backgroundColor: colors.background,
+    padding: 16,
   },
   title: {
     fontSize: 20,
-    color: colors.foreground,
-    marginBottom: spacing.lg,
+    marginBottom: 24,
     textAlign: "center",
   },
   sectionTitle: {
     fontSize: 16,
-    marginTop: spacing.lg,
-    marginBottom: spacing.sm,
-    color: colors.foreground,
+    marginTop: 24,
+    marginBottom: 8,
   },
   row: {
     flexDirection: "row",
     justifyContent: "space-between",
     paddingVertical: 4,
     borderBottomWidth: StyleSheet.hairlineWidth,
-    borderColor: colors.border,
   },
   cell: {
     flex: 1,
     fontSize: 12,
-    color: colors.foreground,
   },
   chart: {
     alignSelf: "center",
