@@ -2,7 +2,7 @@
 
 import { Loader, Text } from "@mantine/core";
 import { useEffect, useState } from "react";
-import MetricCard from "../MetricCard";
+import MetricCard from "../cards/MetricCard";
 import { getCurrentWeekKey } from "../../utils/time";
 
 interface StatDetail {

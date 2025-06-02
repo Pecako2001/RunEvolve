@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from 'react';
-import globalStyles from '../styles/global.module.css';
+import globalStyles from '@/styles/global.module.css';
 import { TextInput, Button, Stack, Text, Box } from '@mantine/core';
 import { notifications } from '@mantine/notifications';
 import axios from 'axios';
