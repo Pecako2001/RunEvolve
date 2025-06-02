@@ -1,5 +1,6 @@
 import React, { useContext, useState, useMemo } from "react";
 import { View, Text, StyleSheet, Switch } from "react-native";
+import Slider from "@react-native-community/slider";
 import BottomNavBar from "../components/BottomNavBar";
 import { spacing } from "../theme";
 import { ThemeContext } from "../ThemeContext";
@@ -37,9 +38,9 @@ export default function SettingsScreen() {
   return (
     <View style={styles.root}>
       <View style={styles.container}>
-        <Text style={styles.title}>Settings</Text>
+        <Text style={[styles.title, { fontSize: 20 * scale }]}>Settings</Text>
         <View style={styles.itemRow}>
-          <Text style={styles.itemText}>Dark Theme</Text>
+          <Text style={[styles.itemText, { fontSize: 16 * scale }]}>Dark Theme</Text>
           <Switch
             value={darkMode}
             onValueChange={toggleDarkMode}
@@ -47,11 +48,15 @@ export default function SettingsScreen() {
           />
         </View>
         <View style={styles.itemRow}>
-          <Text style={styles.itemText}>Large Text</Text>
-          <Switch
-            value={largeText}
-            onValueChange={setLargeText}
-            accessibilityLabel="toggle large text"
+          <Text style={[styles.itemText, { fontSize: 16 * scale }]}>Text Size</Text>
+          <Slider
+            accessibilityLabel="text size"
+            minimumValue={1}
+            maximumValue={2}
+            step={0.25}
+            value={scale}
+            onValueChange={setScale}
+            style={styles.slider}
           />
         </View>
       </View>

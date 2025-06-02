@@ -11,7 +11,7 @@ it("shows default settings options", () => {
     </ThemeProvider>,
   );
   expect(getByText("Dark Theme")).toBeTruthy();
-  expect(getByText("Large Text")).toBeTruthy();
+  expect(getByText("Text Size")).toBeTruthy();
 });
 
 it("toggles dark mode colors", () => {

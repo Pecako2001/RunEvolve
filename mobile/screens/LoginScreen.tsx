@@ -79,7 +79,7 @@ export default function LoginScreen({ navigation, onSuccess, onError }: Props) {
         placeholderTextColor="#6b7280"
         value={email}
         onChangeText={setEmail}
-        style={styles.input}
+        style={[styles.input, { fontSize: 16 * scale }]}
       />
       <TextInput
         placeholder="Password"
@@ -87,9 +87,9 @@ export default function LoginScreen({ navigation, onSuccess, onError }: Props) {
         value={password}
         onChangeText={setPassword}
         secureTextEntry
-        style={styles.input}
+        style={[styles.input, { fontSize: 16 * scale }]}
       />
-      {error ? <Text style={styles.error}>{error}</Text> : null}
+      {error ? <Text style={[styles.error, { fontSize: 14 * scale }]}>{error}</Text> : null}
       <PrimaryButton title="Sign in" onPress={handleLogin} />
       <PrimaryButton
         title="Create account"

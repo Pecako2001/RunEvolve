@@ -75,21 +75,21 @@ export default function RegisterScreen({ navigation }: Props) {
         placeholderTextColor="#6b7280"
         value={firstName}
         onChangeText={setFirstName}
-        style={styles.input}
+        style={[styles.input, { fontSize: 16 * scale }]}
       />
       <TextInput
         placeholder="Last Name"
         placeholderTextColor="#6b7280"
         value={lastName}
         onChangeText={setLastName}
-        style={styles.input}
+        style={[styles.input, { fontSize: 16 * scale }]}
       />
       <TextInput
         placeholder="Email"
         placeholderTextColor="#6b7280"
         value={email}
         onChangeText={setEmail}
-        style={styles.input}
+        style={[styles.input, { fontSize: 16 * scale }]}
       />
       <TextInput
         placeholder="Password"
@@ -97,7 +97,7 @@ export default function RegisterScreen({ navigation }: Props) {
         value={password}
         onChangeText={setPassword}
         secureTextEntry
-        style={styles.input}
+        style={[styles.input, { fontSize: 16 * scale }]}
       />
       <TextInput
         placeholder="Confirm Password"
@@ -105,9 +105,9 @@ export default function RegisterScreen({ navigation }: Props) {
         value={confirm}
         onChangeText={setConfirm}
         secureTextEntry
-        style={styles.input}
+        style={[styles.input, { fontSize: 16 * scale }]}
       />
-      {error ? <Text style={styles.error}>{error}</Text> : null}
+      {error ? <Text style={[styles.error, { fontSize: 14 * scale }]}>{error}</Text> : null}
       <PrimaryButton title="Create Account" onPress={handleRegister} />
       <PrimaryButton
         title="Back to login"
