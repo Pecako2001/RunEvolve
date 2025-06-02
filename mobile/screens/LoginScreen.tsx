@@ -5,7 +5,7 @@ import { colors, spacing, radius, font } from "../theme";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const API_BASE_URL = process.env.EXPO_PUBLIC_API_URL || "http://localhost:8000";
+const API_BASE_URL = process.env.EXPO_PUBLIC_API_URL || "http://192.168.7.138:8000";
 
 type LoginCallbacks = {
   /** Called when login succeeds */
