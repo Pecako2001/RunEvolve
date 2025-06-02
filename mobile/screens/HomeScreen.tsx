@@ -1,11 +1,35 @@
-import React from "react";
+import React, { useContext, useMemo } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import PrimaryButton from "../components/PrimaryButton";
 import BottomNavBar from "../components/BottomNavBar";
-import { colors, spacing } from "../theme";
+import { spacing } from "../theme";
+import { ThemeContext } from "../ThemeContext";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 
-export default function HomeScreen({ navigation }: NativeStackScreenProps<any>) {
+export default function HomeScreen({
+  navigation,
+}: NativeStackScreenProps<any>) {
+  const { colors } = useContext(ThemeContext);
+  const styles = useMemo(() =>
+    StyleSheet.create({
+      root: {
+        flex: 1,
+      },
+      container: {
+        flex: 1,
+        alignItems: "center",
+        justifyContent: "center",
+        backgroundColor: colors.background,
+        padding: spacing.md,
+      },
+      title: {
+        fontSize: 20,
+        marginBottom: spacing.lg,
+        color: colors.foreground,
+      },
+    }),
+  [colors]);
+
   return (
     <View style={styles.root}>
       <View style={styles.container}>
@@ -19,21 +43,3 @@ export default function HomeScreen({ navigation }: NativeStackScreenProps<any>) 
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  root: {
-    flex: 1,
-  },
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: colors.background,
-    padding: spacing.md,
-  },
-  title: {
-    fontSize: 20,
-    marginBottom: spacing.lg,
-    color: colors.foreground,
-  },
-});

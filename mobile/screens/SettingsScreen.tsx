@@ -1,11 +1,38 @@
-import React, { useState } from "react";
+import React, { useContext, useState, useMemo } from "react";
 import { View, Text, StyleSheet, Switch } from "react-native";
 import BottomNavBar from "../components/BottomNavBar";
-import { colors, spacing } from "../theme";
+import { spacing } from "../theme";
+import { ThemeContext } from "../ThemeContext";
 
 export default function SettingsScreen() {
-  const [darkMode, setDarkMode] = useState(false);
+  const { darkMode, toggleDarkMode, colors } = useContext(ThemeContext);
   const [largeText, setLargeText] = useState(false);
+  const styles = useMemo(() =>
+    StyleSheet.create({
+      root: { flex: 1 },
+      container: {
+        flex: 1,
+        padding: spacing.md,
+        backgroundColor: colors.background,
+      },
+      title: {
+        fontSize: 20,
+        marginBottom: spacing.lg,
+        color: colors.foreground,
+        textAlign: "center",
+      },
+      itemRow: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
+        marginBottom: spacing.md,
+      },
+      itemText: {
+        color: colors.foreground,
+        fontSize: 16,
+      },
+    }),
+  [colors]);
 
   return (
     <View style={styles.root}>
@@ -15,7 +42,7 @@ export default function SettingsScreen() {
           <Text style={styles.itemText}>Dark Theme</Text>
           <Switch
             value={darkMode}
-            onValueChange={setDarkMode}
+            onValueChange={toggleDarkMode}
             accessibilityLabel="toggle dark theme"
           />
         </View>
@@ -33,29 +60,3 @@ export default function SettingsScreen() {
   );
 }
 
-const styles = StyleSheet.create({
-  root: {
-    flex: 1,
-  },
-  container: {
-    flex: 1,
-    padding: spacing.md,
-    backgroundColor: colors.background,
-  },
-  title: {
-    fontSize: 20,
-    marginBottom: spacing.lg,
-    color: colors.foreground,
-    textAlign: "center",
-  },
-  itemRow: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    marginBottom: spacing.md,
-  },
-  itemText: {
-    color: colors.foreground,
-    fontSize: 16,
-  },
-});

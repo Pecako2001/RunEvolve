@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useContext } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { colors } from "./theme";
+import { ThemeProvider, ThemeContext } from "./ThemeContext";
 import HomeScreen from "./screens/HomeScreen";
 import LoginScreen from "./screens/LoginScreen";
 import RegisterScreen from "./screens/RegisterScreen";
@@ -10,7 +10,8 @@ import SettingsScreen from "./screens/SettingsScreen";
 
 const Stack = createNativeStackNavigator();
 
-export default function App() {
+function Navigation() {
+  const { colors } = useContext(ThemeContext);
   return (
     <NavigationContainer>
       <Stack.Navigator
@@ -35,5 +36,13 @@ export default function App() {
         <Stack.Screen name="Settings" component={SettingsScreen} />
       </Stack.Navigator>
     </NavigationContainer>
+  );
+}
+
+export default function App() {
+  return (
+    <ThemeProvider>
+      <Navigation />
+    </ThemeProvider>
   );
 }
