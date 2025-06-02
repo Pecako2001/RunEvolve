@@ -19,7 +19,15 @@ export default function App() {
           headerTintColor: "#ffffff",
         }}
       >
-        <Stack.Screen name="Login" component={LoginScreen} />
+        <Stack.Screen name="Login">
+          {(props) => (
+            <LoginScreen
+              {...props}
+              onSuccess={() => console.log("login successful")}
+              onError={() => console.log("login failed")}
+            />
+          )}
+        </Stack.Screen>
         <Stack.Screen name="Register" component={RegisterScreen} />
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="Statistics" component={StatisticsScreen} />

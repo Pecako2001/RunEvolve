@@ -7,9 +7,16 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const API_BASE_URL = process.env.EXPO_PUBLIC_API_URL || "http://localhost:8000";
 
-type Props = NativeStackScreenProps<any>;
+type LoginCallbacks = {
+  /** Called when login succeeds */
+  onSuccess?: () => void;
+  /** Called when login fails */
+  onError?: (err: unknown) => void;
+};
 
-export default function LoginScreen({ navigation }: Props) {
+type Props = NativeStackScreenProps<any> & LoginCallbacks;
+
+export default function LoginScreen({ navigation, onSuccess, onError }: Props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -27,9 +34,11 @@ export default function LoginScreen({ navigation }: Props) {
       if (!resp.ok) throw new Error("Invalid credentials");
       const json = await resp.json();
       await AsyncStorage.setItem("token", json.access_token);
+      onSuccess?.();
       navigation.replace("Home");
     } catch (e) {
       setError("Invalid credentials");
+      onError?.(e);
     }
   };
 
