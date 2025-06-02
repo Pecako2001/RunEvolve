@@ -4,27 +4,32 @@ import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { spacing } from "../theme";
 import { ThemeContext } from "../ThemeContext";
+import { useTheme } from "react-native-paper";
 
 export default function BottomNavBar() {
   const navigation = useNavigation();
   const { colors } = useContext(ThemeContext);
-  const styles = useMemo(() =>
-    StyleSheet.create({
-      container: {
-        flexDirection: "row",
-        justifyContent: "space-around",
-        backgroundColor: colors.accent,
-        paddingVertical: spacing.sm,
-      },
-      item: {
-        flex: 1,
-        alignItems: "center",
-      },
-      text: {
-        color: "#ffffff",
-      },
-    }),
-  [colors]);
+  const { colors: themeColors } = useTheme();
+  const accent = themeColors.accent ?? colors.accent;
+  const styles = useMemo(
+    () =>
+      StyleSheet.create({
+        container: {
+          flexDirection: "row",
+          justifyContent: "space-around",
+          backgroundColor: accent,
+          paddingVertical: spacing.sm,
+        },
+        item: {
+          flex: 1,
+          alignItems: "center",
+        },
+        text: {
+          color: "#ffffff",
+        },
+      }),
+    [accent],
+  );
   return (
     <View style={styles.container}>
       <TouchableOpacity

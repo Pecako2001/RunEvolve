@@ -2,6 +2,7 @@ import React from "react";
 import { render, fireEvent, waitFor } from "@testing-library/react-native";
 import LoginScreen from "../screens/LoginScreen";
 import { ThemeProvider } from "../ThemeContext";
+import { Provider as PaperProvider } from "react-native-paper";
 
 jest.mock("@react-native-async-storage/async-storage", () => ({
   setItem: jest.fn(() => Promise.resolve()),
@@ -15,9 +16,11 @@ test("calls success callback on login", async () => {
   const onSuccess = jest.fn();
   const navigation = { replace: jest.fn(), navigate: jest.fn() } as any;
   const { getByText, getByPlaceholderText } = render(
-    <ThemeProvider>
-      <LoginScreen navigation={navigation} onSuccess={onSuccess} />
-    </ThemeProvider>,
+    <PaperProvider>
+      <ThemeProvider>
+        <LoginScreen navigation={navigation} onSuccess={onSuccess} />
+      </ThemeProvider>
+    </PaperProvider>,
   );
   fireEvent.changeText(getByPlaceholderText("Email"), "user@example.com");
   fireEvent.changeText(getByPlaceholderText("Password"), "pass");
@@ -33,9 +36,11 @@ test("calls error callback on failure", async () => {
   const onError = jest.fn();
   const navigation = { replace: jest.fn(), navigate: jest.fn() } as any;
   const { getByText, getByPlaceholderText } = render(
-    <ThemeProvider>
-      <LoginScreen navigation={navigation} onError={onError} />
-    </ThemeProvider>,
+    <PaperProvider>
+      <ThemeProvider>
+        <LoginScreen navigation={navigation} onError={onError} />
+      </ThemeProvider>
+    </PaperProvider>,
   );
   fireEvent.changeText(getByPlaceholderText("Email"), "bad@example.com");
   fireEvent.changeText(getByPlaceholderText("Password"), "pass");

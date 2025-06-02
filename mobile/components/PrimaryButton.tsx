@@ -6,6 +6,7 @@ import {
   GestureResponderEvent,
 } from "react-native";
 import { colors, spacing, radius, font } from "../theme";
+import { useTheme } from "react-native-paper";
 import { useFontScale } from "../FontSizeContext";
 
 type Props = {
@@ -15,8 +16,10 @@ type Props = {
 
 export default function PrimaryButton({ title, onPress }: Props) {
   const { scale } = useFontScale();
+  const { colors: themeColors } = useTheme();
+  const accent = themeColors.accent ?? colors.accent;
   return (
-    <TouchableOpacity style={styles.button} onPress={onPress}>
+    <TouchableOpacity style={[styles.button, { backgroundColor: accent }]} onPress={onPress}>
       <Text style={[styles.text, { fontSize: 16 * scale }]}>{title}</Text>
     </TouchableOpacity>
   );
@@ -24,7 +27,6 @@ export default function PrimaryButton({ title, onPress }: Props) {
 
 const styles = StyleSheet.create({
   button: {
-    backgroundColor: colors.accent,
     paddingVertical: spacing.sm,
     paddingHorizontal: spacing.md,
     borderRadius: radius.md,
