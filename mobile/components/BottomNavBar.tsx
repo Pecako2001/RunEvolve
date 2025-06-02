@@ -17,6 +17,7 @@ export default function BottomNavBar() {
         container: {
           flexDirection: "row",
           justifyContent: "space-around",
+          alignItems: "flex-end",
           backgroundColor: accent,
           paddingVertical: spacing.sm,
         },
@@ -24,8 +25,21 @@ export default function BottomNavBar() {
           flex: 1,
           alignItems: "center",
         },
+        centerWrapper: {
+          flex: 1,
+          alignItems: "center",
+        },
+        centerButton: {
+          backgroundColor: "#2563eb",
+          width: 56,
+          height: 56,
+          borderRadius: 28,
+          alignItems: "center",
+          justifyContent: "center",
+        },
         text: {
           color: "#ffffff",
+          marginTop: 2,
         },
       }),
     [accent],
@@ -46,8 +60,13 @@ export default function BottomNavBar() {
         onPress={() => navigation.navigate("Statistics" as never)}
       >
         <Ionicons name="stats-chart" size={24} color="#ffffff" />
-        <Text style={styles.text}>Stats</Text>
+        <Text style={styles.text}>Statistics</Text>
       </TouchableOpacity>
+      <View style={styles.centerWrapper}>
+        <TouchableOpacity accessibilityRole="button" style={styles.centerButton}>
+          <Ionicons name="git-network" size={28} color="#ffffff" />
+        </TouchableOpacity>
+      </View>
       <TouchableOpacity
         accessibilityRole="button"
         style={styles.item}
@@ -59,21 +78,3 @@ export default function BottomNavBar() {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: "row",
-    justifyContent: "space-around",
-    backgroundColor: colors.accent,
-    paddingVertical: spacing.md,
-    marginBottom: spacing.md,
-  },
-  item: {
-    flex: 1,
-    alignItems: "center",
-  },
-  text: {
-    color: "#ffffff",
-    marginTop: 2,
-  },
-});
