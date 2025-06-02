@@ -20,6 +20,36 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/auth/token")
 
 router = APIRouter(prefix="/auth", tags=["auth"])
 
+# Callback registries for login events
+login_success_callbacks = []
+login_failure_callbacks = []
+
+
+def register_login_success_callback(cb):
+    """Register a callback fired when a user successfully logs in."""
+    login_success_callbacks.append(cb)
+
+
+def register_login_failure_callback(cb):
+    """Register a callback fired when a login attempt fails."""
+    login_failure_callbacks.append(cb)
+
+
+def _run_login_success_callbacks(user: models.User, db: Session) -> None:
+    for cb in login_success_callbacks:
+        try:
+            cb(user, db)
+        except Exception:
+            pass
+
+
+def _run_login_failure_callbacks(username: str, db: Session) -> None:
+    for cb in login_failure_callbacks:
+        try:
+            cb(username, db)
+        except Exception:
+            pass
+
 
 def _hash_password(password: str) -> str:
     return hashlib.sha256(password.encode()).hexdigest()
@@ -54,8 +84,10 @@ def login_for_access_token(
 ):
     user = authenticate_user(db, form_data.username, form_data.password)
     if not user:
+        _run_login_failure_callbacks(form_data.username, db)
         raise HTTPException(status_code=401, detail="Incorrect username or password")
     access_token = create_access_token({"sub": user.email})
+    _run_login_success_callbacks(user, db)
     return {"access_token": access_token, "token_type": "bearer"}
 
 
