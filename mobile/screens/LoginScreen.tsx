@@ -1,33 +1,35 @@
-import React, { useState } from 'react';
-import { View, TextInput, Button, Text, StyleSheet } from 'react-native';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import React, { useState } from "react";
+import { View, TextInput, Text, StyleSheet } from "react-native";
+import PrimaryButton from "../components/PrimaryButton";
+import { colors, spacing, radius, font } from "../theme";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const API_BASE_URL = process.env.EXPO_PUBLIC_API_URL || 'http://localhost:8000';
+const API_BASE_URL = process.env.EXPO_PUBLIC_API_URL || "http://localhost:8000";
 
 type Props = NativeStackScreenProps<any>;
 
 export default function LoginScreen({ navigation }: Props) {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
   const handleLogin = async () => {
     try {
       const params = new URLSearchParams();
-      params.append('username', email);
-      params.append('password', password);
+      params.append("username", email);
+      params.append("password", password);
       const resp = await fetch(`${API_BASE_URL}/auth/token`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: params.toString(),
       });
-      if (!resp.ok) throw new Error('Invalid credentials');
+      if (!resp.ok) throw new Error("Invalid credentials");
       const json = await resp.json();
-      await AsyncStorage.setItem('token', json.access_token);
-      navigation.replace('Home');
+      await AsyncStorage.setItem("token", json.access_token);
+      navigation.replace("Home");
     } catch (e) {
-      setError('Invalid credentials');
+      setError("Invalid credentials");
     }
   };
 
@@ -35,20 +37,25 @@ export default function LoginScreen({ navigation }: Props) {
     <View style={styles.container}>
       <TextInput
         placeholder="Email"
+        placeholderTextColor="#6b7280"
         value={email}
         onChangeText={setEmail}
         style={styles.input}
       />
       <TextInput
         placeholder="Password"
+        placeholderTextColor="#6b7280"
         value={password}
         onChangeText={setPassword}
         secureTextEntry
         style={styles.input}
       />
       {error ? <Text style={styles.error}>{error}</Text> : null}
-      <Button title="Sign in" onPress={handleLogin} />
-      <Button title="Create account" onPress={() => navigation.navigate('Register')} />
+      <PrimaryButton title="Sign in" onPress={handleLogin} />
+      <PrimaryButton
+        title="Create account"
+        onPress={() => navigation.navigate("Register")}
+      />
     </View>
   );
 }
@@ -56,20 +63,25 @@ export default function LoginScreen({ navigation }: Props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: 16,
+    alignItems: "center",
+    justifyContent: "center",
+    padding: spacing.md,
+    backgroundColor: colors.background,
   },
   input: {
-    width: '100%',
-    padding: 8,
-    marginVertical: 8,
+    width: "100%",
+    paddingVertical: spacing.sm,
+    paddingHorizontal: spacing.md,
+    marginVertical: spacing.sm,
     borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 4,
+    borderColor: colors.border,
+    borderRadius: radius.md,
+    backgroundColor: colors.inputBg,
+    fontFamily: font.regular,
+    color: colors.foreground,
   },
   error: {
-    color: 'red',
-    marginVertical: 4,
+    color: colors.error,
+    marginVertical: spacing.sm,
   },
 });
