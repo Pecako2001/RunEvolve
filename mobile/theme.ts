@@ -18,6 +18,9 @@ export const darkColors = {
   inputBg: "#1f2937",
 };
 
+// Default colors used when no theme is provided
+export const colors = lightColors;
+
 export type Colors = typeof lightColors;
 
 export const spacing = {
