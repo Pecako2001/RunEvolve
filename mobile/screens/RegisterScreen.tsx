@@ -1,55 +1,139 @@
 import React, { useState, useContext, useMemo } from "react";
-import { View, TextInput, Text, StyleSheet } from "react-native";
+import {
+  View,
+  TextInput,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+} from "react-native";
+import { Ionicons } from "@expo/vector-icons";
+import { Checkbox } from "react-native-paper";
 import PrimaryButton from "../components/PrimaryButton";
 import { spacing, radius, font } from "../theme";
 import { ThemeContext } from "../ThemeContext";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { useFontScale } from "../FontSizeContext";
 
 const API_BASE_URL = process.env.EXPO_PUBLIC_API_URL || "http://localhost:8000";
 
 type Props = NativeStackScreenProps<any>;
 
 export default function RegisterScreen({ navigation }: Props) {
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [confirm, setConfirm] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [acceptTerms, setAcceptTerms] = useState(false);
   const [error, setError] = useState("");
   const { colors } = useContext(ThemeContext);
-  const styles = useMemo(() =>
-    StyleSheet.create({
-      container: {
-        flex: 1,
-        alignItems: "center",
-        justifyContent: "center",
-        padding: spacing.md,
-        backgroundColor: colors.background,
-      },
-      input: {
-        width: "100%",
-        paddingVertical: spacing.sm,
-        paddingHorizontal: spacing.md,
-        marginVertical: spacing.sm,
-        borderWidth: 1,
-        borderColor: colors.border,
-        borderRadius: radius.md,
-        backgroundColor: colors.inputBg,
-        fontFamily: font.regular,
-        color: colors.foreground,
-      },
-      error: {
-        color: colors.error,
-        marginVertical: spacing.sm,
-      },
-    }),
-  [colors]);
+  const { scale } = useFontScale();
+  const styles = useMemo(
+    () =>
+      StyleSheet.create({
+        container: {
+          flex: 1,
+          alignItems: "center",
+          justifyContent: "center",
+          padding: spacing.md,
+          backgroundColor: colors.background,
+        },
+        toggleRow: {
+          flexDirection: "row",
+          backgroundColor: colors.inputBg,
+          borderRadius: radius.md,
+          marginBottom: spacing.lg,
+        },
+        toggleButton: {
+          flex: 1,
+          paddingVertical: spacing.sm,
+          alignItems: "center",
+          borderRadius: radius.md,
+        },
+        toggleActive: {
+          backgroundColor: colors.accent,
+        },
+        toggleText: {
+          fontFamily: font.regular,
+          color: colors.foreground,
+        },
+        toggleTextActive: {
+          color: "#ffffff",
+        },
+        title: {
+          fontFamily: font.regular,
+          fontWeight: "bold",
+          color: colors.foreground,
+          marginBottom: spacing.lg,
+        },
+        inputRow: {
+          width: "100%",
+          flexDirection: "row",
+          alignItems: "center",
+          paddingHorizontal: spacing.md,
+          paddingVertical: spacing.sm,
+          marginVertical: spacing.sm,
+          borderWidth: 1,
+          borderColor: colors.border,
+          borderRadius: radius.md,
+          backgroundColor: colors.inputBg,
+        },
+        inputField: {
+          flex: 1,
+          fontFamily: font.regular,
+          color: colors.foreground,
+        },
+        icon: {
+          marginLeft: spacing.sm,
+        },
+        checkboxRow: {
+          flexDirection: "row",
+          alignItems: "center",
+          marginVertical: spacing.sm,
+        },
+        checkboxLabel: {
+          marginLeft: spacing.sm,
+          color: colors.foreground,
+          fontFamily: font.regular,
+        },
+        altRow: {
+          flexDirection: "row",
+          alignItems: "center",
+          marginTop: spacing.md,
+        },
+        link: {
+          color: colors.accent,
+          marginLeft: spacing.sm,
+        },
+        socialRow: {
+          flexDirection: "row",
+          marginTop: spacing.lg,
+        },
+        socialButton: {
+          width: 40,
+          height: 40,
+          borderRadius: 20,
+          alignItems: "center",
+          justifyContent: "center",
+          marginHorizontal: spacing.sm,
+          backgroundColor: colors.inputBg,
+          borderWidth: 1,
+          borderColor: colors.border,
+        },
+        error: {
+          color: colors.error,
+          marginVertical: spacing.sm,
+        },
+      }),
+    [colors],
+  );
 
   const handleRegister = async () => {
-    if (password !== confirm) {
-      setError("Passwords do not match");
+    if (!acceptTerms) {
+      setError("Please accept the terms");
       return;
     }
+    const [firstName, ...rest] = name.trim().split(" ");
+    const lastName = rest.join(" ");
     try {
       const resp = await fetch(`${API_BASE_URL}/auth/register`, {
         method: "POST",
@@ -70,50 +154,97 @@ export default function RegisterScreen({ navigation }: Props) {
 
   return (
     <View style={styles.container}>
-      <TextInput
-        placeholder="First Name"
-        placeholderTextColor="#6b7280"
-        value={firstName}
-        onChangeText={setFirstName}
-        style={[styles.input, { fontSize: 16 * scale }]}
-      />
-      <TextInput
-        placeholder="Last Name"
-        placeholderTextColor="#6b7280"
-        value={lastName}
-        onChangeText={setLastName}
-        style={[styles.input, { fontSize: 16 * scale }]}
-      />
-      <TextInput
-        placeholder="Email"
-        placeholderTextColor="#6b7280"
-        value={email}
-        onChangeText={setEmail}
-        style={[styles.input, { fontSize: 16 * scale }]}
-      />
-      <TextInput
-        placeholder="Password"
-        placeholderTextColor="#6b7280"
-        value={password}
-        onChangeText={setPassword}
-        secureTextEntry
-        style={[styles.input, { fontSize: 16 * scale }]}
-      />
-      <TextInput
-        placeholder="Confirm Password"
-        placeholderTextColor="#6b7280"
-        value={confirm}
-        onChangeText={setConfirm}
-        secureTextEntry
-        style={[styles.input, { fontSize: 16 * scale }]}
-      />
-      {error ? <Text style={[styles.error, { fontSize: 14 * scale }]}>{error}</Text> : null}
-      <PrimaryButton title="Create Account" onPress={handleRegister} />
+      <View style={styles.toggleRow}>
+        <TouchableOpacity
+          style={styles.toggleButton}
+          onPress={() => navigation.goBack()}
+        >
+          <Text style={[styles.toggleText, { fontSize: 14 * scale }]}>Log In</Text>
+        </TouchableOpacity>
+        <View style={[styles.toggleButton, styles.toggleActive]}>
+          <Text
+            style={[styles.toggleText, styles.toggleTextActive, { fontSize: 14 * scale }]}
+          >
+            Sign Up
+          </Text>
+        </View>
+      </View>
+      <Text style={[styles.title, { fontSize: 24 * scale }]}>Sign Up</Text>
+      <View style={styles.inputRow}>
+        <TextInput
+          placeholder="Your Name"
+          placeholderTextColor="#6b7280"
+          value={name}
+          onChangeText={setName}
+          style={[styles.inputField, { fontSize: 16 * scale }]}
+        />
+      </View>
+      <View style={styles.inputRow}>
+        <TextInput
+          placeholder="Your Email"
+          placeholderTextColor="#6b7280"
+          value={email}
+          onChangeText={setEmail}
+          keyboardType="email-address"
+          style={[styles.inputField, { fontSize: 16 * scale }]}
+        />
+        <Ionicons name="mail-outline" size={20} color={colors.foreground} style={styles.icon} />
+      </View>
+      <View style={styles.inputRow}>
+        <TextInput
+          placeholder="Password"
+          placeholderTextColor="#6b7280"
+          value={password}
+          onChangeText={setPassword}
+          secureTextEntry={!showPassword}
+          style={[styles.inputField, { fontSize: 16 * scale }]}
+        />
+        <TouchableOpacity
+          onPress={() => setShowPassword((s) => !s)}
+          accessibilityRole="button"
+        >
+          <Ionicons
+            name={showPassword ? "eye-off-outline" : "eye-outline"}
+            size={20}
+            color={colors.foreground}
+            style={styles.icon}
+          />
+        </TouchableOpacity>
+      </View>
+      <View style={styles.checkboxRow}>
+        <Checkbox
+          status={acceptTerms ? "checked" : "unchecked"}
+          onPress={() => setAcceptTerms((v) => !v)}
+        />
+        <Text style={[styles.checkboxLabel, { fontSize: 14 * scale }]}>I accept the Terms & Conditions.</Text>
+      </View>
+      {error ? (
+        <Text style={[styles.error, { fontSize: 14 * scale }]}>{error}</Text>
+      ) : null}
       <PrimaryButton
-        title="Back to login"
-        onPress={() => navigation.goBack()}
+        title="Create Account"
+        onPress={handleRegister}
+        iconRight={<Ionicons name="arrow-forward" size={20} color="#fff" />}
       />
+      <View style={styles.altRow}>
+        <Text style={{ color: colors.foreground, fontSize: 14 * scale }}>
+          Already have an account?
+        </Text>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
+          <Text style={[styles.link, { fontSize: 14 * scale }]}>Log In</Text>
+        </TouchableOpacity>
+      </View>
+      <View style={styles.socialRow}>
+        <TouchableOpacity style={styles.socialButton}>
+          <Ionicons name="logo-google" size={20} color={colors.foreground} />
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.socialButton}>
+          <Ionicons name="logo-facebook" size={20} color={colors.foreground} />
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.socialButton}>
+          <Ionicons name="logo-apple" size={20} color={colors.foreground} />
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }
-
