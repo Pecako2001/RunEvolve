@@ -7,12 +7,13 @@ from jose import JWTError, jwt
 from pydantic import BaseModel
 from sqlalchemy.orm import Session
 
+import os
 from ..schemas import Token, User
 from ..database import get_db
 from .. import models
 import hashlib
 
-SECRET_KEY = "secret"
+SECRET_KEY = os.getenv("SECRET_KEY", "dev_secret")
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
