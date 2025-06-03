@@ -1,51 +1,18 @@
-import React, { useContext, useMemo } from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import React, { useContext } from "react";
+import { View, Text, TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
-import { spacing } from "../theme";
 import { ThemeContext } from "../ThemeContext";
 import { useTheme } from "react-native-paper";
+import styles from "../styles/BottomNavBarStyles";
 
 export default function BottomNavBar() {
   const navigation = useNavigation();
   const { colors } = useContext(ThemeContext);
   const { colors: themeColors } = useTheme();
   const accent = themeColors.accent ?? colors.accent;
-  const styles = useMemo(
-    () =>
-      StyleSheet.create({
-        container: {
-          flexDirection: "row",
-          justifyContent: "space-around",
-          alignItems: "flex-end",
-          backgroundColor: accent,
-          paddingVertical: spacing.sm,
-        },
-        item: {
-          flex: 1,
-          alignItems: "center",
-        },
-        centerWrapper: {
-          flex: 1,
-          alignItems: "center",
-        },
-        centerButton: {
-          backgroundColor: "#2563eb",
-          width: 56,
-          height: 56,
-          borderRadius: 28,
-          alignItems: "center",
-          justifyContent: "center",
-        },
-        text: {
-          color: "#ffffff",
-          marginTop: 2,
-        },
-      }),
-    [accent],
-  );
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: accent }]}>
       <TouchableOpacity
         accessibilityRole="button"
         style={styles.item}

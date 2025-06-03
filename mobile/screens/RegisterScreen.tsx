@@ -1,18 +1,13 @@
 import React, { useState, useContext, useMemo } from "react";
-import {
-  View,
-  TextInput,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-} from "react-native";
+import { View, TextInput, Text, TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { Checkbox } from "react-native-paper";
 import PrimaryButton from "../components/PrimaryButton";
-import { spacing, radius, font } from "../theme";
+import { spacing } from "../theme";
 import { ThemeContext } from "../ThemeContext";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { useFontScale } from "../FontSizeContext";
+import stylesFunc from "../styles/RegisterScreenStyles";
 
 const API_BASE_URL = process.env.EXPO_PUBLIC_API_URL || "http://localhost:8000";
 
@@ -27,105 +22,7 @@ export default function RegisterScreen({ navigation }: Props) {
   const [error, setError] = useState("");
   const { colors } = useContext(ThemeContext);
   const { scale } = useFontScale();
-  const styles = useMemo(
-    () =>
-      StyleSheet.create({
-        container: {
-          flex: 1,
-          alignItems: "center",
-          justifyContent: "center",
-          padding: spacing.md,
-          backgroundColor: colors.background,
-        },
-        toggleRow: {
-          flexDirection: "row",
-          backgroundColor: colors.inputBg,
-          borderRadius: radius.md,
-          marginBottom: spacing.lg,
-        },
-        toggleButton: {
-          flex: 1,
-          paddingVertical: spacing.sm,
-          alignItems: "center",
-          borderRadius: radius.md,
-        },
-        toggleActive: {
-          backgroundColor: colors.accent,
-        },
-        toggleText: {
-          fontFamily: font.regular,
-          color: colors.foreground,
-        },
-        toggleTextActive: {
-          color: "#ffffff",
-        },
-        title: {
-          fontFamily: font.regular,
-          fontWeight: "bold",
-          color: colors.foreground,
-          marginBottom: spacing.lg,
-        },
-        inputRow: {
-          width: "100%",
-          flexDirection: "row",
-          alignItems: "center",
-          paddingHorizontal: spacing.md,
-          paddingVertical: spacing.sm,
-          marginVertical: spacing.sm,
-          borderWidth: 1,
-          borderColor: colors.border,
-          borderRadius: radius.md,
-          backgroundColor: colors.inputBg,
-        },
-        inputField: {
-          flex: 1,
-          fontFamily: font.regular,
-          color: colors.foreground,
-        },
-        icon: {
-          marginLeft: spacing.sm,
-        },
-        checkboxRow: {
-          flexDirection: "row",
-          alignItems: "center",
-          marginVertical: spacing.sm,
-        },
-        checkboxLabel: {
-          marginLeft: spacing.sm,
-          color: colors.foreground,
-          fontFamily: font.regular,
-        },
-        altRow: {
-          flexDirection: "row",
-          alignItems: "center",
-          marginTop: spacing.md,
-        },
-        link: {
-          color: colors.accent,
-          marginLeft: spacing.sm,
-        },
-        socialRow: {
-          flexDirection: "row",
-          marginTop: spacing.lg,
-        },
-        socialButton: {
-          width: 40,
-          height: 40,
-          borderRadius: 20,
-          alignItems: "center",
-          justifyContent: "center",
-          marginHorizontal: spacing.sm,
-          backgroundColor: colors.inputBg,
-          borderWidth: 1,
-          borderColor: colors.border,
-        },
-        error: {
-          color: colors.error,
-          marginVertical: spacing.sm,
-        },
-      }),
-    [colors],
-  );
+  const styles = useMemo(() => stylesFunc(colors), [colors]);
 
   const handleRegister = async () => {
     if (!acceptTerms) {

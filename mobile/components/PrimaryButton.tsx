@@ -2,13 +2,13 @@ import React from "react";
 import {
   TouchableOpacity,
   Text,
-  StyleSheet,
   GestureResponderEvent,
   View,
 } from "react-native";
-import { colors, spacing, radius, font } from "../theme";
+import { colors } from "../theme";
 import { useTheme } from "react-native-paper";
 import { useFontScale } from "../FontSizeContext";
+import styles from "../styles/PrimaryButtonStyles";
 
 type Props = {
   title: string;
@@ -21,33 +21,9 @@ export default function PrimaryButton({ title, onPress, iconRight }: Props) {
   const { colors: themeColors } = useTheme();
   const accent = themeColors.accent ?? colors.accent;
   return (
-    <TouchableOpacity
-      style={[styles.button, { backgroundColor: accent }]}
-      onPress={onPress}
-    >
+    <TouchableOpacity style={[styles.button, { backgroundColor: accent }]} onPress={onPress}>
       <Text style={[styles.text, { fontSize: 16 * scale }]}>{title}</Text>
       {iconRight ? <View style={styles.icon}>{iconRight}</View> : null}
     </TouchableOpacity>
   );
 }
-
-const styles = StyleSheet.create({
-  button: {
-    paddingVertical: spacing.sm,
-    paddingHorizontal: spacing.md,
-    borderRadius: radius.md,
-    marginVertical: spacing.sm,
-    alignItems: "center",
-    flexDirection: "row",
-    justifyContent: "center",
-  },
-  text: {
-    color: "#ffffff",
-    fontWeight: "bold",
-    fontSize: 16,
-    fontFamily: font.regular,
-  },
-  icon: {
-    marginLeft: spacing.sm,
-  },
-});
