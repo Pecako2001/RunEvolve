@@ -46,5 +46,33 @@ async def get_athlete_zones(
     return live
 
 
+@router.get("/athlete/stats")
+async def get_athlete_stats(
+    current_user=Depends(get_current_user),
+    db: Session = Depends(get_db),
+):
+    """Return athlete statistics, caching per user."""
+    cached = get_cached_stats(db, current_user.id)
+    if cached:
+        return cached.data
+    live = fetch_athlete_stats(ACCESS_TOKEN, current_user.id)
+    store_cached_stats(db, current_user.id, live)
+    return live
+
+
+@router.get("/athlete/activities")
+async def get_athlete_activities(
+    current_user=Depends(get_current_user),
+    db: Session = Depends(get_db),
+):
+    """Return athlete activities, caching per user."""
+    cached = get_cached_activities(db, current_user.id)
+    if cached:
+        return cached.data
+    live = fetch_athlete_activities(ACCESS_TOKEN)
+    store_cached_activities(db, current_user.id, live)
+    return live
+
+
 
 
