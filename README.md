@@ -81,7 +81,13 @@ The backend, along with the PostgreSQL database, is containerized using Docker.
 
     This command will build the images for the backend and database services and start them in detached mode.
 
-5.  **Verify Backend:**
+5.  **Run Database Migrations:**
+    Alembic manages the database schema. When using Docker, migrations run automatically via `start.sh`. If running locally, apply them manually:
+    ```bash
+    alembic upgrade head
+    ```
+
+6.  **Verify Backend:**
     The backend API should now be accessible at `http://localhost:8000`.
     You can view the interactive API documentation (Swagger UI) at `http://localhost:8000/docs` or ReDoc at `http://localhost:8000/redoc`.
 

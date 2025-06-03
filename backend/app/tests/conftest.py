@@ -13,15 +13,13 @@ os.environ.setdefault("DATABASE_URL", "sqlite:///./test.db")
 # Adjust imports to reflect the project structure
 # Assuming 'app' is the root package for the application code
 from app.main import app  # FastAPI app instance
-from app.database import SessionLocal  # DB session factory
-from app.models import Run as RunModel, User as UserModel  # SQLAlchemy models
+from app.database import SessionLocal, engine  # DB session factory
+from app.models import Base, Run as RunModel, User as UserModel  # SQLAlchemy models
 from app.schemas import RunCreate # Pydantic schema for creation
 from app.crud import create_run # CRUD function
 
-# Ensure tables are created (if using a test-specific DB or in-memory)
-# For this subtask, we assume models.Base.metadata.create_all(bind=engine) in main.py handles it.
-# If a separate test DB were used, you'd do it here:
-# Base.metadata.create_all(bind=engine) # Ensure this uses the correct engine for tests
+# Ensure tables are created for the SQLite test database
+Base.metadata.create_all(bind=engine)
 
 @pytest.fixture(scope="session")
 def event_loop():
