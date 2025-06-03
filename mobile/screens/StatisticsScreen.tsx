@@ -1,10 +1,11 @@
 import React, { useEffect, useState, useContext } from "react";
-import { View, Text, StyleSheet, ScrollView } from "react-native";
+import { View, Text, ScrollView } from "react-native";
 import BottomNavBar from "../components/BottomNavBar";
-import { lightColors, darkColors, spacing } from "../theme";
+import { lightColors, darkColors } from "../theme";
 import { useTheme } from "react-native-paper";
 import { ThemeContext } from "../ThemeContext";
 import Svg, { Polyline, Rect } from "react-native-svg";
+import styles from "../styles/StatisticsScreenStyles";
 
 const API_BASE_URL = process.env.EXPO_PUBLIC_API_URL || "http://localhost:8000";
 
@@ -228,34 +229,3 @@ function BarChart({
   );
 }
 
-const styles = StyleSheet.create({
-  root: {
-    flex: 1,
-  },
-  container: {
-    padding: spacing.md,
-  },
-  title: {
-    fontSize: 20,
-    marginBottom: spacing.lg,
-    textAlign: "center",
-  },
-  sectionTitle: {
-    fontSize: 16,
-    marginTop: spacing.lg,
-    marginBottom: spacing.sm,
-  },
-  row: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    paddingVertical: 4,
-    borderBottomWidth: StyleSheet.hairlineWidth,
-  },
-  cell: {
-    flex: 1,
-    fontSize: 12,
-  },
-  chart: {
-    alignSelf: "center",
-  },
-});

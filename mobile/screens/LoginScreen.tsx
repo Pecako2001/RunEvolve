@@ -1,7 +1,7 @@
 import React, { useState, useContext, useMemo } from "react";
-import { View, TextInput, Text, StyleSheet } from "react-native";
+import { View, TextInput, Text } from "react-native";
 import PrimaryButton from "../components/PrimaryButton";
-import { spacing, radius, font } from "../theme";
+import { spacing } from "../theme";
 import { ThemeContext } from "../ThemeContext";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -19,6 +19,7 @@ type LoginCallbacks = {
 type Props = NativeStackScreenProps<any> & LoginCallbacks;
 
 import { PixelRatio } from "react-native";
+import stylesFunc from "../styles/LoginScreenStyles";
 
 export default function LoginScreen({ navigation, onSuccess, onError }: Props) {
   const [email, setEmail] = useState("");
@@ -26,35 +27,7 @@ export default function LoginScreen({ navigation, onSuccess, onError }: Props) {
   const [error, setError] = useState("");
   const { colors } = useContext(ThemeContext);
   const scale = PixelRatio.getFontScale ? PixelRatio.getFontScale() : 1;
-  const styles = useMemo(() =>
-    StyleSheet.create({
-      container: {
-        flex: 1,
-        alignItems: "center",
-        justifyContent: "center",
-        padding: spacing.md,
-        backgroundColor: colors.background,
-      },
-      input: {
-        width: "100%",
-        paddingVertical: spacing.sm,
-        paddingHorizontal: spacing.md,
-        marginVertical: spacing.sm,
-        borderWidth: 1,
-        borderColor: colors.border,
-        borderRadius: radius.md,
-        backgroundColor: colors.inputBg,
-        fontFamily: font.regular,
-        color: colors.foreground,
-      },
-      error: {
-        color: colors.error,
-        marginVertical: spacing.sm,
-      },
-    }),
-  [colors]);
-
-  const handleLogin = async () => {
+  const styles = useMemo(() => stylesFunc(colors), [colors]);
     try {
       const params = new URLSearchParams();
       params.append("username", email);
