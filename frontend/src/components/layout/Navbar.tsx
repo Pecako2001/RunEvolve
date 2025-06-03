@@ -33,7 +33,7 @@ const navSections = [
       { href: "/", label: "Home", icon: IconHome },
       { href: "/statistics", label: "Statistics", icon: IconChartDots },
       { href: "/CreateRunPage", label: "Create Run", icon: IconChecklist },
-      { href: "/NetwerkPage", label: "Network", icon: IconBrain },
+      { href: "/NetworkPage", label: "Network", icon: IconBrain },
       { href: "/goals", label: "Goal", icon: IconBrain },
     ],
   },

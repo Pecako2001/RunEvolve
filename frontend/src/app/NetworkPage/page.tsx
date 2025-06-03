@@ -17,7 +17,7 @@ import { notifications } from "@mantine/notifications";
 
 const API = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
 
-export default function NetwerkPage() {
+export default function NetworkPage() {
   const [runType, setRunType] = useState<string | null>(null);
   const [distance, setDistance] = useState<number>();
   const [planning, setPlanning] = useState<{
