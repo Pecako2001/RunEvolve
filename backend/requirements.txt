@@ -12,3 +12,4 @@ pandas
 python-jose[cryptography]
 python-multipart
 requests
+alembic

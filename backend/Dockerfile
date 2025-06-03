@@ -14,6 +14,8 @@ RUN pip install --no-cache-dir --upgrade pip && \
 
 # Copy the rest of the backend application code into the container at /app
 COPY . .
+COPY start.sh /app/start.sh
+RUN chmod +x /app/start.sh
 
 # Make port 8000 available to the world outside this container
 EXPOSE 8000
@@ -24,4 +26,4 @@ ENV PORT 8000
 # Run uvicorn when the container launches
 # The command should refer to the FastAPI app instance in your main.py
 # Assuming your main FastAPI app instance is named 'app' in 'app.main'
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
+CMD ["/app/start.sh"]

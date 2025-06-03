@@ -7,7 +7,7 @@ from typing import List, Dict, Any
 from datetime import datetime
 
 from . import crud, models, schemas
-from .database import engine, get_db
+from .database import get_db
 from .services.ai_model import predict_run_type, generate_training_plan
 from .models import RunStatus # Import RunStatus for setting planned runs
 
@@ -15,11 +15,7 @@ from .routers import network, strava, auth
 
 # Load environment variables from .env file
 load_dotenv()
-
-# Create database tables
-# This should ideally be handled by Alembic in a production application
-# but for this project, we'll create them on startup.
-models.Base.metadata.create_all(bind=engine)
+# Database tables are created via Alembic migrations.
 
 app = FastAPI()
 
