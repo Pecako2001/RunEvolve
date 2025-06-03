@@ -6,5 +6,5 @@ cd frontend
 npm install
 cd ..
 # Format repository with Prettier
-npx prettier -w .
+npx --prefix frontend prettier -w .
 
