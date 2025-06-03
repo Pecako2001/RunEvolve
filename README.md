@@ -112,13 +112,13 @@ The backend, along with the PostgreSQL database, is containerized using Docker.
     # yarn install
     ```
 
-3.  **Configure Environment Variables (Optional - `frontend/.env.local`):**
+3.  **Configure Environment Variables (`frontend/.env.local`):**
 
-    - If your backend API is running on a URL different from the default (`http://localhost:8000`), create a `.env.local` file in the `frontend` directory.
-    - Add the following line, replacing the URL with your backend's actual URL:
+    - Copy the provided example file and customize it if needed:
+      ```bash
+      cp .env.local.example .env.local
       ```
-      NEXT_PUBLIC_API_URL=http://your_backend_api_url:port
-      ```
+    - If your backend API is running on a URL different from the default (`http://localhost:8000`), update the `NEXT_PUBLIC_API_URL` value in `.env.local`.
     - If this file is not present, the application defaults to `http://localhost:8000` for API calls.
 
 4.  **Run the Development Server:**
@@ -143,6 +143,7 @@ The backend, along with the PostgreSQL database, is containerized using Docker.
 
 ### Frontend (`frontend/.env.local` - Optional)
 
+- Copy `.env.local.example` to `.env.local` and adjust values as needed.
 - `NEXT_PUBLIC_API_URL`: The base URL for the backend API. If not set, the application defaults to `http://localhost:8000`.
 
 ## Available Scripts (Frontend)
