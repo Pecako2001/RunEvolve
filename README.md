@@ -167,6 +167,36 @@ Shared utilities and theme-aware classes live in `frontend/src/styles/global.mod
 Import this module in components to access base styles like `cardHover` or
 `createRunForm__submitButton` and ensure consistent dark/light theme behavior.
 
+## Running Tests
+
+### Backend
+
+From the `backend` directory, run the Python test suite with **pytest**:
+
+```bash
+pytest
+```
+
+If you have the workspace set up with Turbo, you can also run:
+
+```bash
+pnpm turbo run test --filter backend
+```
+
+### Mobile
+
+Navigate to the `mobile` directory and run the React Native tests:
+
+```bash
+npm test
+```
+
+As with the backend, you can execute all checks via Turbo:
+
+```bash
+pnpm turbo run test --filter mobile
+```
+
 ## API Endpoints (Backend)
 
 The backend API is built with FastAPI, which provides automatic interactive API documentation.
