@@ -38,6 +38,7 @@
     "next-router-mock": "^1.0.2",
     "postcss-preset-mantine": "^1.17.0",
     "tailwindcss": "^4",
-    "typescript": "^5"
+    "typescript": "^5",
+    "prettier": "^3.2.5"
   }
 }
